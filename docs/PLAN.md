@@ -22,9 +22,10 @@
 
 1. Diseño elegido: la página "Agustín Camacho" del canvas, con su contenido real (24/11).
 2. Agustín creó la cuenta `acamachorisso` y el repo vacío `acamachorisso.github.io`, activó Pages con GitHub Actions y sumó a Juani como colaborador (24/11).
-3. Clave de Web3Forms creada con acamacho.contacto@gmail.com. Hoy está en `.env`; en la etapa 1 pasa a `src/config.ts` (ver Formulario).
-4. Repo clonado en `C:\Users\Usuario\Documents\juani\agustin`. Falta la etapa 1.
+3. Clave de Web3Forms creada con acamacho.contacto@gmail.com. Está en `src/config.ts` (ver Formulario); el `.env` ya no se usa.
+4. Repo clonado en `C:\Users\Usuario\Documents\juani\agustin`.
 5. Revisado el material del canvas (24/11): las 196 fotos, los 7 videos cortos, el clip del inicio, los posters, el logo (PNG de 2000 × 2000) y los 7 links de YouTube están completos. En el canvas algunas imágenes no se ven porque usan carga diferida (`loading="lazy"`), pero los archivos están bien.
+6. **Etapas 1 a 6 hechas en `develop`, sin push (24/11).** `npm test` pasa: tipos, esquemas, 21 páginas y 1592 links internos. Revisado con capturas a 1440 y 390 px contra el canvas. Probado con Edge: visor de fotos (clic, flechas, Escape y foco), YouTube y MP4 en el visor, y los errores de contenido (foto que falta, categoría que no existe, YouTube y MP4 juntos, .MOV, .HEIC, link de YouTube roto, categoría y álbum con el mismo nombre, foto sin usar). Lighthouse en celular: rendimiento de 92 a 100 (inicio 96), 100 en accesibilidad, buenas prácticas y SEO; en compu, 100.
 
 ## Pendientes
 
@@ -34,7 +35,12 @@
 | Video de Porsche | Agustín | Sigue en "Próximamente". Cuando salga, carga el link desde el editor |
 | Fotos en mejor calidad | Agustín, más adelante | Se arranca con las del Wix (191 de 196 están a 1500 px). Las reemplaza él desde el editor; la guía explica cómo |
 | Bio vigente y trabajos nuevos o a sacar | Agustín | Preguntado |
-| ¿Web en inglés? | Agustín | Preguntado. Si dice que sí, cambia la estructura y se habla antes de la etapa 1 |
+| ¿Web en inglés? | Agustín | Preguntado. Si dice que sí, cambia la estructura y se habla antes de publicar |
+| Push y primera publicación | Juani decide | El repo remoto está vacío. Conviene subir `main` primero, así queda como rama por defecto: el entorno `github-pages` solo deja publicar desde esa rama |
+| Probar Pages CMS | Juani, con `develop` subido | Subir varias fotos juntas, reordenarlas arrastrando, borrar una, el selector de categoría y sección, y subir un MP4. Si la subida múltiple falla, ver Riesgos |
+| Mensaje de prueba del formulario | Juani, con la web online | Con y sin JavaScript, y uno con el honeypot completo (no tiene que llegar). Llega a acamacho.contacto@gmail.com |
+| Celulares reales y vista previa del link | Juani, con la web online | iPhone y Android: video del inicio, videos con sonido, visor con el dedo. Pegar el link en WhatsApp |
+| Capturas para la guía | Juani, después de probar Pages CMS | `docs/GUIA.md` está escrita sin capturas |
 
 ## Decisiones tomadas
 
