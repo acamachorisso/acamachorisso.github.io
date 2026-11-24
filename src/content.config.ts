@@ -46,7 +46,7 @@ const imageBase = z
   .refine((v) => v.startsWith('/src/assets/') && /\.(jpe?g|png|webp)$/i.test(v), { error: 'La imagen tiene que estar en src/assets/ y ser .jpg, .png o .webp.', abort: true })
   .refine((v) => existsSync(join(process.cwd(), v)), { error: 'No encuentro esa imagen. Revisá que no la hayas borrado o subila de nuevo.', abort: true });
 
-const image = (what: string) => z.preprocess(empty, z.string({ error: `Falta ${what}.`, abort: true }).pipe(imageBase));
+const image = (what: string) => z.preprocess(empty, z.string({ error: `Falta ${what}.` }).pipe(imageBase));
 const optionalImage = z.preprocess(empty, imageBase.optional());
 
 /** Un MP4 subido a public/videos/. Se aceptan "/videos/x.mp4", "videos/x.mp4" y "public/videos/x.mp4". */
