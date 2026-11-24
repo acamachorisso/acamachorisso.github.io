@@ -1,5 +1,7 @@
 ---
 import '@fontsource-variable/archivo/wdth.css';
+// La tipografía se pide de entrada: si llega tarde, el texto cambia de ancho al cargar y la página salta.
+import archivoLatin from '@fontsource-variable/archivo/files/archivo-latin-wdth-normal.woff2?url';
 import '../styles/global.css';
 import { getImage } from 'astro:assets';
 import Nav from '../components/Nav.astro';
@@ -38,6 +40,7 @@ const shareUrl = new URL(share.src, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />
     <link rel="canonical" href={canonical.href} />

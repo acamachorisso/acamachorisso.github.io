@@ -27,14 +27,13 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
   <header class="hero" slot="hero">
     <video
       class="hero-media"
-      src={withBase(site.hero_video)}
       poster={poster.src}
-      autoplay
       muted
       loop
       playsinline
-      preload="metadata"
+      preload="none"
       aria-hidden="true"
+      data-src={withBase(site.hero_video)}
       data-hero-video></video>
     <div class="shade"></div>
     <Nav current="inicio" over />
@@ -115,10 +114,16 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
 </Base>
 
 <script>
-  // Con "reducir movimiento" activado, el video del inicio queda quieto en su primer cuadro.
+  // El video del inicio empieza a cargar cuando el resto de la página ya terminó:
+  // primero se ven el nombre y la imagen fija, y enseguida arranca el video, sin sonido y en loop.
+  // Con "reducir movimiento" activado, queda la imagen fija.
   const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
-  if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    video.removeAttribute('autoplay');
-    video.pause();
-  }
+  const start = () => {
+    if (!video?.dataset.src || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    video.src = video.dataset.src;
+    video.muted = true;
+    video.play().catch(() => {});
+  };
+  if (document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once: true });
 </script>

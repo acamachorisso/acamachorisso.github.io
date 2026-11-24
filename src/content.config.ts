@@ -25,8 +25,9 @@ const toBoolean = (v: unknown) => (v === 'true' ? true : v === 'false' ? false :
 const flag = z.preprocess(toBoolean, z.boolean().default(false));
 const order = z.preprocess(toNumber, z.number({ error: 'El orden tiene que ser un número (1 va primero).' }).default(99));
 
-/** Una lista que puede venir vacía, como null o sin escribir. */
-const list = <T extends z.ZodType>(item: T) => z.preprocess((v) => (v == null || v === '' ? [] : v), z.array(item));
+/** Una lista que puede venir vacía, como null, sin escribir o con un solo elemento suelto. */
+const list = <T extends z.ZodType>(item: T) =>
+  z.preprocess((v) => (v == null || v === '' ? [] : Array.isArray(v) ? v : [v]), z.array(item));
 
 /**
  * Pages CMS guarda una referencia como ruta ("src/content/photo-categories/viajes.yaml").

@@ -1,0 +1,358 @@
+# Configuración del editor de la web (Pages CMS: https://app.pagescms.org).
+# Cada vez que Agustín guarda algo, Pages CMS hace un commit y GitHub Actions publica la web en 1 o 2 minutos.
+# Si un dato está mal, la publicación se frena y queda online la versión anterior.
+
+media:
+  - name: fotos
+    label: Fotos de los álbumes
+    input: src/assets/fotos
+    output: /src/assets/fotos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+  - name: imagenes
+    label: Imágenes de la web
+    input: src/assets/site
+    output: /src/assets/site
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+  - name: portadas
+    label: Portadas de videos
+    input: src/assets/videos
+    output: /src/assets/videos
+    extensions: [jpg, jpeg, png, webp]
+    rename: safe
+  - name: videos
+    label: Videos (MP4)
+    input: public/videos
+    output: /videos
+    extensions: [mp4]
+    rename: safe
+
+content:
+  # ---------- Álbumes ----------
+  - name: albums
+    label: Álbumes de fotos
+    type: collection
+    path: src/content/albums
+    format: yaml
+    subfolders: false
+    filename:
+      template: "{fields.title}.yaml"
+      field: false
+    fields:
+      - name: title
+        label: Nombre del álbum
+        type: string
+        required: true
+        description: "Por ejemplo: Inglaterra. También arma la dirección del álbum (/fotos/inglaterra/)."
+      - name: category
+        label: Categoría
+        type: reference
+        required: true
+        description: Viajes, Trabajos, Personales… Se crean y ordenan en "Categorías de fotos".
+        options:
+          collection: photo-categories
+          search: title
+          value: "{path}"
+          label: "{fields.title}"
+      - name: kind
+        label: Tipo (opcional)
+        type: string
+        description: "Una etiqueta corta: Evento, Producto, Backstage… Sale al lado de la cantidad de fotos."
+      - name: description
+        label: Descripción (opcional)
+        type: text
+        description: "Una o dos líneas. Por ejemplo: Capturadas en abril de 2022 en Londres, Oxford y Bath."
+      - name: cover
+        label: Portada
+        type: image
+        required: true
+        description: La foto que se ve en la lista de álbumes. Se recorta a 3:2 desde el centro.
+        options:
+          media: fotos
+      - name: photos
+        label: Fotos
+        type: image
+        required: true
+        description: "Subí varias a la vez (JPG, 2500 px del lado más largo). Arrastralas para cambiar el orden: así se ven en la web. Las fotos del iPhone en .HEIC no sirven: exportalas como JPG."
+        options:
+          media: fotos
+          multiple: true
+      - name: order
+        label: Orden dentro de la categoría
+        type: number
+        default: 99
+        description: 1 va primero.
+      - name: hidden
+        label: Ocultar (sin borrarlo)
+        type: boolean
+        default: false
+
+  # ---------- Categorías de fotos ----------
+  - name: photo-categories
+    label: Categorías de fotos
+    type: collection
+    path: src/content/photo-categories
+    format: yaml
+    subfolders: false
+    filename:
+      template: "{fields.title}.yaml"
+      field: false
+    fields:
+      - name: title
+        label: Nombre
+        type: string
+        required: true
+        description: "Por ejemplo: Viajes, Trabajos, Retratos. Aparece en el menú Fotos. No puede llamarse igual que un álbum."
+      - name: order
+        label: Orden
+        type: number
+        default: 99
+        description: Posición en el menú Fotos. 1 va primero. Una categoría sin álbumes no aparece.
+      - name: hidden
+        label: Ocultar (sin borrarla)
+        type: boolean
+        default: false
+
+  # ---------- Videos ----------
+  - name: videos
+    label: Videos
+    type: collection
+    path: src/content/videos
+    format: yaml
+    subfolders: false
+    filename:
+      template: "{fields.title}.yaml"
+      field: false
+    fields:
+      - name: title
+        label: Título
+        type: string
+        required: true
+      - name: section
+        label: Sección
+        type: reference
+        required: true
+        description: Proyectos, Videos cortos… Se crean y ordenan en "Secciones de videos".
+        options:
+          collection: video-sections
+          search: title
+          value: "{path}"
+          label: "{fields.title}"
+      - name: type
+        label: Tipo (opcional)
+        type: string
+        description: "Videoclip, Publicidad, Cortometraje, Reel…"
+      - name: youtube
+        label: Link de YouTube
+        type: string
+        description: "Pegá el link del video (Compartir → Copiar). Va el link de YouTube o el MP4, no los dos."
+      - name: file
+        label: Archivo MP4
+        type: file
+        description: "Para videos que no están en YouTube. Exportalo en MP4 (H.264), lo más liviano posible: los videos cortos, de menos de 15 MB. Los .MOV del celular no sirven."
+        options:
+          media: videos
+      - name: poster
+        label: Portada
+        type: image
+        description: "Un cuadro del video en JPG. Obligatoria para los MP4 y los Próximamente. Con YouTube, si la dejás vacía, se usa la miniatura de YouTube."
+        options:
+          media: portadas
+      - name: soon
+        label: Próximamente
+        type: boolean
+        default: false
+        description: Se muestra en gris con el cartel "Próximamente" y sin link. Cuando salga, pegá el link y destildá esto.
+      - name: order
+        label: Orden dentro de la sección
+        type: number
+        default: 99
+        description: 1 va primero. Los Próximamente van siempre al final.
+      - name: hidden
+        label: Ocultar (sin borrarlo)
+        type: boolean
+        default: false
+
+  # ---------- Secciones de videos ----------
+  - name: video-sections
+    label: Secciones de videos
+    type: collection
+    path: src/content/video-sections
+    format: yaml
+    subfolders: false
+    filename:
+      template: "{fields.title}.yaml"
+      field: false
+    fields:
+      - name: title
+        label: Nombre
+        type: string
+        required: true
+        description: "Por ejemplo: Proyectos, Videos cortos, Publicidad."
+      - name: format
+        label: Formato
+        type: select
+        required: true
+        default: horizontal
+        options:
+          values:
+            - name: horizontal
+              label: Horizontal (grilla 16:9, como Proyectos)
+            - name: vertical
+              label: Vertical (carrusel 9:16, como Videos cortos)
+      - name: order
+        label: Orden
+        type: number
+        default: 99
+        description: Posición en la página Videos. 1 va primero. Una sección sin videos no aparece.
+      - name: hidden
+        label: Ocultar (sin borrarla)
+        type: boolean
+        default: false
+
+  # ---------- Datos generales (un solo archivo) ----------
+  - name: site
+    label: Datos generales
+    type: file
+    path: src/data/site.yaml
+    format: yaml
+    fields:
+      - name: name
+        label: Nombre
+        type: string
+        required: true
+      - name: tagline
+        label: Frase de debajo del nombre
+        type: string
+        required: true
+        description: "Por ejemplo: Fotógrafo — Filmmaker"
+      - name: location
+        label: Lugar (opcional)
+        type: string
+        description: Si lo completás, sale en el pie al lado de la frase. Vacío, no se muestra.
+      - name: description
+        label: Descripción para Google
+        type: text
+        description: Una o dos frases. Es lo que muestran Google y la vista previa del link en WhatsApp o Instagram.
+      - name: logo
+        label: Logo
+        type: image
+        required: true
+        description: PNG con fondo transparente y en claro (la web es negra). También arma el ícono de la pestaña.
+        options:
+          media: imagenes
+      - name: hero_video
+        label: Video del inicio
+        type: file
+        required: true
+        description: "El video de fondo, sin sonido y en loop. MP4 en 1080p, sin audio, de 10 a 20 segundos y menos de 15 MB. Si pesa más de 20 MB, la publicación se frena."
+        options:
+          media: videos
+      - name: hero_poster
+        label: Imagen del video del inicio
+        type: image
+        required: true
+        description: Un cuadro del video. Se ve mientras el video carga y cuando el celular está en ahorro de batería.
+        options:
+          media: imagenes
+      - name: showreel
+        label: Showreel (botón "Ver showreel" del inicio)
+        type: reference
+        description: Elegí el video del showreel. El botón aparece solo cuando ese video tiene link o MP4 y no está en Próximamente.
+        options:
+          collection: videos
+          search: title
+          value: "{path}"
+          label: "{fields.title}"
+      - name: bio_short
+        label: Sobre mí corto (inicio)
+        type: text
+        required: true
+      - name: about_background
+        label: Foto de fondo de Sobre mí (inicio)
+        type: image
+        required: true
+        description: Horizontal. El texto va a la izquierda, así que conviene que lo importante esté a la derecha.
+        options:
+          media: imagenes
+      - name: videos_cover
+        label: Foto del acceso a Videos (inicio)
+        type: image
+        required: true
+        options:
+          media: imagenes
+      - name: photos_cover
+        label: Foto del acceso a Fotos (inicio)
+        type: image
+        required: true
+        options:
+          media: imagenes
+      - name: portrait
+        label: Retrato (Sobre mí)
+        type: image
+        required: true
+        description: Vertical. Se recorta a 4:5 desde el centro.
+        options:
+          media: imagenes
+      - name: bio_lead
+        label: Primera frase de Sobre mí
+        type: text
+        required: true
+        description: Sale en letra más grande, debajo del título.
+      - name: bio
+        label: Bio
+        type: text
+        required: true
+        description: "Un párrafo nuevo = una línea en blanco. Se puede usar *cursiva*, **negrita** y [texto](https://link)."
+      - name: facts
+        label: Ficha de Sobre mí
+        type: object
+        list: true
+        description: Los pares que salen debajo de la bio (Hace, Para, Proceso…). Arrastralos para cambiar el orden.
+        fields:
+          - name: label
+            label: Etiqueta
+            type: string
+            required: true
+          - name: text
+            label: Texto
+            type: string
+            required: true
+      - name: contact_intro
+        label: Texto de Contacto
+        type: text
+      - name: contact_image
+        label: Foto de Contacto
+        type: image
+        description: Se recorta cuadrada desde el centro.
+        options:
+          media: imagenes
+      - name: email
+        label: Email
+        type: string
+        required: true
+        description: Sale en Contacto y en el pie. Los mensajes del formulario llegan a acamacho.contacto@gmail.com (eso se cambia en Web3Forms).
+      - name: links
+        label: Redes
+        type: object
+        list: true
+        description: Salen en Contacto y en el pie, en este orden.
+        fields:
+          - name: label
+            label: Nombre
+            type: string
+            required: true
+          - name: url
+            label: Link
+            type: string
+            required: true
+            pattern:
+              regex: "^(https?://|mailto:)"
+              message: "Tiene que empezar con https://"
+      - name: share_image
+        label: Imagen al compartir el link
+        type: image
+        description: La que aparece cuando alguien pega el link de la web en WhatsApp o Instagram. Se recorta a 1200 × 630.
+        options:
+          media: imagenes
