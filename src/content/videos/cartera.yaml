@@ -1,0 +1,8 @@
+title: "Cartera"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=6Wq6FuJi5hM
+poster: /src/assets/videos/cartera.jpg
+soon: false
+order: 3
+hidden: false

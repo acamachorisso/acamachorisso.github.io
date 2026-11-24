@@ -1,0 +1,18 @@
+title: "Santa Bárbara"
+category: src/content/photo-categories/trabajos.yaml
+kind: "Producto · Calzado"
+cover: /src/assets/fotos/santa-barbara/portada.jpg
+photos:
+  - /src/assets/fotos/santa-barbara/sba-01.jpg
+  - /src/assets/fotos/santa-barbara/sba-02.jpg
+  - /src/assets/fotos/santa-barbara/sba-03.jpg
+  - /src/assets/fotos/santa-barbara/sba-04.jpg
+  - /src/assets/fotos/santa-barbara/sba-05.jpg
+  - /src/assets/fotos/santa-barbara/sba-06.jpg
+  - /src/assets/fotos/santa-barbara/sba-07.jpg
+  - /src/assets/fotos/santa-barbara/sba-08.jpg
+  - /src/assets/fotos/santa-barbara/sba-09.jpg
+  - /src/assets/fotos/santa-barbara/sba-10.jpg
+  - /src/assets/fotos/santa-barbara/sba-11.jpg
+order: 2
+hidden: false

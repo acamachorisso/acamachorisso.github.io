@@ -1,0 +1,25 @@
+title: "Wach"
+category: src/content/photo-categories/trabajos.yaml
+kind: "Backstage"
+cover: /src/assets/fotos/wach/portada.jpg
+photos:
+  - /src/assets/fotos/wach/wac-01.jpg
+  - /src/assets/fotos/wach/wac-02.jpg
+  - /src/assets/fotos/wach/wac-03.jpg
+  - /src/assets/fotos/wach/wac-04.jpg
+  - /src/assets/fotos/wach/wac-05.jpg
+  - /src/assets/fotos/wach/wac-06.jpg
+  - /src/assets/fotos/wach/wac-07.jpg
+  - /src/assets/fotos/wach/wac-08.jpg
+  - /src/assets/fotos/wach/wac-09.jpg
+  - /src/assets/fotos/wach/wac-10.jpg
+  - /src/assets/fotos/wach/wac-11.jpg
+  - /src/assets/fotos/wach/wac-12.jpg
+  - /src/assets/fotos/wach/wac-13.jpg
+  - /src/assets/fotos/wach/wac-14.jpg
+  - /src/assets/fotos/wach/wac-15.jpg
+  - /src/assets/fotos/wach/wac-16.jpg
+  - /src/assets/fotos/wach/wac-17.jpg
+  - /src/assets/fotos/wach/wac-18.jpg
+order: 5
+hidden: false

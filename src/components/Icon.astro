@@ -1,0 +1,30 @@
+---
+// Íconos de línea del diseño. Siempre decorativos: el texto o el aria-label del botón dice qué hacen.
+interface Props {
+  name: 'right' | 'left' | 'down' | 'chevron' | 'external' | 'close' | 'play' | 'play-solid';
+  size?: number;
+}
+const { name, size = 14 } = Astro.props;
+const paths: Record<Props['name'], string> = {
+  right: 'M4 12h16M14 6l6 6-6 6',
+  left: 'M20 12H4M10 6l-6 6 6 6',
+  down: 'M12 4v16M6 14l6 6 6-6',
+  chevron: 'M5 9l7 7 7-7',
+  external: 'M7 17L17 7M9 7h8v8',
+  close: 'M6 6l12 12M18 6L6 18',
+  play: 'M8 5.5v13l10.5-6.5z',
+  'play-solid': 'M7 4.5v15l13-7.5z',
+};
+const solid = name === 'play-solid';
+const stroke = name === 'chevron' || name === 'external' ? 2.2 : 1.8;
+---
+
+<svg
+  width={size}
+  height={size}
+  viewBox="0 0 24 24"
+  fill={solid ? 'currentColor' : 'none'}
+  stroke={solid ? 'none' : 'currentColor'}
+  stroke-width={stroke}
+  aria-hidden="true"
+  focusable="false"><path d={paths[name]}></path></svg>

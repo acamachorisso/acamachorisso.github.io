@@ -1,0 +1,8 @@
+title: "Sonidos"
+section: src/content/video-sections/proyectos.yaml
+type: "Cortometraje"
+youtube: https://www.youtube.com/watch?v=HWI4DysylWs
+poster: /src/assets/videos/sonidos.jpg
+soon: false
+order: 7
+hidden: false

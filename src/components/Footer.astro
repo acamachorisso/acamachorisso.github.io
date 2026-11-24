@@ -1,0 +1,59 @@
+---
+import { getNav, getSite } from '../lib/content';
+import { withBase } from '../lib/format';
+
+interface Props {
+  current?: string;
+}
+const { current } = Astro.props;
+const [site, nav] = await Promise.all([getSite(), getNav()]);
+const pages = nav.filter((item) => item.key !== current && item.key !== 'contacto');
+const year = new Date().getFullYear();
+---
+
+<footer class="foot wrap">
+  <div class="foot-brand">
+    <p class="foot-name wide">{site.name}</p>
+    <p class="foot-sub">{[site.tagline, site.location].filter(Boolean).join(' · ')}</p>
+  </div>
+  <div>
+    <h2 class="caps">Contacto</h2>
+    <ul>
+      <li><a href={withBase('/contacto/')}>Escribime</a></li>
+      <li>
+        <a href={`mailto:${site.email}`}>
+          {site.email.split('@')[0]}<wbr />@{site.email.split('@')[1]}
+        </a>
+      </li>
+    </ul>
+  </div>
+  {
+    site.links.length > 0 && (
+      <div>
+        <h2 class="caps">Redes</h2>
+        <ul>
+          {site.links.map((l) => (
+            <li>
+              <a href={l.url} rel="noopener">
+                {l.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+    )
+  }
+  <div>
+    <h2 class="caps">Páginas</h2>
+    <ul>
+      {
+        pages.map((item) => (
+          <li>
+            <a href={withBase(item.href)}>{item.label}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+  <div class="copy"><span>© {year} {site.name}</span><span>Fotografía y video</span></div>
+</footer>

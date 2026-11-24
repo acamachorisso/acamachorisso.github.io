@@ -1,0 +1,8 @@
+title: "IDWG"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=0ungyxtZo0w
+poster: /src/assets/videos/idwg.jpg
+soon: false
+order: 5
+hidden: false

@@ -1,0 +1,21 @@
+title: "Campo"
+category: src/content/photo-categories/personales.yaml
+cover: /src/assets/fotos/campo/portada.jpg
+photos:
+  - /src/assets/fotos/campo/cam-01.jpg
+  - /src/assets/fotos/campo/cam-02.jpg
+  - /src/assets/fotos/campo/cam-03.jpg
+  - /src/assets/fotos/campo/cam-04.jpg
+  - /src/assets/fotos/campo/cam-05.jpg
+  - /src/assets/fotos/campo/cam-06.jpg
+  - /src/assets/fotos/campo/cam-07.jpg
+  - /src/assets/fotos/campo/cam-08.jpg
+  - /src/assets/fotos/campo/cam-09.jpg
+  - /src/assets/fotos/campo/cam-10.jpg
+  - /src/assets/fotos/campo/cam-11.jpg
+  - /src/assets/fotos/campo/cam-12.jpg
+  - /src/assets/fotos/campo/cam-13.jpg
+  - /src/assets/fotos/campo/cam-14.jpg
+  - /src/assets/fotos/campo/cam-15.jpg
+order: 2
+hidden: false

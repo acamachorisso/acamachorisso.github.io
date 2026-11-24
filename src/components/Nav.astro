@@ -1,0 +1,52 @@
+---
+import { Image } from 'astro:assets';
+import Icon from './Icon.astro';
+import { getNav, getSite } from '../lib/content';
+import { withBase } from '../lib/format';
+import { img } from '../lib/media';
+
+interface Props {
+  /** Qué ítem del menú está activo ("videos", "fotos"…) y, dentro de Fotos, qué categoría. */
+  current?: string;
+  currentSub?: string;
+  /** En el inicio, el menú va encima del video. */
+  over?: boolean;
+}
+const { current, currentSub, over = false } = Astro.props;
+const [nav, site] = await Promise.all([getNav(), getSite()]);
+---
+
+<nav class:list={['nav', 'wrap', { 'nav-over': over }]} aria-label="Principal">
+  <a class="logo" href={withBase('/')}>
+    <Image src={img(site.logo)} alt={`${site.name}, inicio`} height={60} loading="eager" />
+  </a>
+  <ul class="menu caps">
+    {
+      nav.map((item) =>
+        item.children ? (
+          <li class="dd">
+            <a class="menu-link" href={withBase(item.href)} aria-current={current === item.key ? 'page' : undefined}>
+              {item.label}
+              <Icon name="chevron" size={10} />
+            </a>
+            <ul class="dd-menu">
+              {item.children.map((child) => (
+                <li>
+                  <a href={withBase(child.href)} aria-current={currentSub === child.key ? 'page' : undefined}>
+                    {child.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </li>
+        ) : (
+          <li class={item.key === 'inicio' ? 'home-link' : undefined}>
+            <a class="menu-link" href={withBase(item.href)} aria-current={current === item.key ? 'page' : undefined}>
+              {item.label}
+            </a>
+          </li>
+        ),
+      )
+    }
+  </ul>
+</nav>

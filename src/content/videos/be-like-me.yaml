@@ -1,0 +1,8 @@
+title: "Be Like Me"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=IVa7SvqZK3c
+poster: /src/assets/videos/be-like-me.jpg
+soon: false
+order: 1
+hidden: false

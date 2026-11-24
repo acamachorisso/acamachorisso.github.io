@@ -1,0 +1,30 @@
+title: "Causa x Aiguá"
+category: src/content/photo-categories/trabajos.yaml
+kind: "Evento"
+cover: /src/assets/fotos/causa-x-aigua/portada.jpg
+photos:
+  - /src/assets/fotos/causa-x-aigua/aig-01.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-02.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-03.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-04.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-05.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-06.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-07.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-08.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-09.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-10.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-11.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-12.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-13.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-14.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-15.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-16.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-17.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-18.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-19.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-20.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-21.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-22.jpg
+  - /src/assets/fotos/causa-x-aigua/aig-23.jpg
+order: 3
+hidden: false

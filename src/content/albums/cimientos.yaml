@@ -1,0 +1,25 @@
+title: "Cimientos"
+category: src/content/photo-categories/trabajos.yaml
+kind: "Evento"
+cover: /src/assets/fotos/cimientos/portada.jpg
+photos:
+  - /src/assets/fotos/cimientos/cim-01.jpg
+  - /src/assets/fotos/cimientos/cim-02.jpg
+  - /src/assets/fotos/cimientos/cim-03.jpg
+  - /src/assets/fotos/cimientos/cim-04.jpg
+  - /src/assets/fotos/cimientos/cim-05.jpg
+  - /src/assets/fotos/cimientos/cim-06.jpg
+  - /src/assets/fotos/cimientos/cim-07.jpg
+  - /src/assets/fotos/cimientos/cim-08.jpg
+  - /src/assets/fotos/cimientos/cim-09.jpg
+  - /src/assets/fotos/cimientos/cim-10.jpg
+  - /src/assets/fotos/cimientos/cim-11.jpg
+  - /src/assets/fotos/cimientos/cim-12.jpg
+  - /src/assets/fotos/cimientos/cim-13.jpg
+  - /src/assets/fotos/cimientos/cim-14.jpg
+  - /src/assets/fotos/cimientos/cim-15.jpg
+  - /src/assets/fotos/cimientos/cim-16.jpg
+  - /src/assets/fotos/cimientos/cim-17.jpg
+  - /src/assets/fotos/cimientos/cim-18.jpg
+order: 4
+hidden: false

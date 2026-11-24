@@ -1,0 +1,192 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import Viewer from '../components/Viewer.astro';
+import { getVideoGroups, type VideoItem } from '../lib/content';
+import { withBase } from '../lib/format';
+import { maybeImg } from '../lib/media';
+
+const groups = await getVideoGroups();
+
+/** Lo que necesita cada tarjeta: adónde lleva sin JavaScript y qué abre el visor. */
+async function card(item: VideoItem, format: 'horizontal' | 'vertical') {
+  const v = item.video.data;
+  const poster = maybeImg(v.poster);
+  const ytThumb = v.youtube ? `https://i.ytimg.com/vi/${v.youtube}/hqdefault.jpg` : undefined;
+  const posterSrc = poster ? (await getImage({ src: poster, width: 960, format: 'webp' })).src : ytThumb;
+  return {
+    id: item.video.id,
+    title: v.title,
+    type: v.type,
+    soon: v.soon,
+    duration: item.duration,
+    poster,
+    ytThumb,
+    posterSrc,
+    href: v.youtube ? `https://www.youtube.com/watch?v=${v.youtube}` : v.file ? withBase(v.file) : undefined,
+    data: v.youtube
+      ? { 'data-kind': 'youtube', 'data-id': v.youtube }
+      : { 'data-kind': 'mp4' },
+    format,
+  };
+}
+
+const sections = await Promise.all(
+  groups.map(async (g) => ({
+    ...g,
+    cards: await Promise.all(g.items.map((item) => card(item, g.section.data.format))),
+  })),
+);
+---
+
+<Base title="Videos" description="Videoclips, publicidad, cortometrajes y videos cortos de Agustín Camacho." current="videos">
+  <div class="page-head wrap">
+    <div class="head-row">
+      <h1 class="title wide">Videos</h1>
+      {
+        sections.length > 1 && (
+          <nav class="jump caps" aria-label="Secciones de videos">
+            {sections.map((s) => (
+              <a href={`#${s.anchor}`}>
+                {s.section.data.title} ({s.cards.length})
+              </a>
+            ))}
+          </nav>
+        )
+      }
+    </div>
+  </div>
+
+  {
+    sections.map((s) => (
+      <section id={s.anchor} class="block wrap" aria-labelledby={`${s.anchor}-t`} data-viewer-group>
+        <div class="sec-head">
+          <h2 id={`${s.anchor}-t`} class="h2 wide">
+            {s.section.data.title}
+          </h2>
+          {s.section.data.format === 'vertical' && s.cards.length > 1 && (
+            <div class="arrows" data-rail-arrows hidden>
+              <button class="icon-btn" type="button" data-rail="-1" aria-label="Ver anteriores">
+                <Icon name="left" size={16} />
+              </button>
+              <button class="icon-btn" type="button" data-rail="1" aria-label="Ver siguientes">
+                <Icon name="right" size={16} />
+              </button>
+            </div>
+          )}
+        </div>
+
+        {s.section.data.format === 'horizontal' ? (
+          <ul class="grid">
+            {s.cards.map((c) =>
+              c.soon || !c.href ? (
+                <li class="card soon">
+                  <span class="thumb">
+                    {c.poster ? (
+                      <Image src={c.poster} alt="" widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                    ) : (
+                      c.ytThumb && <img src={c.ytThumb} alt="" loading="lazy" decoding="async" />
+                    )}
+                    <span class="badge caps">Próximamente</span>
+                  </span>
+                  <span class="card-text">
+                    <h3 class="card-title wide">{c.title}</h3>
+                    {c.type && <span class="card-meta caps">{c.type}</span>}
+                  </span>
+                </li>
+              ) : (
+                <li>
+                  <a
+                    class="card"
+                    href={c.href}
+                    data-viewer-item
+                    data-title={c.title}
+                    data-format="horizontal"
+                    data-poster={c.posterSrc}
+                    {...c.data}>
+                    <span class="thumb">
+                      {c.poster ? (
+                        <Image src={c.poster} alt="" widths={[480, 800, 1200]} sizes="(max-width: 760px) 100vw, (max-width: 1000px) 50vw, 33vw" />
+                      ) : (
+                        <img src={c.ytThumb} alt="" loading="lazy" decoding="async" />
+                      )}
+                      <span class="play" aria-hidden="true">
+                        <Icon name="play" size={20} />
+                      </span>
+                    </span>
+                    <span class="card-text">
+                      <span class="card-title wide">{c.title}</span>
+                      <span class="card-meta caps">{[c.type, c.duration].filter(Boolean).join(' · ')}</span>
+                    </span>
+                  </a>
+                </li>
+              ),
+            )}
+          </ul>
+        ) : (
+          <ul class="rail" data-rail-track>
+            {s.cards.map((c) => (
+              <li>
+                {c.soon || !c.href ? (
+                  <span class="short soon">
+                    {c.poster && <Image src={c.poster} alt="" widths={[300, 520]} sizes="260px" />}
+                    <span class="badge caps">Próximamente</span>
+                    <span class="short-info">
+                      <span class="short-title wide">{c.title}</span>
+                    </span>
+                  </span>
+                ) : (
+                  <a
+                    class="short"
+                    href={c.href}
+                    data-viewer-item
+                    data-title={c.title}
+                    data-format="vertical"
+                    data-poster={c.posterSrc}
+                    aria-label={`Reproducir ${c.title}`}
+                    {...c.data}>
+                    {c.poster ? (
+                      <Image src={c.poster} alt="" widths={[300, 520]} sizes="260px" />
+                    ) : (
+                      <img src={c.ytThumb} alt="" loading="lazy" decoding="async" />
+                    )}
+                    <span class="short-info">
+                      <span class="short-title wide">{c.title}</span>
+                      <span class="short-dur caps">
+                        <Icon name="play-solid" size={12} />
+                        {c.duration ?? c.type ?? 'Ver'}
+                      </span>
+                    </span>
+                  </a>
+                )}
+              </li>
+            ))}
+          </ul>
+        )}
+      </section>
+    ))
+  }
+
+  <Viewer />
+</Base>
+
+<script>
+  // Flechas de los carruseles verticales: se muestran solo con JavaScript y si hay para desplazar.
+  for (const section of document.querySelectorAll<HTMLElement>('[data-viewer-group]')) {
+    const track = section.querySelector<HTMLElement>('[data-rail-track]');
+    const arrows = section.querySelector<HTMLElement>('[data-rail-arrows]');
+    if (!track || !arrows) continue;
+    const update = () => {
+      arrows.hidden = track.scrollWidth <= track.clientWidth + 4;
+    };
+    update();
+    new ResizeObserver(update).observe(track);
+    for (const button of arrows.querySelectorAll<HTMLButtonElement>('[data-rail]')) {
+      button.addEventListener('click', () => {
+        const step = Number(button.dataset.rail) * Math.max(track.clientWidth * 0.8, 260);
+        track.scrollBy({ left: step, behavior: 'smooth' });
+      });
+    }
+  }
+</script>

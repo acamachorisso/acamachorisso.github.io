@@ -1,0 +1,8 @@
+title: "Loot SS #1"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=JUPAbtNj1V4
+poster: /src/assets/videos/loot-ss-1.jpg
+soon: false
+order: 4
+hidden: false

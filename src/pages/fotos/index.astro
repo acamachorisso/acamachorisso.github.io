@@ -1,0 +1,26 @@
+---
+// /fotos/ manda a la primera categoría con álbumes. Por si el navegador no redirige, muestra los links.
+import Base from '../../layouts/Base.astro';
+import { getPhotoGroups } from '../../lib/content';
+import { withBase } from '../../lib/format';
+
+const groups = await getPhotoGroups();
+const first = groups[0] ? `/fotos/${groups[0].slug}/` : '/';
+---
+
+<Base title="Fotos" current="fotos" redirect={first} noindex>
+  <div class="simple wrap">
+    <h1 class="title wide">Fotos</h1>
+    <ul class="tabs caps" style="list-style: none; margin: 0; padding: 0">
+      {
+        groups.map((g) => (
+          <li>
+            <a class="tab" href={withBase(`/fotos/${g.slug}/`)}>
+              {g.category.data.title}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+</Base>

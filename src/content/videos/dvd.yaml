@@ -1,0 +1,8 @@
+title: "DVD"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=XEpO95xEK4o
+poster: /src/assets/videos/dvd.jpg
+soon: false
+order: 2
+hidden: false

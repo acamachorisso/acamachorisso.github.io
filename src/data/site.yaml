@@ -1,0 +1,38 @@
+name: Agustín Camacho
+tagline: Fotógrafo — Filmmaker
+location: ""
+description: Portfolio de Agustín Camacho, fotógrafo y filmmaker. Videoclips, publicidad, cortometrajes y fotografía de viajes, eventos y producto.
+hero_video: /videos/inicio.mp4
+hero_poster: /src/assets/site/inicio-poster.jpg
+showreel: src/content/videos/showreel.yaml
+bio_short: Agustín Camacho es un fotógrafo y filmmaker uruguayo especializado en crear piezas audiovisuales con enfoque narrativo y mirada cinematográfica, desarrollando proyectos de forma completa desde la preproducción hasta la postproducción.
+about_background: /src/assets/site/sobre-mi-fondo.jpg
+videos_cover: /src/assets/site/inicio-videos.jpg
+photos_cover: /src/assets/site/inicio-fotos.jpg
+portrait: /src/assets/site/retrato.jpg
+bio_lead: Agustín Camacho es un fotógrafo y filmmaker uruguayo con más de tres años de experiencia en la creación de piezas audiovisuales con enfoque cinematográfico y contemporáneo.
+bio: |-
+  Trabaja en fotografía, video y edición, desarrollando proyectos desde la preproducción hasta la postproducción para marcas, eventos y proyectos personales. Su enfoque combina narrativa y estética, buscando crear contenido que no solo sea atractivo, sino que también comunique de forma efectiva la identidad y los valores de cada proyecto.
+
+  Esto es resultado de una formación en cine y fotografía, complementada por una constante búsqueda de aprendizaje autodidacta y experiencia práctica dentro del ámbito audiovisual.
+facts:
+  - label: Hace
+    text: Fotografía, video y edición
+  - label: Para
+    text: Marcas, eventos y proyectos personales
+  - label: Proceso
+    text: De la preproducción a la postproducción
+  - label: Formación
+    text: Cine y fotografía
+contact_intro: "Contame tu proyecto: qué querés hacer, para cuándo y dónde. Te respondo por email."
+contact_image: /src/assets/site/contacto.jpg
+email: acamacho.contacto@gmail.com
+links:
+  - label: Instagram
+    url: https://www.instagram.com/acamachorisso
+  - label: YouTube
+    url: https://www.youtube.com/@acamachorisso
+  - label: TikTok
+    url: https://www.tiktok.com/@acamachorisso
+share_image: /src/assets/site/inicio-fotos.jpg
+logo: /src/assets/site/logo.png

@@ -1,0 +1,8 @@
+title: "Save Me"
+section: src/content/video-sections/proyectos.yaml
+type: "Videoclip"
+youtube: https://www.youtube.com/watch?v=i2-QZXHk0jM
+poster: /src/assets/videos/save-me.jpg
+soon: false
+order: 6
+hidden: false

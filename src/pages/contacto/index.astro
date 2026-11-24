@@ -1,0 +1,137 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import { WEB3FORMS_KEY } from '../../config';
+import { getSite } from '../../lib/content';
+import { handle, withBase } from '../../lib/format';
+import { maybeImg } from '../../lib/media';
+
+const site = await getSite();
+const picture = maybeImg(site.contact_image);
+// Sin JavaScript, Web3Forms recibe el formulario y vuelve a esta dirección.
+const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
+---
+
+<Base title="Contacto" description={`Escribile a ${site.name} para tu proyecto de foto o video.`} current="contacto">
+  <div class="contact wrap">
+    <div class="left">
+      <h1 class="title wide">Contacto</h1>
+      {site.contact_intro && <p class="intro">{site.contact_intro}</p>}
+
+      <form class="form" action="https://api.web3forms.com/submit" method="POST" data-contact-form>
+        <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
+        <input type="hidden" name="subject" value="Nuevo mensaje desde la web" />
+        <input type="hidden" name="from_name" value={`Web de ${site.name}`} />
+        <input type="hidden" name="redirect" value={thanks} />
+        <input type="checkbox" name="botcheck" class="hp" tabindex="-1" autocomplete="off" aria-hidden="true" />
+
+        <div class="field">
+          <label class="caps" for="c-nombre">Nombre *</label>
+          <input id="c-nombre" name="Nombre" type="text" autocomplete="given-name" required maxlength="120" />
+        </div>
+        <div class="field">
+          <label class="caps" for="c-apellido">Apellido</label>
+          <input id="c-apellido" name="Apellido" type="text" autocomplete="family-name" maxlength="120" />
+        </div>
+        <div class="field full">
+          <label class="caps" for="c-email">Email *</label>
+          <input id="c-email" name="email" type="email" autocomplete="email" required maxlength="200" />
+        </div>
+        <div class="field full">
+          <label class="caps" for="c-propuesta">Propuesta</label>
+          <textarea id="c-propuesta" name="Propuesta" maxlength="5000"></textarea>
+        </div>
+        <p class="form-error" role="alert" data-form-error hidden></p>
+        <button class="btn solid send caps" type="submit">
+          <span data-send-label>Enviar</span>
+          <Icon name="right" />
+        </button>
+      </form>
+
+      <div class="notice" role="status" tabindex="-1" data-form-sent hidden>
+        <span class="caps mute">Mensaje enviado</span>
+        <p>¡Gracias! Te respondo a la brevedad por email.</p>
+        <button class="btn caps" type="button" data-form-again>Escribir otro mensaje</button>
+      </div>
+    </div>
+
+    <aside class="right" aria-label="Otras formas de contacto">
+      {
+        picture && (
+          <div class="pic">
+            <Image src={picture} alt={`${site.name} trabajando`} widths={[480, 800, 1000]} sizes="(max-width: 900px) 100vw, 40vw" />
+          </div>
+        )
+      }
+      <ul class="links caps">
+        <li>
+          <a href={`mailto:${site.email}`}>
+            Email <small>{site.email}</small>
+          </a>
+        </li>
+        {
+          site.links.map((l) => (
+            <li>
+              <a href={l.url} rel="noopener">
+                {l.label} <small>{handle(l.url)}</small>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </aside>
+  </div>
+</Base>
+
+<script>
+  // Con JavaScript, el mensaje se manda sin salir de la página y se muestra la confirmación acá.
+  const form = document.querySelector<HTMLFormElement>('[data-contact-form]');
+  const sent = document.querySelector<HTMLElement>('[data-form-sent]');
+  const error = document.querySelector<HTMLElement>('[data-form-error]');
+  const label = document.querySelector<HTMLElement>('[data-send-label]');
+  if (form && sent && error && label) {
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]')!;
+    const email = form.dataset.email ?? '';
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault();
+      error.hidden = true;
+      button.disabled = true;
+      label.textContent = 'Enviando…';
+      try {
+        const data = Object.fromEntries(new FormData(form));
+        delete data.redirect;
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+          body: JSON.stringify(data),
+        });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok || result.success === false) throw new Error(result.message || response.statusText);
+        form.reset();
+        form.hidden = true;
+        sent.hidden = false;
+        sent.focus();
+      } catch {
+        error.innerHTML = '';
+        error.append('No se pudo enviar el mensaje. Probá de nuevo en un rato o escribime directo a ');
+        const mail = document.querySelector<HTMLAnchorElement>('.links a[href^="mailto:"]');
+        const link = document.createElement('a');
+        link.href = mail?.href ?? `mailto:${email}`;
+        link.textContent = mail?.href.replace('mailto:', '') ?? email;
+        error.append(link, '.');
+        error.hidden = false;
+      } finally {
+        button.disabled = false;
+        label.textContent = 'Enviar';
+      }
+    });
+
+    document.querySelector('[data-form-again]')?.addEventListener('click', () => {
+      sent.hidden = true;
+      form.hidden = false;
+      form.querySelector<HTMLInputElement>('input:not([type="hidden"]):not(.hp)')?.focus();
+    });
+  }
+</script>

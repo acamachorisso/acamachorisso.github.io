@@ -1,0 +1,57 @@
+---
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getSite, getVideoGroups } from '../lib/content';
+import { paragraphs, withBase } from '../lib/format';
+import { img } from '../lib/media';
+
+const [site, videos] = await Promise.all([getSite(), getVideoGroups()]);
+const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
+---
+
+<Base title="Sobre mí" description={site.bio_lead} image={site.portrait} current="sobre-mi">
+  <div class="bio wrap">
+    <div class="portrait">
+      <Image
+        src={img(site.portrait)}
+        alt={`Retrato de ${site.name}`}
+        widths={[480, 800, 1100]}
+        sizes="(max-width: 900px) 100vw, 45vw"
+        loading="eager"
+      />
+    </div>
+    <div class="text">
+      <span class="caps mute">{site.tagline}</span>
+      <h1 class="title wide">Sobre mí</h1>
+      <p class="lead">{site.bio_lead}</p>
+      {paragraphs(site.bio).map((p) => <p class="body" set:html={p} />)}
+      {
+        site.facts.length > 0 && (
+          <dl class="facts">
+            {site.facts.map((f) => (
+              <>
+                <dt class="caps">{f.label}</dt>
+                <dd>{f.text}</dd>
+              </>
+            ))}
+          </dl>
+        )
+      }
+      <div class="ctas caps">
+        <a class="btn" href={withBase('/contacto/')}>
+          Escribime
+          <Icon name="right" />
+        </a>
+        {videos.length > 0 && <a class="btn ghost" href={withBase('/videos/')}>Ver videos</a>}
+        {
+          instagram && (
+            <a class="btn ghost" href={instagram.url} rel="noopener">
+              Instagram
+            </a>
+          )
+        }
+      </div>
+    </div>
+  </div>
+</Base>

@@ -1,0 +1,32 @@
+title: "España"
+category: src/content/photo-categories/viajes.yaml
+description: "Capturadas en abril de 2022 en Trujillo, Granada, Madrid, Sevilla y Córdoba."
+cover: /src/assets/fotos/espana/portada.jpg
+photos:
+  - /src/assets/fotos/espana/esp-01.jpg
+  - /src/assets/fotos/espana/esp-02.jpg
+  - /src/assets/fotos/espana/esp-03.jpg
+  - /src/assets/fotos/espana/esp-04.jpg
+  - /src/assets/fotos/espana/esp-05.jpg
+  - /src/assets/fotos/espana/esp-06.jpg
+  - /src/assets/fotos/espana/esp-07.jpg
+  - /src/assets/fotos/espana/esp-08.jpg
+  - /src/assets/fotos/espana/esp-09.jpg
+  - /src/assets/fotos/espana/esp-10.jpg
+  - /src/assets/fotos/espana/esp-11.jpg
+  - /src/assets/fotos/espana/esp-12.jpg
+  - /src/assets/fotos/espana/esp-13.jpg
+  - /src/assets/fotos/espana/esp-14.jpg
+  - /src/assets/fotos/espana/esp-15.jpg
+  - /src/assets/fotos/espana/esp-16.jpg
+  - /src/assets/fotos/espana/esp-17.jpg
+  - /src/assets/fotos/espana/esp-18.jpg
+  - /src/assets/fotos/espana/esp-19.jpg
+  - /src/assets/fotos/espana/esp-20.jpg
+  - /src/assets/fotos/espana/esp-21.jpg
+  - /src/assets/fotos/espana/esp-22.jpg
+  - /src/assets/fotos/espana/esp-23.jpg
+  - /src/assets/fotos/espana/esp-24.jpg
+  - /src/assets/fotos/espana/esp-25.jpg
+order: 2
+hidden: false

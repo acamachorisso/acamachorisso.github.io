@@ -1,0 +1,32 @@
+title: "Campo de la Tahona"
+category: src/content/photo-categories/trabajos.yaml
+kind: "Evento"
+cover: /src/assets/fotos/campo-de-la-tahona/portada.jpg
+photos:
+  - /src/assets/fotos/campo-de-la-tahona/tah-01.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-02.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-03.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-04.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-05.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-06.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-07.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-08.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-09.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-10.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-11.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-12.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-13.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-14.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-15.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-16.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-17.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-18.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-19.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-20.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-21.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-22.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-23.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-24.jpg
+  - /src/assets/fotos/campo-de-la-tahona/tah-25.jpg
+order: 1
+hidden: false

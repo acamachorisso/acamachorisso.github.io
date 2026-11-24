@@ -1,0 +1,70 @@
+---
+import '@fontsource-variable/archivo/wdth.css';
+import '../styles/global.css';
+import { getImage } from 'astro:assets';
+import Nav from '../components/Nav.astro';
+import Footer from '../components/Footer.astro';
+import { getSite } from '../lib/content';
+import { withBase } from '../lib/format';
+import { img } from '../lib/media';
+
+interface Props {
+  /** Título de la página. Sin título, se usa "Nombre — Frase". */
+  title?: string;
+  description?: string;
+  /** Imagen para la vista previa del link (WhatsApp, Instagram…). Sin imagen, la de Datos generales. */
+  image?: string;
+  current?: string;
+  currentSub?: string;
+  /** El inicio arma su propio menú encima del video. */
+  nav?: boolean;
+  /** Para /fotos/: manda a otra dirección. */
+  redirect?: string;
+  noindex?: boolean;
+}
+
+const { title, description, image, current, currentSub, nav = true, redirect, noindex = false } = Astro.props;
+const site = await getSite();
+const fullTitle = title ? `${title} — ${site.name}` : `${site.name} — ${site.tagline}`;
+const desc = description ?? site.description ?? `${site.name}, ${site.tagline.toLowerCase()}.`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const shareSource = image ?? site.share_image ?? site.photos_cover;
+const share = await getImage({ src: img(shareSource), width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 82 });
+const shareUrl = new URL(share.src, Astro.site);
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical.href} />
+    {noindex && <meta name="robots" content="noindex" />}
+    {redirect && <meta http-equiv="refresh" content={`0; url=${withBase(redirect)}`} />}
+    <meta name="theme-color" content="#0a0a0a" />
+    <link rel="icon" type="image/png" href={withBase('/favicon.png')} />
+    <link rel="apple-touch-icon" href={withBase('/apple-touch-icon.png')} />
+    <link rel="sitemap" href={withBase('/sitemap-index.xml')} />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_UY" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={shareUrl.href} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <a class="skip caps" href="#contenido">Saltar al contenido</a>
+    {nav && <Nav current={current} currentSub={currentSub} />}
+    <slot name="hero" />
+    <main id="contenido" tabindex="-1">
+      <slot />
+    </main>
+    <Footer current={current} />
+  </body>
+</html>

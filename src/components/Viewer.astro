@@ -1,0 +1,147 @@
+---
+// Visor a pantalla completa para las fotos de un álbum y los videos.
+// Cada link con data-viewer-item abre el visor; los de un mismo data-viewer-group se recorren con las flechas.
+// Sin JavaScript, los links abren la foto grande, el MP4 o YouTube directamente.
+import Icon from './Icon.astro';
+---
+
+<dialog class="viewer" aria-label="Visor" data-viewer>
+  <div class="viewer-stage" data-viewer-stage></div>
+  <div class="viewer-bar">
+    <p class="viewer-title" aria-live="polite">
+      <span class="wide" data-viewer-title></span>
+      <span class="caps mute" data-viewer-counter></span>
+    </p>
+    <div class="viewer-btns">
+      <button class="icon-btn" type="button" data-viewer-prev aria-label="Anterior"><Icon name="left" size={18} /></button>
+      <button class="icon-btn" type="button" data-viewer-next aria-label="Siguiente"><Icon name="right" size={18} /></button>
+      <button class="icon-btn" type="button" data-viewer-close aria-label="Cerrar" autofocus><Icon name="close" size={18} /></button>
+    </div>
+  </div>
+</dialog>
+
+<style>
+  .viewer-title {
+    margin: 0;
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+</style>
+
+<script>
+  const found = document.querySelector<HTMLDialogElement>('[data-viewer]');
+  if (found) {
+    const dialog = found;
+    const stage = dialog.querySelector<HTMLElement>('[data-viewer-stage]')!;
+    const title = dialog.querySelector<HTMLElement>('[data-viewer-title]')!;
+    const counter = dialog.querySelector<HTMLElement>('[data-viewer-counter]')!;
+    const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-viewer-prev]')!;
+    const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-viewer-next]')!;
+    let items: HTMLAnchorElement[] = [];
+    let index = 0;
+
+    function render() {
+      const item = items[index];
+      const d = item.dataset;
+      stage.replaceChildren();
+      if (d.kind === 'photo') {
+        const image = document.createElement('img');
+        image.srcset = d.srcset ?? '';
+        image.sizes = '100vw';
+        image.src = item.href;
+        image.alt = d.alt ?? '';
+        stage.append(image);
+      } else if (d.kind === 'youtube') {
+        const frame = document.createElement('iframe');
+        frame.className = d.format === 'vertical' ? 'frame-v' : 'frame-h';
+        frame.src = `https://www.youtube-nocookie.com/embed/${d.id}?autoplay=1&rel=0&playsinline=1&modestbranding=1`;
+        frame.title = d.title ?? 'Video de YouTube';
+        frame.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+        frame.allowFullscreen = true;
+        stage.append(frame);
+      } else {
+        const video = document.createElement('video');
+        video.className = d.format === 'vertical' ? 'frame-v' : 'frame-h';
+        video.src = item.href;
+        if (d.poster) video.poster = d.poster;
+        video.controls = true;
+        video.playsInline = true;
+        stage.append(video);
+        // Se da play en el mismo toque: así el iPhone lo reproduce con sonido.
+        // Lo pidió la persona, así que arranca aunque tenga activado "reducir movimiento".
+        video.play().catch(() => {});
+      }
+      title.textContent = d.title ?? '';
+      counter.textContent = items.length > 1 ? `${index + 1} / ${items.length}` : '';
+      prevBtn.hidden = nextBtn.hidden = items.length < 2;
+      if (d.kind === 'photo') preload(index + 1);
+    }
+
+    /** Carga de antemano la foto siguiente, para que al pasar aparezca enseguida. */
+    function preload(i: number) {
+      const next = items[(i + items.length) % items.length];
+      if (next?.dataset.kind !== 'photo') return;
+      const image = new Image();
+      image.sizes = '100vw';
+      image.srcset = next.dataset.srcset ?? '';
+    }
+
+    function go(step: number) {
+      const hadFocus = stage.contains(document.activeElement);
+      index = (index + step + items.length) % items.length;
+      render();
+      // Si el foco estaba en el video que se cambió, pasa al botón para no perderse.
+      if (hadFocus || !dialog.contains(document.activeElement)) (step > 0 ? nextBtn : prevBtn).focus();
+    }
+
+    document.addEventListener('click', (event) => {
+      if (event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey) return;
+      const link = (event.target as Element).closest<HTMLAnchorElement>('a[data-viewer-item]');
+      if (!link) return;
+      event.preventDefault();
+      const group = link.closest('[data-viewer-group]') ?? document;
+      items = [...group.querySelectorAll<HTMLAnchorElement>('a[data-viewer-item]')];
+      index = Math.max(0, items.indexOf(link));
+      render();
+      dialog.showModal();
+    });
+
+    prevBtn.addEventListener('click', () => go(-1));
+    nextBtn.addEventListener('click', () => go(1));
+    dialog.querySelector('[data-viewer-close]')!.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('close', () => stage.replaceChildren());
+    dialog.addEventListener('keydown', (event) => {
+      // Con el foco en el video, las flechas adelantan o atrasan el video, no lo cambian.
+      if ((event.target as Element).tagName === 'VIDEO') return;
+      if (event.key === 'ArrowLeft') go(-1);
+      if (event.key === 'ArrowRight') go(1);
+    });
+    // Un toque en el fondo (fuera de la foto o el video) cierra el visor.
+    let swiped = false;
+    stage.addEventListener('click', (event) => {
+      if (swiped) {
+        swiped = false;
+        return;
+      }
+      if (event.target === stage) dialog.close();
+    });
+
+    // Deslizar con el dedo: a la izquierda, la siguiente; a la derecha, la anterior.
+    let startX = 0;
+    let startY = 0;
+    stage.addEventListener('pointerdown', (event) => {
+      startX = event.clientX;
+      startY = event.clientY;
+    });
+    stage.addEventListener('pointerup', (event) => {
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      if (items[index]?.dataset.kind === 'photo' && Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy) * 1.5) {
+        swiped = true;
+        go(dx < 0 ? 1 : -1);
+      }
+    });
+  }
+</script>

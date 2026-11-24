@@ -1,0 +1,124 @@
+---
+import { Image, getImage } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import Icon from '../components/Icon.astro';
+import { albumsLabel, getPhotoGroups, getShowreel, getSite, getVideoGroups, videoSummary } from '../lib/content';
+import { withBase } from '../lib/format';
+import { img } from '../lib/media';
+
+const [site, photoGroups, videoGroups, showreel] = await Promise.all([
+  getSite(),
+  getPhotoGroups(),
+  getVideoGroups(),
+  getShowreel(),
+]);
+const albumCount = photoGroups.reduce((n, g) => n + g.albums.length, 0);
+const showreelUrl = showreel?.data.youtube
+  ? `https://www.youtube.com/watch?v=${showreel.data.youtube}`
+  : showreel?.data.file
+    ? withBase(showreel.data.file)
+    : undefined;
+const nameWords = site.name.trim().split(/\s+/);
+const poster = await getImage({ src: img(site.hero_poster), width: 1920, format: 'webp' });
+---
+
+<Base current="inicio" nav={false}>
+  <header class="hero" slot="hero">
+    <video
+      class="hero-media"
+      src={withBase(site.hero_video)}
+      poster={poster.src}
+      autoplay
+      muted
+      loop
+      playsinline
+      preload="metadata"
+      aria-hidden="true"
+      data-hero-video></video>
+    <div class="shade"></div>
+    <Nav current="inicio" over />
+    <div class="hero-copy wrap">
+      <div>
+        <h1 class="name wide">
+          {nameWords.map((w, i) => (i < nameWords.length - 1 ? [w, <br />] : w))}
+        </h1>
+        <p class="role caps">{site.tagline}</p>
+      </div>
+      <div class="hero-side">
+        {
+          showreelUrl && (
+            <a class="cta side caps" href={showreelUrl} rel="noopener">
+              Ver showreel
+              <Icon name="right" />
+            </a>
+          )
+        }
+        <a class="cta caps" href="#trabajo">
+          Ver trabajos
+          <Icon name="down" />
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <section class="about wrap" aria-labelledby="sobre-mi">
+    <Image class="about-bg" src={img(site.about_background)} alt="" widths={[800, 1400, 2000]} sizes="100vw" />
+    <div class="about-in">
+      <h2 id="sobre-mi" class="eyebrow caps">Sobre mí</h2>
+      <p class="about-text">{site.bio_short}</p>
+      <a class="line-link caps" href={withBase('/sobre-mi/')}>
+        Leer más
+        <Icon name="right" />
+      </a>
+    </div>
+  </section>
+
+  {
+    (videoGroups.length > 0 || photoGroups.length > 0) && (
+      <section id="trabajo" class="work wrap" aria-labelledby="trabajo-t">
+        <div class="work-head">
+          <h2 id="trabajo-t" class="h2 wide">
+            Trabajo
+          </h2>
+          <span class="caps mute">Videos y fotografía</span>
+        </div>
+        <div class="tiles">
+          {videoGroups.length > 0 && (
+            <a class="tile" href={withBase('/videos/')}>
+              <Image src={img(site.videos_cover)} alt="" widths={[600, 900, 1400]} sizes="(max-width: 760px) 100vw, 50vw" />
+              <span class="tile-label">
+                <span class="tile-title wide">Videos</span>
+                <span class="tile-meta caps">
+                  {videoSummary(videoGroups)}
+                  <Icon name="right" />
+                </span>
+              </span>
+            </a>
+          )}
+          {photoGroups.length > 0 && (
+            <a class="tile" href={withBase(`/fotos/${photoGroups[0].slug}/`)}>
+              <Image src={img(site.photos_cover)} alt="" widths={[600, 900, 1400]} sizes="(max-width: 760px) 100vw, 50vw" />
+              <span class="tile-label">
+                <span class="tile-title wide">Fotos</span>
+                <span class="tile-meta caps">
+                  {albumsLabel(albumCount)}
+                  <Icon name="right" />
+                </span>
+              </span>
+            </a>
+          )}
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<script>
+  // Con "reducir movimiento" activado, el video del inicio queda quieto en su primer cuadro.
+  const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
+  if (video && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    video.removeAttribute('autoplay');
+    video.pause();
+  }
+</script>

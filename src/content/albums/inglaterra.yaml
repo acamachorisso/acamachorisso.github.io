@@ -1,0 +1,32 @@
+title: "Inglaterra"
+category: src/content/photo-categories/viajes.yaml
+description: "Capturadas en abril de 2022 en Londres, Oxford y Bath."
+cover: /src/assets/fotos/inglaterra/portada.jpg
+photos:
+  - /src/assets/fotos/inglaterra/ing-01.jpg
+  - /src/assets/fotos/inglaterra/ing-02.jpg
+  - /src/assets/fotos/inglaterra/ing-03.jpg
+  - /src/assets/fotos/inglaterra/ing-04.jpg
+  - /src/assets/fotos/inglaterra/ing-05.jpg
+  - /src/assets/fotos/inglaterra/ing-06.jpg
+  - /src/assets/fotos/inglaterra/ing-07.jpg
+  - /src/assets/fotos/inglaterra/ing-08.jpg
+  - /src/assets/fotos/inglaterra/ing-09.jpg
+  - /src/assets/fotos/inglaterra/ing-10.jpg
+  - /src/assets/fotos/inglaterra/ing-11.jpg
+  - /src/assets/fotos/inglaterra/ing-12.jpg
+  - /src/assets/fotos/inglaterra/ing-13.jpg
+  - /src/assets/fotos/inglaterra/ing-14.jpg
+  - /src/assets/fotos/inglaterra/ing-15.jpg
+  - /src/assets/fotos/inglaterra/ing-16.jpg
+  - /src/assets/fotos/inglaterra/ing-17.jpg
+  - /src/assets/fotos/inglaterra/ing-18.jpg
+  - /src/assets/fotos/inglaterra/ing-19.jpg
+  - /src/assets/fotos/inglaterra/ing-20.jpg
+  - /src/assets/fotos/inglaterra/ing-21.jpg
+  - /src/assets/fotos/inglaterra/ing-22.jpg
+  - /src/assets/fotos/inglaterra/ing-23.jpg
+  - /src/assets/fotos/inglaterra/ing-24.jpg
+  - /src/assets/fotos/inglaterra/ing-25.jpg
+order: 1
+hidden: false

@@ -1,0 +1,203 @@
+---
+// /fotos/<categoría>/ y /fotos/<álbum>/ salen de esta misma página: comparten la dirección /fotos/…
+// Si una categoría y un álbum se llamaran igual, getPhotoGroups() frena la publicación con un error claro.
+import type { GetStaticPaths } from 'astro';
+import { Image, getImage } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Icon from '../../components/Icon.astro';
+import Viewer from '../../components/Viewer.astro';
+import { albumsLabel, getPhotoGroups, getUnusedPhotos, photosLabel, type Album, type CategoryGroup } from '../../lib/content';
+import { withBase } from '../../lib/format';
+import { img } from '../../lib/media';
+
+type Props =
+  | { kind: 'category'; group: CategoryGroup; groups: CategoryGroup[] }
+  | { kind: 'album'; group: CategoryGroup; album: Album; prev?: { slug: string; title: string }; next?: { slug: string; title: string } };
+
+export const getStaticPaths = (async () => {
+  const groups = await getPhotoGroups();
+  const unused = await getUnusedPhotos();
+  if (unused.length) {
+    console.warn(
+      `\n[Fotos] ${unused.length} foto(s) en src/assets/fotos/ que ningún álbum usa. No se ven en la web pero ocupan lugar; ` +
+        `si no las vas a usar, borralas desde la biblioteca del editor:\n  ${unused.join('\n  ')}\n`,
+    );
+  }
+  return groups.flatMap((group) => {
+    const n = group.albums.length;
+    return [
+      { params: { slug: group.slug }, props: { kind: 'category' as const, group, groups } },
+      ...group.albums.map(({ album, slug }, i) => {
+        // Con dos álbumes, el anterior y el siguiente son el mismo: se muestra solo el siguiente.
+        const prev = n > 2 ? group.albums[(i - 1 + n) % n] : undefined;
+        const next = n > 1 ? group.albums[(i + 1) % n] : undefined;
+        return {
+          params: { slug },
+          props: {
+            kind: 'album' as const,
+            group,
+            album,
+            prev: prev && { slug: prev.slug, title: prev.album.data.title },
+            next: next && { slug: next.slug, title: next.album.data.title },
+          },
+        };
+      }),
+    ];
+  });
+}) satisfies GetStaticPaths;
+
+const props = Astro.props as Props;
+const { group } = props;
+const categoryTitle = group.category.data.title;
+
+// Álbumes en la grilla: de a dos grandes; si son impares, los tres últimos van más chicos (de a tres).
+const sizeOf = (i: number, n: number) => (n % 2 === 1 && n >= 3 && i >= n - 3 ? 'small' : 'big');
+
+// Fotos del álbum: miniatura para la grilla y versión grande para el visor.
+const photos =
+  props.kind === 'album'
+    ? await Promise.all(
+        props.album.data.photos.map(async (path, i, all) => {
+          const meta = img(path);
+          const full = await getImage({ src: meta, widths: [1280, 1920, 2560], format: 'webp', quality: 82 });
+          const largest = await getImage({ src: meta, width: Math.min(meta.width, 1920), format: 'webp', quality: 82 });
+          return {
+            meta,
+            alt: `${props.album.data.title}, foto ${i + 1} de ${all.length}`,
+            srcset: full.srcSet.attribute,
+            href: largest.src,
+          };
+        }),
+      )
+    : [];
+---
+
+{
+  props.kind === 'category' ? (
+    <Base
+      title={categoryTitle}
+      description={`Fotos de ${categoryTitle.toLowerCase()} de Agustín Camacho: ${props.group.albums.map((a) => a.album.data.title).join(', ')}.`}
+      image={group.albums[0].album.data.cover}
+      current="fotos"
+      currentSub={group.slug}>
+      <div class="page-head wrap">
+        <span class="caps mute">Fotos</span>
+        <div class="head-row">
+          <h1 class="title wide">{categoryTitle}</h1>
+          <span class="caps mute">
+            {albumsLabel(group.albums.length)} · {photosLabel(group.photoCount)}
+          </span>
+        </div>
+        {props.groups.length > 1 && (
+          <nav class="tabs caps" aria-label="Categorías de fotos">
+            {props.groups.map((g) => (
+              <a class="tab" href={withBase(`/fotos/${g.slug}/`)} aria-current={g.slug === group.slug ? 'page' : undefined}>
+                {g.category.data.title}
+              </a>
+            ))}
+          </nav>
+        )}
+      </div>
+      <ul class="albums wrap">
+        {group.albums.map(({ album, slug }, i) => (
+          <li class={sizeOf(i, group.albums.length)}>
+            <a class="alb" href={withBase(`/fotos/${slug}/`)}>
+              <span class="alb-img">
+                <Image
+                  src={img(album.data.cover)}
+                  alt=""
+                  widths={[480, 800, 1200]}
+                  sizes="(max-width: 760px) 100vw, 50vw"
+                  loading={i < 2 ? 'eager' : 'lazy'}
+                />
+                <span class="alb-open caps" aria-hidden="true">
+                  Ver álbum
+                  <Icon name="right" size={12} />
+                </span>
+              </span>
+              <span class="alb-row">
+                <span class="alb-title wide">{album.data.title}</span>
+                <span class="alb-meta caps">{photosLabel(album.data.photos.length)}</span>
+              </span>
+              {(album.data.description || album.data.kind) && (
+                <span class="alb-desc">{album.data.description ?? album.data.kind}</span>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </Base>
+  ) : (
+    <Base
+      title={props.album.data.title}
+      description={
+        props.album.data.description ??
+        `${props.album.data.title}: ${photosLabel(props.album.data.photos.length)} de Agustín Camacho (${categoryTitle}).`
+      }
+      image={props.album.data.cover}
+      current="fotos"
+      currentSub={group.slug}>
+      <div class="album-head wrap">
+        <a class="back caps" href={withBase(`/fotos/${group.slug}/`)}>
+          <Icon name="left" />
+          {categoryTitle}
+        </a>
+        <div class="head-row">
+          <h1 class="title wide">{props.album.data.title}</h1>
+          <span class="caps mute">
+            {[props.album.data.kind, photosLabel(props.album.data.photos.length)].filter(Boolean).join(' · ')}
+          </span>
+        </div>
+        {props.album.data.description && <p class="album-desc">{props.album.data.description}</p>}
+      </div>
+      <div class="wrap">
+        <ul class="masonry" data-viewer-group>
+          {photos.map((p, i) => (
+            <li>
+              <a
+                class="ph"
+                href={p.href}
+                data-viewer-item
+                data-kind="photo"
+                data-srcset={p.srcset}
+                data-alt={p.alt}
+                data-title={props.album.data.title}
+                aria-label={`Ver grande: ${p.alt}`}>
+                <Image
+                  src={p.meta}
+                  alt={p.alt}
+                  widths={[400, 700, 1000]}
+                  sizes="(max-width: 1000px) 50vw, 33vw"
+                  loading={i < 6 ? 'eager' : 'lazy'}
+                />
+              </a>
+            </li>
+          ))}
+        </ul>
+        {(props.prev || props.next) && (
+          <nav class="pager" aria-label="Otros álbumes">
+            {props.prev && (
+              <a class="prev" href={withBase(`/fotos/${props.prev.slug}/`)}>
+                <Icon name="left" size={18} />
+                <span>
+                  <span class="pg-label caps">Álbum anterior</span>
+                  <span class="pg-title wide">{props.prev.title}</span>
+                </span>
+              </a>
+            )}
+            {props.next && (
+              <a class="next" href={withBase(`/fotos/${props.next.slug}/`)}>
+                <span>
+                  <span class="pg-label caps">Álbum siguiente</span>
+                  <span class="pg-title wide">{props.next.title}</span>
+                </span>
+                <Icon name="right" size={18} />
+              </a>
+            )}
+          </nav>
+        )}
+      </div>
+      <Viewer />
+    </Base>
+  )
+}
