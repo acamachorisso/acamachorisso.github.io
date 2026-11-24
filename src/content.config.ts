@@ -41,17 +41,11 @@ const normalizePath = (v: string) => '/' + v.trim().replace(/\\/g, '/').replace(
 const imageBase = z
   .string()
   .transform(normalizePath)
-  .refine((v) => !/\.(heic|heif)$/i.test(v), {
-    error: 'Las fotos .HEIC del iPhone no se pueden usar en la web. Exportala como JPG y subila de nuevo.',
-  })
-  .refine((v) => v.startsWith('/src/assets/') && /\.(jpe?g|png|webp)$/i.test(v), {
-    error: 'La imagen tiene que estar en src/assets/ y ser .jpg, .png o .webp.',
-  })
-  .refine((v) => existsSync(join(process.cwd(), v)), {
-    error: 'No encuentro esa imagen. Revisá que no la hayas borrado o subila de nuevo.',
-  });
+  .refine((v) => !/\.(heic|heif)$/i.test(v), { error: 'Las fotos .HEIC del iPhone no se pueden usar en la web. Exportala como JPG y subila de nuevo.', abort: true })
+  .refine((v) => v.startsWith('/src/assets/') && /\.(jpe?g|png|webp)$/i.test(v), { error: 'La imagen tiene que estar en src/assets/ y ser .jpg, .png o .webp.', abort: true })
+  .refine((v) => existsSync(join(process.cwd(), v)), { error: 'No encuentro esa imagen. Revisá que no la hayas borrado o subila de nuevo.', abort: true });
 
-const image = (what: string) => z.preprocess(empty, z.string({ error: `Falta ${what}.` }).pipe(imageBase));
+const image = (what: string) => z.preprocess(empty, z.string({ error: `Falta ${what}.`, abort: true }).pipe(imageBase));
 const optionalImage = z.preprocess(empty, imageBase.optional());
 
 /** Un MP4 subido a public/videos/. Se aceptan "/videos/x.mp4", "videos/x.mp4" y "public/videos/x.mp4". */
@@ -59,21 +53,15 @@ const videoFile = (maxMb: number, tooBig: string) =>
   z
     .string()
     .transform((v) => normalizePath(v).replace(/^\/public\//, '/'))
-    .refine((v) => !/\.mov$/i.test(v), {
-      error: 'Los videos .MOV del celular no se ven en todos los navegadores. Exportalo como MP4 y subilo de nuevo.',
-    })
-    .refine((v) => v.startsWith('/videos/') && /\.mp4$/i.test(v), {
-      error: 'El video tiene que estar en la carpeta de videos y ser .mp4.',
-    })
-    .refine((v) => existsSync(join(process.cwd(), 'public', v)), {
-      error: 'No encuentro ese video. Revisá que no lo hayas borrado o subilo de nuevo.',
-    })
+    .refine((v) => !/\.mov$/i.test(v), { error: 'Los videos .MOV del celular no se ven en todos los navegadores. Exportalo como MP4 y subilo de nuevo.', abort: true })
+    .refine((v) => v.startsWith('/videos/') && /\.mp4$/i.test(v), { error: 'El video tiene que estar en la carpeta de videos y ser .mp4.', abort: true })
+    .refine((v) => existsSync(join(process.cwd(), 'public', v)), { error: 'No encuentro ese video. Revisá que no lo hayas borrado o subilo de nuevo.', abort: true })
     .refine(
       (v) => {
         const file = join(process.cwd(), 'public', v);
         return !existsSync(file) || statSync(file).size <= maxMb * 1024 * 1024;
       },
-      { error: tooBig },
+      { error: tooBig, abort: true },
     );
 
 /** Un link de YouTube en cualquier forma (watch, youtu.be, shorts, embed) o el ID solo → el ID. */

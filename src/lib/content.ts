@@ -54,15 +54,16 @@ export async function getPhotoGroups(): Promise<CategoryGroup[]> {
   const claim = (slug: string, what: string) => {
     const other = seen.get(slug);
     if (other) {
+      const first = other.charAt(0).toUpperCase() + other.slice(1);
       throw new Error(
-        `${other} y ${what} tendrían la misma dirección (/fotos/${slug}/). Cambiale el nombre de archivo a uno de los dos.`,
+        `${first} y ${what} tendrían la misma dirección (/fotos/${slug}/). Cambiale el nombre a uno de los dos.`,
       );
     }
     seen.set(slug, what);
   };
   for (const g of groups) {
-    claim(g.slug, `La categoría "${g.category.data.title}"`);
-    for (const { album, slug } of g.albums) claim(slug, `El álbum "${album.data.title}"`);
+    claim(g.slug, `la categoría "${g.category.data.title}"`);
+    for (const { album, slug } of g.albums) claim(slug, `el álbum "${album.data.title}"`);
   }
   return groups;
 }
