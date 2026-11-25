@@ -243,6 +243,18 @@ button {
   font-size: clamp(40px, 5.4vw, 84px);
   line-height: 0.88;
 }
+/* Categorías de Fotos: la etiqueta "Fotos" un poco más grande y pegada al título (14 px en vez de 32). */
+.cat-head .kicker {
+  font-size: 14px;
+  margin-bottom: -18px;
+}
+/* En el celular el contador va siempre abajo del título, sea cual sea el largo del nombre. */
+@media (max-width: 560px) {
+  .cat-head .head-row {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
 .h2 {
   margin: 0;
   font-size: clamp(24px, 2.4vw, 34px);

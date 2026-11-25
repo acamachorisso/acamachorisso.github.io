@@ -82,10 +82,10 @@ const photos =
       image={group.albums[0].album.data.cover}
       current="fotos"
       currentSub={group.slug}>
-      <div class="page-head wrap">
-        <span class="caps mute">Fotos</span>
+      <div class="page-head wrap cat-head">
+        <span class="kicker caps mute">Fotos</span>
         <div class="head-row">
-          <h1 class="title wide">{categoryTitle}</h1>
+          <h1 class="title title-md wide">{categoryTitle}</h1>
           <span class="caps mute">
             {albumsLabel(group.albums.length)} · {photosLabel(group.photoCount)}
           </span>
