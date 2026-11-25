@@ -220,7 +220,6 @@ const site = defineCollection({
     portrait: image('el retrato de Sobre mí'),
     bio_lead: text('la primera frase de Sobre mí'),
     bio: text('la bio'),
-    facts: list(z.object({ label: text('la etiqueta del dato'), text: text('el texto del dato') })),
     contact_intro: optionalText,
     contact_image: optionalImage,
     email: z.string({ error: 'Falta el email.' }).trim().pipe(z.email({ error: 'El email no es válido.' })),

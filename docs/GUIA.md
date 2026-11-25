@@ -145,7 +145,7 @@ El campo **Datos generales → Showreel** no es un video ni un link: dice cuál 
 Ahí están los textos y las fotos fijas de la web:
 
 - Nombre y frase ("Fotógrafo — Filmmaker").
-- **Sobre mí corto** (inicio), **primera frase**, **bio** y **ficha** (Sobre mí). En la bio, un párrafo nuevo es una línea en blanco.
+- **Sobre mí corto** (inicio), **primera frase** y **bio** (página Sobre mí). En la bio, un párrafo nuevo es una línea en blanco.
 - Fotos del inicio, retrato, foto de Contacto y logo. La vista previa del logo parece un cuadro vacío porque es blanco sobre blanco: está bien así.
 - Email y redes (se muestran en Contacto y en el pie).
 - **Imagen al compartir el link**: la que aparece cuando alguien pega el link de tu web en WhatsApp o Instagram.

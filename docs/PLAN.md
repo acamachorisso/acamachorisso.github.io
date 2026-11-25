@@ -152,7 +152,7 @@ Una sección o subsección sin contenido no aparece en el menú ni genera págin
 | Fotos | `/fotos/` | Redirige a la primera categoría con álbumes |
 | Categoría | `/fotos/<categoría>/` (hoy `viajes`, `trabajos`, `personales`) | Álbumes con portada, cantidad de fotos y descripción |
 | Álbum | `/fotos/<álbum>/` | Grilla de fotos, visor a pantalla completa (teclado y gestos), álbum anterior y siguiente |
-| Sobre mí | `/sobre-mi/` | Retrato, bio completa y ficha |
+| Sobre mí | `/sobre-mi/` | Retrato y bio completa, centrada a la altura del retrato (la ficha Hace/Para/Proceso/Formación se sacó el 25/11) |
 | Contacto | `/contacto/` | Formulario, email y redes |
 | Gracias | `/contacto/gracias/` | Confirmación cuando el formulario se envía sin JavaScript |
 | 404 | cualquier otra | Mensaje y link al inicio |

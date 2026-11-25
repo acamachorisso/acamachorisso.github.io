@@ -23,21 +23,9 @@ const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
     </div>
     <div class="text">
       <span class="caps mute">{site.tagline}</span>
-      <h1 class="title wide">Sobre mí</h1>
-      <p class="lead">{site.bio_lead}</p>
+      <h1 class="title title-md wide">Sobre mí</h1>
+      <p class="body">{site.bio_lead}</p>
       {paragraphs(site.bio).map((p) => <p class="body" set:html={p} />)}
-      {
-        site.facts.length > 0 && (
-          <dl class="facts">
-            {site.facts.map((f) => (
-              <>
-                <dt class="caps">{f.label}</dt>
-                <dd>{f.text}</dd>
-              </>
-            ))}
-          </dl>
-        )
-      }
       <div class="ctas caps">
         <a class="btn" href={withBase('/contacto/')}>
           Escribime
