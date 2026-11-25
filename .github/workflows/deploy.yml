@@ -1,10 +1,10 @@
 name: Build and deploy
 
 # En cada push se valida todo (tipos, contenido, build y links).
-# Solo main se publica en GitHub Pages; develop se valida y no se publica.
+# Cada push a main se valida y, si pasa, se publica en GitHub Pages.
 on:
   push:
-    branches: [main, develop]
+    branches: [main]
   workflow_dispatch:
 
 permissions:

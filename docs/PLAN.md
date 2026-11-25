@@ -25,7 +25,7 @@
 3. Clave de Web3Forms creada con acamacho.contacto@gmail.com. Está en `src/config.ts` (ver Formulario); el `.env` ya no se usa.
 4. Repo clonado en `C:\Users\Usuario\Documents\juani\agustin`.
 5. Revisado el material del canvas (24/11): las 196 fotos, los 7 videos cortos, el clip del inicio, los posters, el logo (PNG de 2000 × 2000) y los 7 links de YouTube están completos. En el canvas algunas imágenes no se ven porque usan carga diferida (`loading="lazy"`), pero los archivos están bien.
-6. **Etapas 1 a 6 hechas en `develop`, sin push (24/11).** `npm test` pasa: tipos, esquemas, 21 páginas y 1592 links internos. Revisado con capturas a 1440 y 390 px contra el canvas. Probado con Edge: visor de fotos (clic, flechas, Escape y foco), YouTube y MP4 en el visor, y los errores de contenido (foto que falta, categoría que no existe, YouTube y MP4 juntos, .MOV, .HEIC, link de YouTube roto, categoría y álbum con el mismo nombre, foto sin usar). Lighthouse en celular: rendimiento de 92 a 100 (inicio 96), 100 en accesibilidad, buenas prácticas y SEO; en compu, 100.
+6. **Etapas 1 a 6 hechas y publicadas en `main` (24/11).** `npm test` pasa: tipos, esquemas, 21 páginas y 1592 links internos. Revisado con capturas a 1440 y 390 px contra el canvas. Probado con Edge: visor de fotos (clic, flechas, Escape y foco), YouTube y MP4 en el visor, y los errores de contenido (foto que falta, categoría que no existe, YouTube y MP4 juntos, .MOV, .HEIC, link de YouTube roto, categoría y álbum con el mismo nombre, foto sin usar). Lighthouse en celular: rendimiento de 92 a 100 (inicio 96), 100 en accesibilidad, buenas prácticas y SEO; en compu, 100.
 
 ## Pendientes
 
@@ -36,8 +36,7 @@
 | Fotos en mejor calidad | Agustín, más adelante | Se arranca con las del Wix (191 de 196 están a 1500 px). Las reemplaza él desde el editor; la guía explica cómo |
 | Bio vigente y trabajos nuevos o a sacar | Agustín | Preguntado |
 | ¿Web en inglés? | Agustín | Preguntado. Si dice que sí, cambia la estructura y se habla antes de publicar |
-| Push y primera publicación | Juani decide | El repo remoto está vacío. Conviene subir `main` primero, así queda como rama por defecto: el entorno `github-pages` solo deja publicar desde esa rama |
-| Probar Pages CMS | Juani, con `develop` subido | Subir varias fotos juntas, reordenarlas arrastrando, borrar una, el selector de categoría y sección, y subir un MP4. Si la subida múltiple falla, ver Riesgos |
+| Probar Pages CMS | Juani, con la web online | Subir varias fotos juntas, reordenarlas arrastrando, borrar una, el selector de categoría y sección, y subir un MP4. Si la subida múltiple falla, ver Riesgos |
 | Mensaje de prueba del formulario | Juani, con la web online | Con y sin JavaScript, y uno con el honeypot completo (no tiene que llegar). Llega a acamacho.contacto@gmail.com |
 | Celulares reales y vista previa del link | Juani, con la web online | iPhone y Android: video del inicio, videos con sonido, visor con el dedo. Pegar el link en WhatsApp |
 | Capturas para la guía | Juani, después de probar Pages CMS | `docs/GUIA.md` está escrita sin capturas |
@@ -49,7 +48,7 @@
 | Stack | Astro 7.4 (salida estática) + Pages CMS como editor. Igual que la web de Pablo |
 | Repo | `acamachorisso/acamachorisso.github.io`, en la cuenta de Agustín. Juani es colaborador |
 | Dirección | https://acamachorisso.github.io. Sin dominio propio por ahora; se puede sumar después |
-| Ramas | Sin pull requests. `develop` se valida y no se publica; `main` es lo que está online |
+| Ramas | Sin pull requests. Desde el 24/11 se trabaja directo en `main`, que es lo que está online (antes había un `develop` que solo validaba) |
 | Contacto | Email acamacho.contacto@gmail.com, sin teléfono. Redes: Instagram, YouTube y TikTok (@acamachorisso) |
 | Formulario | Web3Forms (gratis hasta 250 mensajes por mes). Campos: Nombre (obligatorio), Apellido, Email (obligatorio), Propuesta |
 | Categorías editables | Agustín puede crear, renombrar, ordenar u ocultar desde el editor las categorías de Fotos (hoy Viajes, Trabajos y Personales) y las secciones de Videos (hoy Proyectos y Videos cortos), sin tocar código. El menú, el inicio y los contadores se arman solos |
@@ -211,6 +210,6 @@ Son unas 33 horas en total. Con Claude Code, el tiempo de Juani se estima en 13 
 1. Antes de cada etapa, Claude dice qué archivos va a crear o cambiar, y arranca con el OK de Juani.
 2. Al terminar, corre las pruebas automáticas y muestra el resultado tal cual, aunque falle.
 3. Juani lo mira con `npm run dev` y lo compara con el canvas.
-4. Con el OK, commit a `develop` y push: GitHub Actions valida. Para publicar, se pasa `develop` a `main`.
+4. Con el OK, `npm test`, commit a `main` y push: GitHub Actions valida y publica en 1 o 2 minutos.
 
 Claude no hace push ni cambios en la cuenta de Agustín sin que se lo pidan.

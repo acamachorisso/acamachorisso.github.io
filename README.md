@@ -15,7 +15,7 @@ npm run dev      # http://localhost:4321
 npm test         # tipos, esquemas del contenido, build y links internos
 ```
 
-`npm test` es lo mismo que corre GitHub Actions en cada push. `develop` se valida y no se publica; `main` se publica en GitHub Pages.
+`npm test` es lo mismo que corre GitHub Actions en cada push a `main`, que se publica en GitHub Pages.
 
 ## Dónde está cada cosa
 

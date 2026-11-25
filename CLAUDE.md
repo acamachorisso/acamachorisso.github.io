@@ -8,7 +8,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 
 - Diseño: **A · Reel**, la página "Agustín Camacho" del canvas https://claude.ai/artifact/8gkBu9WP3M4iE2VqfYe1WR, con los cambios del 24/11 anotados en el plan (inicio).
 - Repo: `origin` es `acamachorisso/acamachorisso.github.io` (Juani es colaborador).
-- Construido en `develop` el 24/11: etapas 1 a 6 en código. Falta lo que necesita la cuenta de Agustín o un navegador real (ver "Pendientes" en el plan).
+- Online en https://acamachorisso.github.io desde el 24/11 (etapas 1 a 6). Falta lo que necesita la cuenta de Agustín o un navegador real (ver "Pendientes" en el plan).
 
 ## Stack
 
@@ -21,8 +21,8 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 
 ## Reglas que no se discuten
 
-- Sin pull requests. Se trabaja en `develop` (se valida, no se publica); `main` es lo que está online. `npm test` (tipos, esquemas, build y links) tiene que pasar.
-- Agustín edita directo en `main` desde Pages CMS. Antes de trabajar en `develop`, traé lo último: `git fetch && git merge origin/main`.
+- Sin pull requests ni `develop`: desde el 24/11 se trabaja directo en `main`, que es lo que está online. Cada push publica, así que `npm test` (tipos, esquemas, build y links) tiene que pasar antes.
+- Agustín también edita `main` desde Pages CMS. Antes de trabajar, traé lo último: `git pull --rebase`.
 - Antes de cada push, Juani revisa con `npm run dev`. No hagas push ni toques la cuenta de GitHub de Agustín sin que te lo pidan.
 - Categorías de Fotos y secciones de Videos son contenido, no código: el menú, el inicio y los contadores se arman solos. Una categoría o sección sin contenido no aparece.
 - Categorías y álbumes comparten `/fotos/<nombre>/`: si coinciden, el build frena con un error que dice cuál cambiar.
