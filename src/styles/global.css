@@ -979,7 +979,8 @@ a.short:focus-visible img {
 }
 .portrait {
   position: relative;
-  aspect-ratio: 4 / 5;
+  /* Entre el 4:5 de antes y un cuadrado. */
+  aspect-ratio: 7 / 8;
   overflow: hidden;
   background: var(--panel);
 }
@@ -998,8 +999,8 @@ a.short:focus-visible img {
 }
 .body {
   margin: 0;
-  /* Espaciado entre letras de -0.05em en todos los textos, como en el Wix. */
-  letter-spacing: -0.05em;
+  /* El resto de la web va en -0.05em; la bio, apenas más abierta para que se lea mejor de corrido. */
+  letter-spacing: -0.03em;
   /* Mismo tamaño que el texto de Sobre mí en el inicio. */
   font-size: clamp(16px, 1.25vw, 18px);
   line-height: 1.65;
@@ -1029,7 +1030,7 @@ a.short:focus-visible img {
 .left {
   display: flex;
   flex-direction: column;
-  gap: 32px;
+  gap: 24px;
   min-width: 0;
 }
 .intro {

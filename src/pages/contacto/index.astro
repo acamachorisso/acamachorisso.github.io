@@ -9,6 +9,8 @@ import { maybeImg } from '../../lib/media';
 
 const site = await getSite();
 const picture = maybeImg(site.contact_image);
+// Abajo de la foto va solo Instagram (el email y las otras redes están en el pie).
+const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
 // Sin JavaScript, Web3Forms recibe el formulario y vuelve a esta dirección.
 const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
 ---
@@ -19,7 +21,7 @@ const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
       <h1 class="title wide">Contacto</h1>
       {site.contact_intro && <p class="intro">{site.contact_intro}</p>}
 
-      <form class="form" action="https://api.web3forms.com/submit" method="POST" data-contact-form>
+      <form class="form" action="https://api.web3forms.com/submit" method="POST" data-contact-form data-email={site.email}>
         <input type="hidden" name="access_key" value={WEB3FORMS_KEY} />
         <input type="hidden" name="subject" value="Nuevo mensaje desde la web" />
         <input type="hidden" name="from_name" value={`Web de ${site.name}`} />
@@ -39,8 +41,8 @@ const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
           <input id="c-email" name="email" type="email" autocomplete="email" required maxlength="200" />
         </div>
         <div class="field full">
-          <label class="caps" for="c-propuesta">Propuesta</label>
-          <textarea id="c-propuesta" name="Propuesta" maxlength="5000"></textarea>
+          <label class="caps" for="c-propuesta">Propuesta *</label>
+          <textarea id="c-propuesta" name="Propuesta" required maxlength="5000"></textarea>
         </div>
         <p class="form-error" role="alert" data-form-error hidden></p>
         <button class="btn solid send caps" type="submit">
@@ -64,22 +66,17 @@ const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
           </div>
         )
       }
-      <ul class="links caps">
-        <li>
-          <a href={`mailto:${site.email}`}>
-            Email <small>{site.email}</small>
-          </a>
-        </li>
-        {
-          site.links.map((l) => (
+      {
+        instagram && (
+          <ul class="links caps">
             <li>
-              <a href={l.url} rel="noopener">
-                {l.label} <small>{handle(l.url)}</small>
+              <a href={instagram.url} rel="noopener">
+                {instagram.label} <small>{handle(instagram.url)}</small>
               </a>
             </li>
-          ))
-        }
-      </ul>
+          </ul>
+        )
+      }
     </aside>
   </div>
 </Base>

@@ -2,12 +2,11 @@
 import { Image } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { getSite, getVideoGroups } from '../lib/content';
+import { getSite } from '../lib/content';
 import { paragraphs, withBase } from '../lib/format';
 import { img } from '../lib/media';
 
-const [site, videos] = await Promise.all([getSite(), getVideoGroups()]);
-const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
+const site = await getSite();
 ---
 
 <Base title="Sobre mí" description={site.bio_lead} image={site.portrait} current="sobre-mi">
@@ -22,7 +21,6 @@ const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
       />
     </div>
     <div class="text">
-      <span class="caps mute">{site.tagline}</span>
       <h1 class="title title-md wide">Sobre mí</h1>
       <p class="body">{site.bio_lead}</p>
       {paragraphs(site.bio).map((p) => <p class="body" set:html={p} />)}
@@ -31,14 +29,6 @@ const instagram = site.links.find((l) => /instagram\.com/.test(l.url));
           Escribime
           <Icon name="right" />
         </a>
-        {videos.length > 0 && <a class="btn ghost" href={withBase('/videos/')}>Ver videos</a>}
-        {
-          instagram && (
-            <a class="btn ghost" href={instagram.url} rel="noopener">
-              Instagram
-            </a>
-          )
-        }
       </div>
     </div>
   </div>

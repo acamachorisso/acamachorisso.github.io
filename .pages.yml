@@ -283,7 +283,7 @@ content:
         label: Retrato (Sobre mí)
         type: image
         required: true
-        description: Vertical. Se recorta a 4:5 desde el centro.
+        description: Vertical. Se recorta a 7:8 desde el centro.
         options:
           media: imagenes
       - name: bio_lead
@@ -314,7 +314,7 @@ content:
         label: Redes
         type: object
         list: true
-        description: Salen en Contacto y en el pie, en este orden.
+        description: Salen en el pie, en este orden. En Contacto sale solo Instagram.
         fields:
           - name: label
             label: Nombre
