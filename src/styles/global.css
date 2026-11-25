@@ -238,6 +238,11 @@ button {
   /* La primera letra grande tiene margen propio: se corre para que quede alineada con el texto chico. */
   margin-left: -0.035em;
 }
+/* Videos: mismo tamaño que "Videos" en el cuadro del inicio, para que no le gane a las secciones de abajo. */
+.title-md {
+  font-size: clamp(40px, 5.4vw, 84px);
+  line-height: 0.88;
+}
 .h2 {
   margin: 0;
   font-size: clamp(24px, 2.4vw, 34px);
