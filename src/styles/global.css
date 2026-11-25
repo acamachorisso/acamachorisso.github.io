@@ -1030,7 +1030,7 @@ a.short:focus-visible img {
 .left {
   display: flex;
   flex-direction: column;
-  gap: 40px;
+  gap: 64px;
   min-width: 0;
 }
 .intro {
@@ -1189,7 +1189,7 @@ a.short:focus-visible img {
   display: grid;
   grid-template-columns: 2fr repeat(3, minmax(0, 1fr));
   gap: 32px;
-  padding-block: 64px 40px;
+  padding-block: 64px;
   border-top: 1px solid var(--line);
 }
 .foot h2 {
@@ -1208,10 +1208,44 @@ a.short:focus-visible img {
 .foot ul a {
   overflow-wrap: break-word;
 }
-.foot-brand {
+.foot-brand,
+.foot-id {
   display: flex;
   flex-direction: column;
   gap: 14px;
+}
+.foot-brand .copy {
+  margin: 0;
+}
+/* En la compu, todas las columnas comparten las filas (título + un renglón por link),
+   así el copyright queda a la altura exacta de TikTok, el último link de Redes. */
+@media (min-width: 761px) {
+  .foot {
+    row-gap: 10px;
+  }
+  .foot > div {
+    grid-row: 1 / span var(--rows);
+    display: grid;
+    grid-template-rows: subgrid;
+    align-content: start;
+  }
+  .foot ul {
+    display: contents;
+  }
+  .foot h2 {
+    margin-bottom: 6px;
+  }
+  .foot-id {
+    grid-row: 1 / var(--copy-row);
+  }
+  /* Copyright y links alineados por la línea base del texto, aunque tengan distinto tamaño. */
+  .foot li,
+  .foot-brand .copy {
+    align-self: baseline;
+  }
+  .foot-brand .copy {
+    grid-row: var(--copy-row);
+  }
 }
 .foot-name {
   font-size: 22px;
@@ -1223,13 +1257,6 @@ a.short:focus-visible img {
   font-size: 15px;
 }
 .copy {
-  grid-column: 1 / -1;
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding-top: 28px;
-  border-top: 1px solid var(--line);
   color: var(--mute);
   font-size: 13px;
 }

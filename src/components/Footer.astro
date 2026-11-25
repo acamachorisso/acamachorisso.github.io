@@ -9,12 +9,19 @@ const { current } = Astro.props;
 const [site, nav] = await Promise.all([getSite(), getNav()]);
 const pages = nav.filter((item) => item.key !== current && item.key !== 'contacto');
 const year = new Date().getFullYear();
+// En la compu, las columnas comparten filas (título + un renglón por link) y el copyright va
+// en la fila del último link de Redes (TikTok), aunque Páginas tenga más links.
+const rows = 1 + Math.max(2, site.links.length, pages.length);
+const copyRow = 1 + (site.links.length || 2);
 ---
 
-<footer class="foot wrap">
+<footer class="foot wrap" style={`--rows: ${rows}; --copy-row: ${copyRow}`}>
   <div class="foot-brand">
-    <p class="foot-name wide">{site.name}</p>
-    <p class="foot-sub">{[site.tagline, site.location].filter(Boolean).join(' · ')}</p>
+    <div class="foot-id">
+      <p class="foot-name wide">{site.name}</p>
+      <p class="foot-sub">{[site.tagline, site.location].filter(Boolean).join(' · ')}</p>
+    </div>
+    <p class="copy">© {year} {site.name}</p>
   </div>
   <div>
     <h2 class="caps">Contacto</h2>
@@ -34,7 +41,7 @@ const year = new Date().getFullYear();
         <ul>
           {site.links.map((l) => (
             <li>
-              <a href={l.url} rel="noopener">
+              <a href={l.url} target="_blank" rel="noopener noreferrer">
                 {l.label}
               </a>
             </li>
@@ -55,5 +62,4 @@ const year = new Date().getFullYear();
       }
     </ul>
   </div>
-  <div class="copy"><span>© {year} {site.name}</span><span>Fotografía y video</span></div>
 </footer>

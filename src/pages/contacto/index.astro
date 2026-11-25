@@ -70,7 +70,7 @@ const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
         instagram && (
           <ul class="links caps">
             <li>
-              <a href={instagram.url} rel="noopener">
+              <a href={instagram.url} target="_blank" rel="noopener noreferrer">
                 {instagram.label} <small>{handle(instagram.url)}</small>
               </a>
             </li>
