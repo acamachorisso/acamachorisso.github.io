@@ -36,7 +36,7 @@
 | Fotos en mejor calidad | Agustín, más adelante | Se arranca con las del Wix (191 de 196 están a 1500 px). Las reemplaza él desde el editor; la guía explica cómo |
 | Bio vigente y trabajos nuevos o a sacar | Agustín | Preguntado |
 | ¿Web en inglés? | Agustín | Preguntado. Si dice que sí, cambia la estructura y se habla antes de publicar |
-| Probar Pages CMS | Juani, con la web online | Subir varias fotos juntas, reordenarlas arrastrando, borrar una, el selector de categoría y sección, y subir un MP4. Si la subida múltiple falla, ver Riesgos |
+| Probar Pages CMS | Juani, con la web online | Subir varias fotos juntas, reordenarlas arrastrando, borrar una, ordenar álbumes y videos arrastrándolos dentro de una categoría o sección, y subir un MP4. Si la subida múltiple falla, ver Riesgos |
 | Mensaje de prueba del formulario | Juani, con la web online | Con y sin JavaScript, y uno con el honeypot completo (no tiene que llegar). Llega a acamacho.contacto@gmail.com |
 | Celulares reales y vista previa del link | Juani, con la web online | iPhone y Android: video del inicio, videos con sonido, visor con el dedo. Pegar el link en WhatsApp |
 | Capturas para la guía | Juani, después de probar Pages CMS | `docs/GUIA.md` está escrita sin capturas |
@@ -116,28 +116,28 @@ acamachorisso.github.io/
 
 ## Modelo de contenido
 
-**Categorías de Fotos** (`src/content/photo-categories/`): `title` (Viajes, Trabajos, Personales…), `order` (posición en el menú y en el inicio), `hidden`. El nombre del archivo es la dirección: `viajes.yaml` → `/fotos/viajes/`.
+**Categorías de Fotos** (`src/content/photo-categories/`): `title` (Viajes, Trabajos, Personales…), `order` (posición en el menú y en el inicio), `albums` (sus álbumes, en el orden en que se ven; en el editor se arrastran), `hidden`. El nombre del archivo es la dirección: `viajes.yaml` → `/fotos/viajes/`.
+
+Desde el 25/11 el orden y la pertenencia de los álbumes viven en la categoría, y los de los videos en la sección: Pages CMS no deja arrastrar los archivos de una colección, pero sí los ítems de una lista. Un álbum o video va en una sola lista (si está en dos, la publicación se frena). Si no está en ninguna, no se ve, y el log de la publicación lo avisa. Los ítems de una lista que ya no existen, vacíos o repetidos se ignoran.
 
 **Álbumes** (`src/content/albums/`)
 
 | Campo | Obligatorio | Uso |
 | --- | --- | --- |
 | `title` | Sí | Nombre del álbum, por ejemplo "Inglaterra" |
-| `category` | Sí | Categoría de Fotos (selector con las que existen) |
 | `kind` | No | Etiqueta corta: Evento, Producto, Backstage… |
 | `description` | No | Una o dos líneas, por ejemplo "Capturadas en abril de 2022 en Londres, Oxford y Bath." |
 | `cover` | Sí | Foto de portada |
 | `photos` | Sí | Lista de fotos en el orden en que se muestran. En el editor se suben varias a la vez, se reordenan arrastrando y se sacan con un botón |
-| `order` | No | Posición dentro de su subsección |
 | `hidden` | No | Oculta el álbum sin borrarlo |
 
-**Secciones de Videos** (`src/content/video-sections/`): `title` (Proyectos, Videos cortos…), `format` (Horizontal: grilla 16:9, como Proyectos; Vertical: carrusel 9:16, como Videos cortos), `order`, `hidden`.
+**Secciones de Videos** (`src/content/video-sections/`): `title` (Proyectos, Videos cortos…), `format` (Horizontal: grilla 16:9, como Proyectos; Vertical: carrusel 9:16, como Videos cortos), `order`, `videos` (sus videos, en orden; los "Próximamente" se muestran al final), `hidden`.
 
-**Videos** (`src/content/videos/`): `title`, `section` (selector con las que existen), `type` (etiqueta libre: Videoclip, Publicidad, Cortometraje, Reel…), `youtube` (link o ID; se guarda el ID) **o** `file` (MP4), uno de los dos, `poster` (obligatorio para MP4; con YouTube, si falta se usa su miniatura), `soon` (Próximamente: se muestra sin link y sin `youtube` ni `file`), `order`, `hidden`. La duración de los MP4 se calcula al compilar.
+**Videos** (`src/content/videos/`): `title`, `type` (etiqueta libre: Videoclip, Publicidad, Cortometraje, Reel…), `youtube` (link o ID; se guarda el ID) **o** `file` (MP4), uno de los dos, `poster` (obligatorio para MP4; con YouTube, si falta se usa su miniatura), `soon` (Próximamente: se muestra sin link y sin `youtube` ni `file`), `hidden`. La duración de los MP4 se calcula al compilar.
 
 Sacar una foto de la lista la quita de la web, pero el archivo sigue en el repo ocupando lugar. Al compilar, un aviso (no un error) lista las fotos que están en la carpeta de un álbum y no se usan, y la guía explica cómo borrarlas de la biblioteca de archivos del editor.
 
-Si un álbum o un video apunta a una categoría o sección que no existe, la publicación se frena con un error que dice cuál. Lo mismo si una categoría y un álbum tienen el mismo nombre de archivo, porque comparten la dirección `/fotos/…`.
+Si una categoría y un álbum tienen el mismo nombre de archivo, la publicación se frena con un error que dice cuál cambiar, porque comparten la dirección `/fotos/…`.
 
 **Datos generales** (`src/data/site.yaml`): `name`, `tagline` ("Fotógrafo — Filmmaker"), `location`, `bio_short` (inicio), `bio` (Sobre mí, admite párrafos), `facts` (pares etiqueta y texto de Sobre mí), `email`, `links` (etiqueta y URL), `hero_video` y `hero_poster`, `portrait` y `about_background`.
 

@@ -1,7 +1,5 @@
 title: "Loot x Falke 2"
-section: src/content/video-sections/videos-cortos.yaml
 file: /videos/loot-x-falke-2.mp4
 poster: /src/assets/videos/loot-x-falke-2.jpg
 soon: false
-order: 3
 hidden: false

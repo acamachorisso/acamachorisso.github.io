@@ -35,6 +35,16 @@ const list = <T extends z.ZodType>(item: T) =>
  */
 const fileId = (v: unknown) => (typeof v === 'string' ? v.trim().replace(/^.*\//, '').replace(/\.ya?ml$/, '') : empty(v));
 
+/**
+ * Una lista ordenada de álbumes o videos (los que eligió Agustín en una categoría o sección, arrastrados en orden).
+ * Queda como lista de nombres de archivo; las filas vacías (un "Add an item" sin elegir nada) se ignoran.
+ * Si un álbum se borró pero sigue en la lista, se ignora: ver src/lib/content.ts.
+ */
+const entryList = z.preprocess(
+  (v) => (v == null || v === '' ? [] : Array.isArray(v) ? v : [v]).map(fileId).filter((id) => typeof id === 'string' && id !== ''),
+  z.array(z.string()),
+);
+
 /** "/src/assets/x.jpg", "src/assets/x.jpg" → "/src/assets/x.jpg". */
 const normalizePath = (v: string) => '/' + v.trim().replace(/\\/g, '/').replace(/^\/+/, '');
 
@@ -92,6 +102,8 @@ const photoCategories = defineCollection({
   schema: z.object({
     title: text('el nombre de la categoría'),
     order,
+    /** Los álbumes de la categoría, en el orden en que se ven. */
+    albums: entryList,
     hidden: flag,
   }),
 });
@@ -100,12 +112,10 @@ const albums = defineCollection({
   loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/albums' }),
   schema: z.object({
     title: text('el nombre del álbum'),
-    category: z.preprocess(fileId, reference('photoCategories')),
     kind: optionalText,
     description: optionalText,
     cover: image('la portada'),
     photos: list(image('una foto')).refine((v) => v.length > 0, { error: 'El álbum no tiene fotos. Subí al menos una.' }),
-    order,
     hidden: flag,
   }),
 });
@@ -121,6 +131,8 @@ const videoSections = defineCollection({
       z.enum(['horizontal', 'vertical'], { error: 'El formato tiene que ser Horizontal o Vertical.' }),
     ),
     order,
+    /** Los videos de la sección, en el orden en que se ven. */
+    videos: entryList,
     hidden: flag,
   }),
 });
@@ -130,7 +142,6 @@ const videos = defineCollection({
   schema: z
     .object({
       title: text('el título del video'),
-      section: z.preprocess(fileId, reference('videoSections')),
       type: optionalText,
       youtube,
       file: z.preprocess(
@@ -142,7 +153,6 @@ const videos = defineCollection({
       ),
       poster: optionalImage,
       soon: flag,
-      order,
       hidden: flag,
     })
     .refine((v) => !(v.youtube && v.file), {

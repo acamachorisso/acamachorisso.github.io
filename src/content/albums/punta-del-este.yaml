@@ -1,5 +1,4 @@
 title: "Punta del Este"
-category: src/content/photo-categories/personales.yaml
 cover: /src/assets/fotos/punta-del-este/portada.jpg
 photos:
   - /src/assets/fotos/punta-del-este/pde-01.jpg
@@ -14,5 +13,4 @@ photos:
   - /src/assets/fotos/punta-del-este/pde-10.jpg
   - /src/assets/fotos/punta-del-este/pde-11.jpg
   - /src/assets/fotos/punta-del-este/pde-12.jpg
-order: 3
 hidden: false

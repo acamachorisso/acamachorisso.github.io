@@ -1,3 +1,8 @@
 title: "Personales"
 order: 3
+albums:
+  - src/content/albums/rodaje-porsche.yaml
+  - src/content/albums/campo.yaml
+  - src/content/albums/punta-del-este.yaml
+  - src/content/albums/macro.yaml
 hidden: false

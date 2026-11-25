@@ -1,7 +1,5 @@
 title: "Showreel"
-section: src/content/video-sections/proyectos.yaml
 type: "Reel"
 poster: /src/assets/videos/showreel.jpg
 soon: true
-order: 8
 hidden: false

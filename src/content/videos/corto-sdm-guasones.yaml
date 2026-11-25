@@ -1,7 +1,5 @@
 title: "SDM (Guasones)"
-section: src/content/video-sections/videos-cortos.yaml
 file: /videos/sdm-guasones.mp4
 poster: /src/assets/videos/sdm-guasones.jpg
 soon: false
-order: 5
 hidden: false

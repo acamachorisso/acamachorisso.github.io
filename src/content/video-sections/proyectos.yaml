@@ -1,4 +1,14 @@
 title: "Proyectos"
 format: horizontal
 order: 1
+videos:
+  - src/content/videos/be-like-me.yaml
+  - src/content/videos/dvd.yaml
+  - src/content/videos/cartera.yaml
+  - src/content/videos/loot-ss-1.yaml
+  - src/content/videos/idwg.yaml
+  - src/content/videos/save-me.yaml
+  - src/content/videos/sonidos.yaml
+  - src/content/videos/showreel.yaml
+  - src/content/videos/porsche.yaml
 hidden: false

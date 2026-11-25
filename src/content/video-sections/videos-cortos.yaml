@@ -1,4 +1,12 @@
 title: "Videos cortos"
 format: vertical
 order: 2
+videos:
+  - src/content/videos/corto-tbv.yaml
+  - src/content/videos/corto-loot-x-falke.yaml
+  - src/content/videos/corto-loot-x-falke-2.yaml
+  - src/content/videos/corto-sdm-turf.yaml
+  - src/content/videos/corto-sdm-guasones.yaml
+  - src/content/videos/corto-santa-barbara.yaml
+  - src/content/videos/corto-bar-paysandu.yaml
 hidden: false

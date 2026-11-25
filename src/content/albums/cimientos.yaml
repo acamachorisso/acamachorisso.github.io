@@ -1,5 +1,4 @@
 title: "Cimientos"
-category: src/content/photo-categories/trabajos.yaml
 kind: "Evento"
 cover: /src/assets/fotos/cimientos/portada.jpg
 photos:
@@ -21,5 +20,4 @@ photos:
   - /src/assets/fotos/cimientos/cim-16.jpg
   - /src/assets/fotos/cimientos/cim-17.jpg
   - /src/assets/fotos/cimientos/cim-18.jpg
-order: 4
 hidden: false

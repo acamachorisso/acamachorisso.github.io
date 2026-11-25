@@ -20,6 +20,79 @@ const byOrder = (a: Ordered, b: Ordered) => a.data.order - b.data.order || a.dat
 /** La dirección de una categoría o un álbum dentro de /fotos/, sacada del nombre del archivo. */
 export const slugOf = (entry: { id: string }) => slugify(entry.id);
 
+// ---------- Listas ordenadas ----------
+// Cada categoría tiene la lista de sus álbumes y cada sección la de sus videos, en el orden en que se ven
+// (en el editor se ordenan arrastrando). Un álbum o video va en una sola lista; si no está en ninguna, no aparece.
+
+type Entry = { id: string; filePath?: string; data: { title: string } };
+
+/** Busca por nombre de archivo ("campo", lo que guarda el editor) o por id de Astro. */
+function indexByFile<T extends Entry>(entries: T[]): Map<string, T> {
+  const map = new Map<string, T>();
+  for (const e of entries) {
+    map.set(e.id, e);
+    const stem = e.filePath?.replace(/^.*[\\/]/, '').replace(/\.ya?ml$/, '');
+    if (stem) map.set(stem, e);
+  }
+  return map;
+}
+
+/** Los elementos de una lista, en orden, sin repetidos ni los que ya no existen. */
+function resolveList<T extends Entry>(ids: string[], index: Map<string, T>): T[] {
+  const out: T[] = [];
+  for (const id of ids) {
+    const entry = index.get(id);
+    if (entry && !out.includes(entry)) out.push(entry);
+  }
+  return out;
+}
+
+/** Frena la publicación si un álbum (o video) está en la lista de dos categorías (o secciones). */
+function ownersOf<P extends Entry, T extends Entry>(
+  parents: P[],
+  listOf: (p: P) => string[],
+  index: Map<string, T>,
+  error: (item: T, a: P, b: P) => string,
+): Map<T, P> {
+  const owner = new Map<T, P>();
+  for (const parent of parents) {
+    for (const item of resolveList(listOf(parent), index)) {
+      const other = owner.get(item);
+      if (other) throw new Error(error(item, other, parent));
+      owner.set(item, parent);
+    }
+  }
+  return owner;
+}
+
+async function photoIndex() {
+  const [categories, albums] = await Promise.all([getCollection('photoCategories'), getCollection('albums')]);
+  const index = indexByFile(albums);
+  const owner = ownersOf(
+    categories,
+    (c) => c.data.albums,
+    index,
+    (album, a, b) =>
+      `El álbum "${album.data.title}" está en dos categorías: ${a.data.title} y ${b.data.title}. ` +
+      `Un álbum va en una sola: sacalo de una de las dos en "Categorías de fotos".`,
+  );
+  return { categories, albums, index, owner };
+}
+
+async function videoIndex() {
+  const [sections, videos] = await Promise.all([getCollection('videoSections'), getCollection('videos')]);
+  const index = indexByFile(videos);
+  const owner = ownersOf(
+    sections,
+    (s) => s.data.videos,
+    index,
+    (video, a, b) =>
+      `El video "${video.data.title}" está en dos secciones: ${a.data.title} y ${b.data.title}. ` +
+      `Un video va en una sola: sacalo de una de las dos en "Secciones de videos".`,
+  );
+  return { sections, videos, index, owner };
+}
+
 export type CategoryGroup = {
   category: Category;
   slug: string;
@@ -29,16 +102,13 @@ export type CategoryGroup = {
 
 /** Categorías de Fotos en su orden, solo las visibles que tienen álbumes visibles. */
 export async function getPhotoGroups(): Promise<CategoryGroup[]> {
-  const [categories, albums] = await Promise.all([
-    getCollection('photoCategories', (c) => !c.data.hidden),
-    getCollection('albums', (a) => !a.data.hidden),
-  ]);
+  const { categories, index } = await photoIndex();
   const groups = categories
+    .filter((c) => !c.data.hidden)
     .sort(byOrder)
     .map((category) => {
-      const items = albums
-        .filter((a) => a.data.category.id === category.id)
-        .sort(byOrder)
+      const items = resolveList(category.data.albums, index)
+        .filter((a) => !a.data.hidden)
         .map((album) => ({ album, slug: slugOf(album) }));
       return {
         category,
@@ -69,6 +139,26 @@ export async function getPhotoGroups(): Promise<CategoryGroup[]> {
 }
 
 /**
+ * Avisos para el log de la publicación (no la frenan): álbumes que no están en ninguna categoría
+ * y álbumes de una lista que ya no existen.
+ */
+export async function getAlbumWarnings(): Promise<string[]> {
+  const { categories, albums, index, owner } = await photoIndex();
+  const notes: string[] = [];
+  for (const album of albums) {
+    if (!album.data.hidden && !owner.has(album)) {
+      notes.push(`El álbum "${album.data.title}" no está en ninguna categoría: no se ve en la web.`);
+    }
+  }
+  for (const c of categories) {
+    for (const id of c.data.albums) {
+      if (!index.has(id)) notes.push(`La categoría ${c.data.title} tiene en su lista un álbum que ya no existe (${id}): se ignora.`);
+    }
+  }
+  return notes;
+}
+
+/**
  * Fotos que están en src/assets/fotos/ pero ningún álbum usa (ni como foto ni como portada).
  * No frenan la publicación, pero ocupan lugar en el repo.
  */
@@ -88,24 +178,40 @@ export type VideoGroup = { section: VideoSection; anchor: string; items: VideoIt
 
 /** Secciones de Videos en su orden, solo las que tienen videos. Los "Próximamente" van al final. */
 export async function getVideoGroups(): Promise<VideoGroup[]> {
-  const [sections, videos] = await Promise.all([
-    getCollection('videoSections', (s) => !s.data.hidden),
-    getCollection('videos', (v) => !v.data.hidden),
-  ]);
+  const { sections, index } = await videoIndex();
   return sections
+    .filter((s) => !s.data.hidden)
     .sort(byOrder)
     .map((section) => ({
       section,
       anchor: slugOf(section),
-      items: videos
-        .filter((v) => v.data.section.id === section.id)
-        .sort((a, b) => Number(a.data.soon) - Number(b.data.soon) || byOrder(a, b))
+      items: resolveList(section.data.videos, index)
+        .filter((v) => !v.data.hidden)
+        // En el orden de la lista, pero los "Próximamente" al final (sort es estable).
+        .sort((a, b) => Number(a.data.soon) - Number(b.data.soon))
         .map((video) => {
           const seconds = video.data.file ? mp4Duration(video.data.file) : undefined;
           return { video, duration: seconds ? duration(seconds) : undefined };
         }),
     }))
     .filter((g) => g.items.length > 0);
+}
+
+/** Como getAlbumWarnings, para los videos. El del showreel puede no estar en ninguna sección. */
+export async function getVideoWarnings(): Promise<string[]> {
+  const [{ sections, videos, index, owner }, site] = await Promise.all([videoIndex(), getSite()]);
+  const notes: string[] = [];
+  for (const video of videos) {
+    if (!video.data.hidden && !owner.has(video) && video.id !== site.showreel?.id) {
+      notes.push(`El video "${video.data.title}" no está en ninguna sección: no se ve en la web.`);
+    }
+  }
+  for (const s of sections) {
+    for (const id of s.data.videos) {
+      if (!index.has(id)) notes.push(`La sección ${s.data.title} tiene en su lista un video que ya no existe (${id}): se ignora.`);
+    }
+  }
+  return notes;
 }
 
 /** "9 proyectos · 7 videos cortos", para el acceso a Videos del inicio. */

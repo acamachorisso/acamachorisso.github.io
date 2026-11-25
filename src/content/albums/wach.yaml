@@ -1,5 +1,4 @@
 title: "Wach"
-category: src/content/photo-categories/trabajos.yaml
 kind: "Backstage"
 cover: /src/assets/fotos/wach/portada.jpg
 photos:
@@ -21,5 +20,4 @@ photos:
   - /src/assets/fotos/wach/wac-16.jpg
   - /src/assets/fotos/wach/wac-17.jpg
   - /src/assets/fotos/wach/wac-18.jpg
-order: 5
 hidden: false

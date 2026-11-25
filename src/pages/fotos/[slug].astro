@@ -6,7 +6,7 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import Viewer from '../../components/Viewer.astro';
-import { albumsLabel, getPhotoGroups, getUnusedPhotos, photosLabel, type Album, type CategoryGroup } from '../../lib/content';
+import { albumsLabel, getAlbumWarnings, getPhotoGroups, getUnusedPhotos, photosLabel, type Album, type CategoryGroup } from '../../lib/content';
 import { withBase } from '../../lib/format';
 import { img } from '../../lib/media';
 
@@ -16,6 +16,8 @@ type Props =
 
 export const getStaticPaths = (async () => {
   const groups = await getPhotoGroups();
+  const warnings = await getAlbumWarnings();
+  if (warnings.length) console.warn(`\n[Fotos]\n  ${warnings.join('\n  ')}\n`);
   const unused = await getUnusedPhotos();
   if (unused.length) {
     console.warn(

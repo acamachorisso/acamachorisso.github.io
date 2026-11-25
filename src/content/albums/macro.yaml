@@ -1,5 +1,4 @@
 title: "Macro"
-category: src/content/photo-categories/personales.yaml
 cover: /src/assets/fotos/macro/portada.jpg
 photos:
   - /src/assets/fotos/macro/mac-01.jpg
@@ -12,5 +11,4 @@ photos:
   - /src/assets/fotos/macro/mac-08.jpg
   - /src/assets/fotos/macro/mac-09.jpg
   - /src/assets/fotos/macro/mac-10.jpg
-order: 4
 hidden: false

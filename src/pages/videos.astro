@@ -3,11 +3,13 @@ import { Image, getImage } from 'astro:assets';
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
 import Viewer from '../components/Viewer.astro';
-import { getVideoGroups, type VideoItem } from '../lib/content';
+import { getVideoGroups, getVideoWarnings, type VideoItem } from '../lib/content';
 import { withBase } from '../lib/format';
 import { maybeImg } from '../lib/media';
 
 const groups = await getVideoGroups();
+const warnings = await getVideoWarnings();
+if (warnings.length) console.warn(`\n[Videos]\n  ${warnings.join('\n  ')}\n`);
 
 /** Lo que necesita cada tarjeta: adónde lleva sin JavaScript y qué abre el visor. */
 async function card(item: VideoItem, format: 'horizontal' | 'vertical') {

@@ -1,5 +1,4 @@
 title: "Santa Bárbara"
-category: src/content/photo-categories/trabajos.yaml
 kind: "Producto · Calzado"
 cover: /src/assets/fotos/santa-barbara/portada.jpg
 photos:
@@ -14,5 +13,4 @@ photos:
   - /src/assets/fotos/santa-barbara/sba-09.jpg
   - /src/assets/fotos/santa-barbara/sba-10.jpg
   - /src/assets/fotos/santa-barbara/sba-11.jpg
-order: 2
 hidden: false

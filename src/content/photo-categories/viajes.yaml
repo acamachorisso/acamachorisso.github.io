@@ -1,3 +1,6 @@
 title: "Viajes"
 order: 1
+albums:
+  - src/content/albums/inglaterra.yaml
+  - src/content/albums/espana.yaml
 hidden: false

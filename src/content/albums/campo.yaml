@@ -1,5 +1,4 @@
 title: "Campo"
-category: src/content/photo-categories/personales.yaml
 cover: /src/assets/fotos/campo/portada.jpg
 photos:
   - /src/assets/fotos/campo/cam-01.jpg
@@ -17,5 +16,4 @@ photos:
   - /src/assets/fotos/campo/cam-13.jpg
   - /src/assets/fotos/campo/cam-14.jpg
   - /src/assets/fotos/campo/cam-15.jpg
-order: 2
 hidden: false

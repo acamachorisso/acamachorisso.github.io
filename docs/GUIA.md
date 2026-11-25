@@ -21,9 +21,9 @@ A la izquierda vas a ver:
 | En el editor | Qué es |
 | --- | --- |
 | Álbumes de fotos | Cada álbum, con sus fotos |
-| Categorías de fotos | Viajes, Trabajos, Personales y las que crees |
+| Categorías de fotos | Viajes, Trabajos, Personales y las que crees. Adentro de cada una, sus álbumes en orden |
 | Videos | Cada video, de YouTube o MP4 |
-| Secciones de videos | Proyectos, Videos cortos y las que crees |
+| Secciones de videos | Proyectos, Videos cortos y las que crees. Adentro de cada una, sus videos en orden |
 | Datos generales | Textos, fotos de la web, video del inicio, email y redes |
 | Media | Todos los archivos subidos (fotos y videos) |
 
@@ -40,13 +40,18 @@ A la izquierda vas a ver:
 1. **Álbumes de fotos** → **Add an entry** (Agregar).
 2. Completá:
    - **Nombre del álbum**: por ejemplo "Italia". También arma la dirección: `/fotos/italia/`.
-   - **Categoría**: elegila de la lista (Viajes, Trabajos…).
    - **Tipo** (opcional): una etiqueta corta, como Evento o Producto.
    - **Descripción** (opcional): una o dos líneas.
    - **Portada**: la foto que se ve en la lista de álbumes.
    - **Fotos**: subí varias a la vez desde la compu. **Arrastralas para cambiar el orden**: así se ven en la web.
-   - **Orden dentro de la categoría**: 1 va primero.
 3. **Save**.
+4. **Sumalo a su categoría**: **Categorías de fotos** → por ejemplo **Viajes** → en **Álbumes**, tocá **Add an item**, elegí el álbum nuevo, arrastralo al lugar donde lo querés y tocá **Save**. Hasta que no esté en una categoría, el álbum no se ve en la web.
+
+### Ordenar los álbumes
+
+Los álbumes se ordenan **adentro de cada categoría**: **Categorías de fotos** → la categoría → en **Álbumes**, arrastralos hacia arriba o hacia abajo → **Save**. El primero de la lista es el primero en la web, y "Álbum anterior" y "Álbum siguiente" siguen ese mismo orden.
+
+- **Pasar un álbum a otra categoría**: sacalo de la lista de una (con la cruz) y sumalo en la otra. Un álbum va en **una sola categoría**: si queda en dos, la publicación se frena y te avisa cuál sacar.
 
 ### Cambiar las fotos de un álbum
 
@@ -59,33 +64,35 @@ Sacar una foto del álbum **no la borra**: sigue guardada y ocupa lugar. Para bo
 ### Ocultar o borrar un álbum
 
 - **Ocultar (sin borrarlo)**: tildalo y guardá. No se ve, pero queda guardado para después.
-- **Borrar**: en la lista de álbumes, borralo. Después borrá sus fotos desde Media si no las vas a usar.
+- **Borrar**: en la lista de álbumes, borralo. Si sigue en la lista de su categoría, no pasa nada: se ignora (igual podés sacarlo de ahí para que quede prolijo). Después borrá sus fotos desde Media si no las vas a usar.
 
 ### Categorías de fotos (Viajes, Trabajos, Personales…)
 
-- **Crear una**: **Categorías de fotos** → **Add an entry** → nombre y orden → **Save**. Después elegila en los álbumes que van ahí.
+- **Crear una**: **Categorías de fotos** → **Add an entry** → nombre, orden y sus álbumes → **Save**.
 - Una categoría **sin álbumes no aparece** en la web.
 - **Orden**: es la posición en el menú Fotos (1 va primero).
 - Una categoría **no puede llamarse igual que un álbum**, porque los dos usarían la misma dirección (`/fotos/…`). Si pasa, la publicación se frena y te avisa cuál cambiar.
-- **Antes de borrar una categoría**, pasá sus álbumes a otra. Si un álbum queda apuntando a una categoría que no existe, la publicación se frena.
+- **Antes de borrar una categoría**, pasá sus álbumes a otra. Si no, esos álbumes dejan de verse en la web.
 
 ## Videos
 
 ### Agregar un video de YouTube
 
 1. **Videos** → **Add an entry**.
-2. **Título**, **Sección** (Proyectos, Videos cortos…) y **Tipo** (Videoclip, Publicidad…).
+2. **Título** y **Tipo** (Videoclip, Publicidad…).
 3. **Link de YouTube**: en YouTube, tocá Compartir → Copiar y pegalo acá.
 4. **Portada** (opcional): si la dejás vacía, se usa la miniatura de YouTube.
 5. **Save**.
+6. **Sumalo a su sección**: **Secciones de videos** → por ejemplo **Proyectos** → en **Videos**, tocá **Add an item**, elegí el video, arrastralo a su lugar y tocá **Save**. Hasta que no esté en una sección, el video no se ve en la web.
 
 ### Agregar un video MP4 (por ejemplo, un video corto)
 
 1. Exportalo en **MP4 (H.264)**, lo más liviano posible. Para los cortos, menos de 15 MB. Los **.MOV** del celular no sirven.
-2. **Videos** → **Add an entry** → título y sección.
+2. **Videos** → **Add an entry** → título.
 3. **Archivo MP4**: subilo.
 4. **Portada**: obligatoria. Es un cuadro del video en JPG.
 5. **Save**. La duración se calcula sola.
+6. Sumalo a su sección, como en el paso 6 de arriba.
 
 Cada video lleva **un link de YouTube o un MP4, no los dos**.
 
@@ -96,7 +103,9 @@ Cada video lleva **un link de YouTube o un MP4, no los dos**.
 
 ### Secciones de videos (Proyectos, Videos cortos…)
 
-- **Crear una**: **Secciones de videos** → **Add an entry** → nombre, formato y orden.
+- **Crear una**: **Secciones de videos** → **Add an entry** → nombre, formato, orden y sus videos.
+- **Ordenar los videos**: **Secciones de videos** → la sección → en **Videos**, arrastralos → **Save**. Los "Próximamente" se muestran siempre al final. Un video va en **una sola sección**.
+- **Orden** (el número): es la posición de la sección en la página Videos (1 va primero).
 - **Formato**:
   - **Horizontal**: grilla de 16:9, como Proyectos.
   - **Vertical**: carrusel de 9:16, como Videos cortos.

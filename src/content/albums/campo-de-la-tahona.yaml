@@ -1,5 +1,4 @@
 title: "Campo de la Tahona"
-category: src/content/photo-categories/trabajos.yaml
 kind: "Evento"
 cover: /src/assets/fotos/campo-de-la-tahona/portada.jpg
 photos:
@@ -28,5 +27,4 @@ photos:
   - /src/assets/fotos/campo-de-la-tahona/tah-23.jpg
   - /src/assets/fotos/campo-de-la-tahona/tah-24.jpg
   - /src/assets/fotos/campo-de-la-tahona/tah-25.jpg
-order: 1
 hidden: false

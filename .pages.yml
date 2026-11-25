@@ -44,17 +44,7 @@ content:
         label: Nombre del álbum
         type: string
         required: true
-        description: "Por ejemplo: Inglaterra. También arma la dirección del álbum (/fotos/inglaterra/)."
-      - name: category
-        label: Categoría
-        type: reference
-        required: true
-        description: Viajes, Trabajos, Personales… Se crean y ordenan en "Categorías de fotos".
-        options:
-          collection: photo-categories
-          search: title
-          value: "{path}"
-          label: "{fields.title}"
+        description: "Por ejemplo: Inglaterra. También arma la dirección del álbum (/fotos/inglaterra/). Después de crearlo, sumalo a su categoría en \"Categorías de fotos\": hasta entonces no se ve en la web."
       - name: kind
         label: Tipo (opcional)
         type: string
@@ -78,11 +68,6 @@ content:
         options:
           media: fotos
           multiple: true
-      - name: order
-        label: Orden dentro de la categoría
-        type: number
-        default: 99
-        description: 1 va primero.
       - name: hidden
         label: Ocultar (sin borrarlo)
         type: boolean
@@ -109,6 +94,16 @@ content:
         type: number
         default: 99
         description: Posición en el menú Fotos. 1 va primero. Una categoría sin álbumes no aparece.
+      - name: albums
+        label: Álbumes
+        type: reference
+        list: true
+        description: "Los álbumes de esta categoría, en el orden en que se ven en la web. Arrastralos para cambiar el orden. Para sumar uno, tocá \"Add an item\" y elegilo. Cada álbum va en una sola categoría."
+        options:
+          collection: albums
+          search: title
+          value: "{path}"
+          label: "{fields.title}"
       - name: hidden
         label: Ocultar (sin borrarla)
         type: boolean
@@ -129,16 +124,7 @@ content:
         label: Título
         type: string
         required: true
-      - name: section
-        label: Sección
-        type: reference
-        required: true
-        description: Proyectos, Videos cortos… Se crean y ordenan en "Secciones de videos".
-        options:
-          collection: video-sections
-          search: title
-          value: "{path}"
-          label: "{fields.title}"
+        description: "Después de crearlo, sumalo a su sección en \"Secciones de videos\": hasta entonces no se ve en la web."
       - name: type
         label: Tipo (opcional)
         type: string
@@ -164,11 +150,6 @@ content:
         type: boolean
         default: false
         description: Se muestra en gris con el cartel "Próximamente" y sin link. Cuando salga, pegá el link y destildá esto.
-      - name: order
-        label: Orden dentro de la sección
-        type: number
-        default: 99
-        description: 1 va primero. Los Próximamente van siempre al final.
       - name: hidden
         label: Ocultar (sin borrarlo)
         type: boolean
@@ -206,6 +187,16 @@ content:
         type: number
         default: 99
         description: Posición en la página Videos. 1 va primero. Una sección sin videos no aparece.
+      - name: videos
+        label: Videos
+        type: reference
+        list: true
+        description: "Los videos de esta sección, en el orden en que se ven en la web. Arrastralos para cambiar el orden. Para sumar uno, tocá \"Add an item\" y elegilo. Cada video va en una sola sección. Los Próximamente se muestran siempre al final."
+        options:
+          collection: videos
+          search: title
+          value: "{path}"
+          label: "{fields.title}"
       - name: hidden
         label: Ocultar (sin borrarla)
         type: boolean

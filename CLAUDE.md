@@ -25,6 +25,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 - Agustín también edita `main` desde Pages CMS. Antes de trabajar, traé lo último: `git pull --rebase`.
 - Antes de cada push, Juani revisa con `npm run dev`. No hagas push ni toques la cuenta de GitHub de Agustín sin que te lo pidan.
 - Categorías de Fotos y secciones de Videos son contenido, no código: el menú, el inicio y los contadores se arman solos. Una categoría o sección sin contenido no aparece.
+- Cada categoría lista sus álbumes y cada sección sus videos, en orden (en el editor se arrastran). Un álbum o video va en una sola lista; si no está en ninguna, no se ve.
 - Categorías y álbumes comparten `/fotos/<nombre>/`: si coinciden, el build frena con un error que dice cuál cambiar.
 - Cada video lleva un link de YouTube **o** un MP4. Los MP4 y los "Próximamente" necesitan portada. El video del inicio, hasta 20 MB; los demás, hasta 95 MB (GitHub bloquea más de 100 MB).
 - Los errores de contenido dicen qué archivo y qué campo arreglar, en palabras que entienda Agustín.
@@ -36,10 +37,10 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 
 | Carpeta o archivo | Qué es |
 | --- | --- |
-| `src/content/albums/` | Un YAML por álbum. `category` apunta a una categoría; `photos` es la lista ordenada |
-| `src/content/photo-categories/` | Categorías de Fotos (Viajes, Trabajos, Personales y las que cree) |
-| `src/content/videos/` | Un YAML por video. `section` apunta a una sección |
-| `src/content/video-sections/` | Secciones de Videos, con formato horizontal o vertical |
+| `src/content/albums/` | Un YAML por álbum. `photos` es la lista ordenada |
+| `src/content/photo-categories/` | Categorías de Fotos (Viajes, Trabajos, Personales y las que cree). `albums` es la lista ordenada de sus álbumes |
+| `src/content/videos/` | Un YAML por video |
+| `src/content/video-sections/` | Secciones de Videos, con formato horizontal o vertical. `videos` es la lista ordenada de sus videos |
 | `src/data/site.yaml` | Textos, fotos fijas, video del inicio, showreel, email y redes |
 | `src/assets/`, `public/videos/` | Fotos, imágenes y videos |
 

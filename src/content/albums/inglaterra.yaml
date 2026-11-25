@@ -1,5 +1,4 @@
 title: "Inglaterra"
-category: src/content/photo-categories/viajes.yaml
 description: "Capturadas en abril de 2022 en Londres, Oxford y Bath."
 cover: /src/assets/fotos/inglaterra/portada.jpg
 photos:
@@ -28,5 +27,4 @@ photos:
   - /src/assets/fotos/inglaterra/ing-23.jpg
   - /src/assets/fotos/inglaterra/ing-24.jpg
   - /src/assets/fotos/inglaterra/ing-25.jpg
-order: 1
 hidden: false

@@ -1,5 +1,4 @@
 title: "España"
-category: src/content/photo-categories/viajes.yaml
 description: "Capturadas en abril de 2022 en Trujillo, Granada, Madrid, Sevilla y Córdoba."
 cover: /src/assets/fotos/espana/portada.jpg
 photos:
@@ -28,5 +27,4 @@ photos:
   - /src/assets/fotos/espana/esp-23.jpg
   - /src/assets/fotos/espana/esp-24.jpg
   - /src/assets/fotos/espana/esp-25.jpg
-order: 2
 hidden: false

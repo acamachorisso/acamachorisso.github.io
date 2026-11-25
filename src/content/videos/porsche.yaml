@@ -1,7 +1,5 @@
 title: "Porsche"
-section: src/content/video-sections/proyectos.yaml
 type: "Publicidad"
 poster: /src/assets/videos/porsche.jpg
 soon: true
-order: 9
 hidden: false

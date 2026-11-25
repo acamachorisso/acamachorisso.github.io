@@ -1,3 +1,9 @@
 title: "Trabajos"
 order: 2
+albums:
+  - src/content/albums/campo-de-la-tahona.yaml
+  - src/content/albums/santa-barbara.yaml
+  - src/content/albums/causa-x-aigua.yaml
+  - src/content/albums/cimientos.yaml
+  - src/content/albums/wach.yaml
 hidden: false

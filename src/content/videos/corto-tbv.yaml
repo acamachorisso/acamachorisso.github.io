@@ -1,7 +1,5 @@
 title: "TBV"
-section: src/content/video-sections/videos-cortos.yaml
 file: /videos/tbv.mp4
 poster: /src/assets/videos/tbv.jpg
 soon: false
-order: 1
 hidden: false

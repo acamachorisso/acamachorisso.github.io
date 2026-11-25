@@ -1,5 +1,4 @@
 title: "Rodaje Porsche"
-category: src/content/photo-categories/personales.yaml
 cover: /src/assets/fotos/rodaje-porsche/portada.jpg
 photos:
   - /src/assets/fotos/rodaje-porsche/por-01.jpg
@@ -16,5 +15,4 @@ photos:
   - /src/assets/fotos/rodaje-porsche/por-12.jpg
   - /src/assets/fotos/rodaje-porsche/por-13.jpg
   - /src/assets/fotos/rodaje-porsche/por-14.jpg
-order: 1
 hidden: false
