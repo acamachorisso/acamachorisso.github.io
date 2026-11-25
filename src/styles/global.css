@@ -1030,7 +1030,7 @@ a.short:focus-visible img {
 .left {
   display: flex;
   flex-direction: column;
-  gap: 24px;
+  gap: 40px;
   min-width: 0;
 }
 .intro {
