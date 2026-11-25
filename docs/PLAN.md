@@ -65,7 +65,7 @@
 El canvas no se modifica: estos cambios van directo en la web.
 
 - **Inicio, portada:** el nombre y "Fotógrafo — Filmmaker" quedan alineados al mismo borde (la letra grande se corre para compensar su margen interno). Sin "Uruguay" en la portada ni en el pie.
-- **Inicio, Sobre mí:** el título queda igual; el texto baja al tamaño del Wix (16 px en 1280 px de ancho, hasta 18 px).
+- **Inicio, Sobre mí:** con las proporciones de la sección del Wix: alto de un tercio del ancho (494 px en 1440), título "Sobre mí" grande (43 px en 1440), texto de 18 px y un degradado corto y suave que cubre solo el 56 % izquierdo de la foto. En el celular el degradado cubre toda la foto, más suave, para que el texto se lea.
 - **Inicio, Trabajo:** solo Videos y Fotos. Se sacan Viajes, Trabajos y Personales, que son categorías de Fotos.
 
 ## Stack y decisiones técnicas

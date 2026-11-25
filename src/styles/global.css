@@ -368,9 +368,11 @@ button {
   transform: translateX(3px);
 }
 
+/* Proporciones de la sección del Wix: alto de un tercio del ancho (494 px en 1440),
+   título de 43 px, texto de 18 px y un degradado que cubre solo el 56 % izquierdo. */
 .about {
   position: relative;
-  min-height: 640px;
+  min-height: clamp(420px, 34.3vw, 600px);
   display: flex;
   align-items: center;
   overflow: hidden;
@@ -382,35 +384,38 @@ button {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 70% center;
+  object-position: 70% 35%;
 }
 .about::before {
   content: '';
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: linear-gradient(90deg, rgba(10, 10, 10, 0.95) 0%, rgba(10, 10, 10, 0.82) 42%, rgba(10, 10, 10, 0.2) 100%);
+  background: linear-gradient(90deg, rgba(10, 10, 10, 0.98) 0%, rgba(10, 10, 10, 0) 56%);
 }
 .about-in {
   position: relative;
   z-index: 2;
-  max-width: 640px;
+  max-width: 560px;
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding-block: 96px;
+  padding-block: 72px;
 }
-.eyebrow {
-  margin: 0;
-  color: var(--mute);
+.about-title {
+  margin: 0 0 14px -0.035em;
+  font-size: clamp(30px, 3vw, 44px);
+  line-height: 1;
 }
-/* Mismo tamaño que el texto del Wix: 16 px en una pantalla de 1280 px, hasta 18 px. */
+/* Mismo tamaño que el texto del Wix: 16 px en una pantalla de 1280 px, 18 px en 1440. */
 .about-text {
   margin: 0;
   font-size: clamp(16px, 1.25vw, 18px);
-  line-height: 1.6;
+  line-height: 1.45;
   font-weight: 400;
   text-wrap: pretty;
+}
+.about-in .line-link {
+  margin-top: 28px;
 }
 
 .work {
@@ -1265,10 +1270,11 @@ a.short:focus-visible img {
     min-height: 0;
   }
   .about-in {
-    padding-block: 72px;
+    padding-block: 64px;
   }
+  /* En el celular el texto ocupa todo el ancho: el degradado cubre todo, pero más suave. */
   .about::before {
-    background: linear-gradient(90deg, rgba(10, 10, 10, 0.92) 0%, rgba(10, 10, 10, 0.75) 100%);
+    background: linear-gradient(90deg, rgba(10, 10, 10, 0.88) 0%, rgba(10, 10, 10, 0.55) 100%);
   }
   .tiles,
   .grid {
