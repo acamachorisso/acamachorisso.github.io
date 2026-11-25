@@ -14,7 +14,7 @@ Si algo quedó mal cargado (por ejemplo, una foto que falta o un link de YouTube
 
 1. Abrí **https://app.pagescms.org**.
 2. Tocá **Sign in with GitHub** y entrá con tu cuenta `acamachorisso`.
-3. Elegí el repositorio **acamachorisso.github.io** y la rama **main**.
+3. Elegí el proyecto **acamachorisso.github.io**. Si no aparece en la lista, entrá directo a **https://app.pagescms.org/acamachorisso/acamachorisso.github.io/main** y guardalo en favoritos.
 
 A la izquierda vas a ver:
 
@@ -26,6 +26,15 @@ A la izquierda vas a ver:
 | Secciones de videos | Proyectos, Videos cortos y las que crees. Adentro de cada una, sus videos en orden |
 | Datos generales | Textos, fotos de la web, video del inicio, email y redes |
 | Media | Todos los archivos subidos (fotos y videos) |
+
+### Los botones (el editor está en inglés)
+
+- **Add an entry**: crear algo nuevo. **Edit**: abrir uno de la lista. **Save**: guardar y publicar (está gris hasta que cambiás algo).
+- **⋮**: menú con **Delete** (borrar), **Rename** y **View on GitHub**, en cada fila de la lista y arriba a la derecha cuando editás algo.
+- **Upload**: subir desde la compu. **Select**: elegir algo ya subido. **Add an item**: sumar un renglón a una lista. **Required**: obligatorio.
+- **Volver a la lista**: tocá el nombre de la sección arriba a la izquierda (por ejemplo, *Álbumes de fotos › Editing "Inglaterra"*).
+- **Ocultar** y **Próximamente** son interruptores: gris es apagado y verde es prendido.
+- **No uses Rename**: cambia la dirección del álbum o video y lo saca de su categoría o sección. Para cambiar el nombre que se ve, editá el campo Nombre o Título.
 
 ## Fotos
 
@@ -43,28 +52,28 @@ A la izquierda vas a ver:
    - **Tipo** (opcional): una etiqueta corta, como Evento o Producto.
    - **Descripción** (opcional): una o dos líneas.
    - **Portada**: la foto que se ve en la lista de álbumes.
-   - **Fotos**: subí varias a la vez desde la compu. **Arrastralas para cambiar el orden**: así se ven en la web.
+   - **Fotos**: con **Upload** elegís varias a la vez en la ventana de la compu (Ctrl o Shift); con **Select**, las que ya subiste. **Arrastrá las miniaturas para cambiar el orden**: así se ven en la web.
 3. **Save**.
 4. **Sumalo a su categoría**: **Categorías de fotos** → por ejemplo **Viajes** → en **Álbumes**, tocá **Add an item**, elegí el álbum nuevo, arrastralo al lugar donde lo querés y tocá **Save**. Hasta que no esté en una categoría, el álbum no se ve en la web.
 
 ### Ordenar los álbumes
 
-Los álbumes se ordenan **adentro de cada categoría**: **Categorías de fotos** → la categoría → en **Álbumes**, arrastralos hacia arriba o hacia abajo → **Save**. El primero de la lista es el primero en la web, y "Álbum anterior" y "Álbum siguiente" siguen ese mismo orden.
+Los álbumes se ordenan **adentro de cada categoría**: **Categorías de fotos** → la categoría → en **Álbumes**, arrastralos desde los puntitos ⠿ hacia arriba o hacia abajo → **Save**. El primero de la lista es el primero en la web, y "Álbum anterior" y "Álbum siguiente" siguen ese mismo orden.
 
-- **Pasar un álbum a otra categoría**: sacalo de la lista de una (con la cruz) y sumalo en la otra. Un álbum va en **una sola categoría**: si queda en dos, la publicación se frena y te avisa cuál sacar.
+- **Pasar un álbum a otra categoría**: sacalo de la lista de una (con el tacho de su renglón) y sumalo en la otra. Un álbum va en **una sola categoría**: si queda en dos, la publicación se frena y te avisa cuál sacar.
 
 ### Cambiar las fotos de un álbum
 
 - **Agregar**: en el campo Fotos, subí o elegí las nuevas.
 - **Ordenar**: arrastralas.
-- **Sacar una foto**: tocá la cruz de esa foto y guardá. Deja de verse en la web.
+- **Sacar una foto**: tocá el tacho abajo a la derecha de la miniatura y guardá. Deja de verse en la web.
 
-Sacar una foto del álbum **no la borra**: sigue guardada y ocupa lugar. Para borrarla del todo, andá a **Media → Fotos de los álbumes**, buscala y borrala. Borrá solo fotos que ya sacaste de todos los álbumes. Si borrás una que un álbum todavía usa, la publicación se frena con un aviso.
+Sacar una foto del álbum **no la borra**: sigue guardada y ocupa lugar. Para borrarla del todo, andá a **Media → Fotos de los álbumes**, buscala y tocá **⋮ → Delete**. Borrá solo fotos que ya sacaste de todos los álbumes. Si borrás una que un álbum todavía usa, la publicación se frena con un aviso. Ojo: ese mismo menú con Delete aparece en la ventana de **Select**; cuando elegís fotos, tocá la foto, no los tres puntos.
 
 ### Ocultar o borrar un álbum
 
-- **Ocultar (sin borrarlo)**: tildalo y guardá. No se ve, pero queda guardado para después.
-- **Borrar**: en la lista de álbumes, borralo. Si sigue en la lista de su categoría, no pasa nada: se ignora (igual podés sacarlo de ahí para que quede prolijo). Después borrá sus fotos desde Media si no las vas a usar.
+- **Ocultar (sin borrarlo)**: prendé el interruptor y guardá. No se ve, pero queda guardado para después.
+- **Borrar**: en la lista de álbumes, **⋮ → Delete**. Si sigue en la lista de su categoría, no pasa nada: se ignora (igual podés sacarlo de ahí para que quede prolijo). Después borrá sus fotos desde Media si no las vas a usar.
 
 ### Categorías de fotos (Viajes, Trabajos, Personales…)
 
@@ -98,13 +107,13 @@ Cada video lleva **un link de YouTube o un MP4, no los dos**.
 
 ### Videos "Próximamente" (como Porsche)
 
-- Con **Próximamente** tildado, el video se ve en gris con el cartel "Próximamente" y sin link. Necesita una portada.
-- **Cuando salga**: pegá el link de YouTube, destildá Próximamente y guardá.
+- Con **Próximamente** prendido, el video se ve en gris con el cartel "Próximamente" y sin link. Necesita una portada.
+- **Cuando salga**: pegá el link de YouTube, apagá Próximamente y guardá.
 
 ### Secciones de videos (Proyectos, Videos cortos…)
 
 - **Crear una**: **Secciones de videos** → **Add an entry** → nombre, formato, orden y sus videos.
-- **Ordenar los videos**: **Secciones de videos** → la sección → en **Videos**, arrastralos → **Save**. Los "Próximamente" se muestran siempre al final. Un video va en **una sola sección**.
+- **Ordenar los videos**: **Secciones de videos** → la sección → en **Videos**, arrastralos desde los puntitos ⠿ → **Save**. Los "Próximamente" se muestran siempre al final. Un video va en **una sola sección**.
 - **Orden** (el número): es la posición de la sección en la página Videos (1 va primero).
 - **Formato**:
   - **Horizontal**: grilla de 16:9, como Proyectos.
@@ -118,7 +127,7 @@ Cada video lleva **un link de YouTube o un MP4, no los dos**.
 Es el video que se ve atrás de tu nombre: corto, sin sonido y en loop.
 
 1. Exportalo así: **MP4 (H.264), 1080p, sin audio, de 10 a 20 segundos y de menos de 15 MB**.
-2. **Datos generales** → **Video del inicio** → subí el nuevo.
+2. **Datos generales** → **Video del inicio** → sacá el actual con el tacho y subí el nuevo con **Upload**.
 3. **Imagen del video del inicio**: subí un cuadro del video en JPG. Se ve mientras el video carga y en celulares con ahorro de batería.
 4. **Save**.
 
@@ -126,8 +135,10 @@ Si el video pesa más de 20 MB, la publicación se frena: tardaría mucho en arr
 
 ### Botón "Ver showreel"
 
-1. Cuando tengas el showreel completo en YouTube, abrí el video **Showreel** en **Videos**, pegá el link y destildá **Próximamente**.
-2. En **Datos generales → Showreel** ya está elegido ese video. El botón "Ver showreel" aparece solo en el inicio.
+El campo **Datos generales → Showreel** no es un video ni un link: dice cuál de tus videos es el showreel. Ya está elegido el video **Showreel**, que hoy está en Próximamente, y por eso el botón no aparece.
+
+1. Cuando tengas el showreel completo en YouTube, abrí el video **Showreel** en **Videos**, pegá el link y apagá **Próximamente**.
+2. **Save**. En 1 o 2 minutos aparece "Ver showreel" en el inicio, debajo de "Fotógrafo — Filmmaker".
 
 ## Datos generales
 
@@ -135,7 +146,7 @@ Ahí están los textos y las fotos fijas de la web:
 
 - Nombre y frase ("Fotógrafo — Filmmaker").
 - **Sobre mí corto** (inicio), **primera frase**, **bio** y **ficha** (Sobre mí). En la bio, un párrafo nuevo es una línea en blanco.
-- Fotos del inicio, retrato, foto de Contacto y logo.
+- Fotos del inicio, retrato, foto de Contacto y logo. La vista previa del logo parece un cuadro vacío porque es blanco sobre blanco: está bien así.
 - Email y redes (se muestran en Contacto y en el pie).
 - **Imagen al compartir el link**: la que aparece cuando alguien pega el link de tu web en WhatsApp o Instagram.
 
@@ -143,7 +154,7 @@ Los mensajes del formulario de Contacto llegan a **acamacho.contacto@gmail.com**
 
 ## Si algo no se publica
 
-1. Entrá a **https://github.com/acamachorisso/acamachorisso.github.io/actions**.
+1. Entrá a **https://github.com/acamachorisso/acamachorisso.github.io/actions** con tu cuenta de GitHub (sin entrar, no se ven los mensajes).
 2. El último intento con una **cruz roja** es el que falló. Tocalo y después tocá **build**.
 3. Buscá el mensaje en español. Dice qué archivo y qué campo arreglar. Por ejemplo:
    - `albums → italia` · `photos.3: No encuentro esa imagen…` → en el álbum Italia, la foto número 4 (se cuenta desde 0) no está.
