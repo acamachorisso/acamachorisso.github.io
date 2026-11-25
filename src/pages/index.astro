@@ -19,7 +19,6 @@ const showreelUrl = showreel?.data.youtube
   : showreel?.data.file
     ? withBase(showreel.data.file)
     : undefined;
-const nameWords = site.name.trim().split(/\s+/);
 const poster = await getImage({ src: img(site.hero_poster), width: 1920, format: 'webp' });
 ---
 
@@ -38,27 +37,21 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
     <div class="shade"></div>
     <Nav current="inicio" over />
     <div class="hero-copy wrap">
-      <div>
-        <h1 class="name wide">
-          {nameWords.map((w, i) => (i < nameWords.length - 1 ? [w, <br />] : w))}
-        </h1>
-        <p class="role caps">{site.tagline}</p>
-      </div>
-      <div class="hero-side">
-        {
-          showreelUrl && (
-            <a class="cta side caps" href={showreelUrl} rel="noopener">
-              Ver showreel
-              <Icon name="right" />
-            </a>
-          )
-        }
-        <a class="cta caps" href="#trabajo">
-          Ver trabajos
-          <Icon name="down" />
-        </a>
-      </div>
+      <h1 class="name wide">{site.name}</h1>
+      <p class="role caps">{site.tagline}</p>
+      {
+        showreelUrl && (
+          <a class="cta caps" href={showreelUrl} rel="noopener">
+            Ver showreel
+            <Icon name="right" />
+          </a>
+        )
+      }
     </div>
+    <a class="hero-down caps" href="#trabajo">
+      <span class="hero-down-icon" aria-hidden="true"><Icon name="down" size={16} /></span>
+      Ver trabajos
+    </a>
   </header>
 
   <section class="about wrap" aria-labelledby="sobre-mi">
