@@ -50,3 +50,33 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
     }
   </ul>
 </nav>
+
+<script>
+  // Al bajar, el menú se esconde; al subir, aparece deslizándose desde arriba.
+  // No se esconde mientras está cerca del principio ni si el foco está adentro (navegación con teclado).
+  const nav = document.querySelector<HTMLElement>('nav.nav');
+  if (nav) {
+    let last = window.scrollY;
+    let ticking = false;
+    const update = () => {
+      const y = window.scrollY;
+      const height = nav.offsetHeight;
+      nav.classList.toggle('is-scrolled', y > 10);
+      if (y <= height || nav.contains(document.activeElement)) nav.classList.remove('is-hidden');
+      else if (y > last + 4) nav.classList.add('is-hidden');
+      else if (y < last - 4) nav.classList.remove('is-hidden');
+      last = y;
+      ticking = false;
+    };
+    window.addEventListener(
+      'scroll',
+      () => {
+        if (!ticking) requestAnimationFrame(update);
+        ticking = true;
+      },
+      { passive: true },
+    );
+    nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
+    update();
+  }
+</script>

@@ -73,21 +73,8 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
           <h2 id="trabajo-t" class="h2 wide">
             Trabajo
           </h2>
-          <span class="caps mute">Videos y fotografía</span>
         </div>
         <div class="tiles">
-          {videoGroups.length > 0 && (
-            <a class="tile" href={withBase('/videos/')}>
-              <Image src={img(site.videos_cover)} alt="" widths={[600, 900, 1400]} sizes="(max-width: 760px) 100vw, 50vw" />
-              <span class="tile-label">
-                <span class="tile-title wide">Videos</span>
-                <span class="tile-meta caps">
-                  {videoSummary(videoGroups)}
-                  <Icon name="right" />
-                </span>
-              </span>
-            </a>
-          )}
           {photoGroups.length > 0 && (
             <a class="tile" href={withBase(`/fotos/${photoGroups[0].slug}/`)}>
               <Image src={img(site.photos_cover)} alt="" widths={[600, 900, 1400]} sizes="(max-width: 760px) 100vw, 50vw" />
@@ -95,6 +82,18 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
                 <span class="tile-title wide">Fotos</span>
                 <span class="tile-meta caps">
                   {albumsLabel(albumCount)}
+                  <Icon name="right" />
+                </span>
+              </span>
+            </a>
+          )}
+          {videoGroups.length > 0 && (
+            <a class="tile" href={withBase('/videos/')}>
+              <Image src={img(site.videos_cover)} alt="" widths={[600, 900, 1400]} sizes="(max-width: 760px) 100vw, 50vw" />
+              <span class="tile-label">
+                <span class="tile-title wide">Videos</span>
+                <span class="tile-meta caps">
+                  {videoSummary(videoGroups)}
                   <Icon name="right" />
                 </span>
               </span>

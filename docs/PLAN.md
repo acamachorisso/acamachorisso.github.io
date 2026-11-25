@@ -64,6 +64,10 @@
 El canvas no se modifica: estos cambios van directo en la web.
 
 - **Inicio, portada (25/11):** el nombre en una línea y "Fotógrafo — Filmmaker" debajo, centrados en la pantalla y chicos (38 px en 1440), como en el Wix y en la página de Reilin Joey. "Ver trabajos" con flecha abajo al centro. Sin "Uruguay" en la portada ni en el pie.
+- **Inicio, nombre (25/11):** en DM Serif Display (como el logo y el Wix), en mayúsculas, y con fusión "diferencia" en el nombre y la frase: toman el color invertido del video.
+- **Inicio, Trabajo (25/11):** sin "Videos y fotografía"; Fotos a la izquierda y Videos a la derecha.
+- **Menú (25/11):** letra de 14 px (12 en el celular). Se esconde al bajar y aparece deslizándose al subir, en todas las páginas; en el inicio toma fondo negro cuando dejás la portada.
+- **Espaciado (25/11):** -0.05em entre letras en todos los textos, como en el Wix.
 - **Links (25/11):** sin subrayados. La página actual del menú y todo texto que se puede tocar se pintan de azul acero (`--accent: #8db3dc`) con el mouse encima, como el menú del Wix (#76A8DE) pero más apagado para ir con el negro.
 - **Inicio, Sobre mí:** con las proporciones de la sección del Wix: alto de un tercio del ancho (494 px en 1440), título "Sobre mí" grande (43 px en 1440), texto de 18 px y un degradado corto y suave que cubre solo el 56 % izquierdo de la foto. En el celular el degradado cubre toda la foto, más suave, para que el texto se lea.
 - **Inicio, Trabajo:** solo Videos y Fotos. Se sacan Viajes, Trabajos y Personales, que son categorías de Fotos.
