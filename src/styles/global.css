@@ -1566,9 +1566,15 @@ a.short:focus-visible img {
   .about-in {
     padding-block: 0 16px;
   }
-  /* En el celular el texto va justificado (el título no). */
+  /* En el celular el texto va justificado (el título no). Como la columna es angosta, las palabras se
+     cortan con guion al final del renglón, como en un libro, para que no queden espacios muy grandes. */
   .about-text {
     text-align: justify;
+  }
+  .about-text,
+  .body {
+    -webkit-hyphens: auto;
+    hyphens: auto;
   }
   .tiles,
   .grid {
