@@ -472,7 +472,9 @@ button {
 .about-text {
   margin: 0;
   font-size: clamp(16px, 1.25vw, 18px);
-  line-height: 1.45;
+  /* Mismo espaciado que la bio de la página Sobre mí. */
+  letter-spacing: -0.03em;
+  line-height: 1.65;
   font-weight: 400;
   text-wrap: pretty;
 }
