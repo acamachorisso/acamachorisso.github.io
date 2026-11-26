@@ -1217,6 +1217,8 @@ a.short:focus-visible img {
   line-height: 1.65;
   opacity: 0.86;
   max-width: 62ch;
+  /* Justificado, a pedido de Agustín (el título no). */
+  text-align: justify;
 }
 .ctas {
   display: flex;
@@ -1564,6 +1566,10 @@ a.short:focus-visible img {
   .about-in {
     padding-block: 0 16px;
   }
+  /* En el celular el texto va justificado (el título no). */
+  .about-text {
+    text-align: justify;
+  }
   .tiles,
   .grid {
     grid-template-columns: 1fr;
@@ -1615,11 +1621,24 @@ a.short:focus-visible img {
   .simple {
     padding-block: 72px 96px;
   }
+  /* Dos columnas iguales, salvo que el email completo no entre en la primera: entonces esa columna
+     se agranda lo justo y Redes se corre a la derecha. Si ni así entra (pantallas muy angostas),
+     el email se corta antes de la @. */
   .foot {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: minmax(calc(50% - 16px), max-content) 1fr;
   }
-  .foot > div:first-child {
+  .foot-brand {
+    display: contents;
+  }
+  .foot-id {
     grid-column: 1 / -1;
+  }
+  /* El copyright va al final de la página, sobre la derecha. */
+  .foot-brand .copy {
+    order: 1;
+    grid-column: 1 / -1;
+    justify-self: end;
+    margin-top: 16px;
   }
 }
 
