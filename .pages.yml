@@ -148,6 +148,24 @@ content:
         description: "Un cuadro del video en JPG. Obligatoria para los MP4 y los Próximamente. Con YouTube, si la dejás vacía, se usa la miniatura de YouTube."
         options:
           media: portadas
+      - name: note
+        label: Nota (opcional)
+        type: string
+        description: "Una línea que sale chica arriba de los créditos cuando se abre el video. Por ejemplo: (Publicidad no oficial)."
+      - name: credits
+        label: Créditos (opcional)
+        type: object
+        list: true
+        description: "Salen chicos debajo del título cuando se abre el video. Uno por persona o equipo: por ejemplo, Rol \"Cámara\" y Nombre \"Mathias Porras\". Arrastralos para cambiar el orden."
+        fields:
+          - name: role
+            label: Rol
+            type: string
+            description: "Por ejemplo: Dirección, Cámara, Edición y Color."
+          - name: name
+            label: Nombre
+            type: string
+            required: true
       - name: soon
         label: Próximamente
         type: boolean

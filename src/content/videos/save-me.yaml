@@ -2,5 +2,10 @@ title: "Save Me"
 type: "Videoclip"
 youtube: https://www.youtube.com/watch?v=i2-QZXHk0jM
 poster: /src/assets/videos/save-me.jpg
+credits:
+  - role: "Dirección"
+    name: "Mateo Luna"
+  - role: "DDF y Cámara"
+    name: "Agustín Camacho"
 soon: false
 hidden: false

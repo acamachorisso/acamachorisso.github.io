@@ -8,10 +8,13 @@ import Icon from './Icon.astro';
 <dialog class="viewer" aria-label="Visor" data-viewer>
   <div class="viewer-stage" data-viewer-stage></div>
   <div class="viewer-bar">
-    <p class="viewer-title" aria-live="polite">
-      <span class="wide" data-viewer-title></span>
-      <span class="caps mute" data-viewer-counter></span>
-    </p>
+    <div class="viewer-info">
+      <p class="viewer-title" aria-live="polite">
+        <span class="wide" data-viewer-title></span>
+        <span class="caps mute" data-viewer-counter></span>
+      </p>
+      <div class="viewer-credits" data-viewer-credits hidden></div>
+    </div>
     <div class="viewer-btns">
       <button class="icon-btn" type="button" data-viewer-prev aria-label="Anterior"><Icon name="left" size={18} /></button>
       <button class="icon-btn" type="button" data-viewer-next aria-label="Siguiente"><Icon name="right" size={18} /></button>
@@ -37,6 +40,7 @@ import Icon from './Icon.astro';
     const stage = dialog.querySelector<HTMLElement>('[data-viewer-stage]')!;
     const title = dialog.querySelector<HTMLElement>('[data-viewer-title]')!;
     const counter = dialog.querySelector<HTMLElement>('[data-viewer-counter]')!;
+    const credits = dialog.querySelector<HTMLElement>('[data-viewer-credits]')!;
     const prevBtn = dialog.querySelector<HTMLButtonElement>('[data-viewer-prev]')!;
     const nextBtn = dialog.querySelector<HTMLButtonElement>('[data-viewer-next]')!;
     let items: HTMLAnchorElement[] = [];
@@ -75,8 +79,40 @@ import Icon from './Icon.astro';
       }
       title.textContent = d.title ?? '';
       counter.textContent = items.length > 1 ? `${index + 1} / ${items.length}` : '';
+      renderCredits(d.credits);
       prevBtn.hidden = nextBtn.hidden = items.length < 2;
       if (d.kind === 'photo') preload(index + 1);
+    }
+
+    /** Los créditos del video (data-credits, armado en videos.astro): la nota y después rol → nombre. */
+    function renderCredits(json: string | undefined) {
+      credits.replaceChildren();
+      const info: { note?: string; credits?: { role?: string; name: string }[] } = json ? JSON.parse(json) : {};
+      const line = (text: string) => {
+        const p = document.createElement('p');
+        p.className = 'credits-note';
+        p.textContent = text;
+        credits.append(p);
+      };
+      if (info.note) line(info.note);
+      const list = document.createElement('dl');
+      list.className = 'credits';
+      for (const c of info.credits ?? []) {
+        // Sin rol, el texto va suelto, como la nota.
+        if (!c.role) {
+          line(c.name);
+          continue;
+        }
+        const row = document.createElement('div');
+        const role = document.createElement('dt');
+        const name = document.createElement('dd');
+        role.textContent = c.role;
+        name.textContent = c.name;
+        row.append(role, name);
+        list.append(row);
+      }
+      if (list.childElementCount) credits.append(list);
+      credits.hidden = !credits.childElementCount;
     }
 
     /** Carga de antemano la foto siguiente, para que al pasar aparezca enseguida. */

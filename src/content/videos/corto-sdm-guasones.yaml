@@ -1,5 +1,10 @@
 title: "SDM (Guasones)"
 file: /videos/sdm-guasones.mp4
 poster: /src/assets/videos/sdm-guasones.jpg
+credits:
+  - role: "Edición y Color"
+    name: "Agustín Camacho"
+  - role: "Cámara"
+    name: "Juan Andrés Nin"
 soon: false
 hidden: false

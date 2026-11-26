@@ -1,5 +1,11 @@
 title: "Bar Paysandú"
 file: /videos/bar-paysandu.mp4
 poster: /src/assets/videos/bar-paysandu.jpg
+note: "Edición de 16 Reels para los bares: Paysandú, Santa Catalina y Mvd al Sur."
+credits:
+  - role: "Edición y Color"
+    name: "Agustín Camacho"
+  - role: "Cámara"
+    name: "Juan Andrés Nin"
 soon: false
 hidden: false

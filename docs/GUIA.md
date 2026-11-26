@@ -105,6 +105,13 @@ Sacar una foto del álbum **no la borra**: sigue guardada y ocupa lugar. Para bo
 
 Cada video lleva **un link de YouTube o un MP4, no los dos**.
 
+### Créditos (opcional)
+
+Salen chicos debajo del título cuando se abre el video.
+
+- **Créditos**: tocá **Add an item** por cada persona o equipo y completá **Rol** (Cámara, Dirección, Edición y Color…) y **Nombre**. Se ordenan arrastrando.
+- **Nota**: una línea suelta que va arriba de los créditos, como "(Publicidad no oficial)".
+
 ### Videos "Próximamente" (como Porsche)
 
 - Con **Próximamente** prendido, el video se ve en gris con el cartel "Próximamente" y sin link. Necesita una portada.

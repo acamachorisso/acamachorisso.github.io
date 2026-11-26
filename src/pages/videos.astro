@@ -27,9 +27,11 @@ async function card(item: VideoItem, format: 'horizontal' | 'vertical') {
     ytThumb,
     posterSrc,
     href: v.youtube ? `https://www.youtube.com/watch?v=${v.youtube}` : v.file ? withBase(v.file) : undefined,
-    data: v.youtube
-      ? { 'data-kind': 'youtube', 'data-id': v.youtube }
-      : { 'data-kind': 'mp4' },
+    data: {
+      ...(v.youtube ? { 'data-kind': 'youtube', 'data-id': v.youtube } : { 'data-kind': 'mp4' }),
+      // El visor los muestra debajo del título (ver Viewer.astro).
+      'data-credits': v.note || v.credits.length ? JSON.stringify({ note: v.note, credits: v.credits }) : undefined,
+    },
     format,
   };
 }

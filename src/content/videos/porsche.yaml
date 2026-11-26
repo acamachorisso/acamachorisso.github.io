@@ -1,5 +1,9 @@
 title: "Porsche"
 type: "Publicidad"
 poster: /src/assets/videos/porsche.jpg
+note: "(Publicidad no oficial)"
+credits:
+  - role: "Dirigido, filmado y editado por"
+    name: "Agustín Camacho y Agustín Caputi"
 soon: true
 hidden: false

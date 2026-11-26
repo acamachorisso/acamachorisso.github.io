@@ -137,12 +137,27 @@ const videoSections = defineCollection({
   }),
 });
 
+/**
+ * Los créditos de un video (Cámara → Mathias Porras), en orden. Salen chicos en el visor, debajo del título.
+ * Las filas vacías (un "Add an item" sin completar) se ignoran.
+ */
+const credits = z.preprocess(
+  (v) =>
+    (v == null || v === '' ? [] : Array.isArray(v) ? v : [v]).filter(
+      (c) => c && typeof c === 'object' && Object.values(c).some((x) => typeof x === 'string' && x.trim() !== ''),
+    ),
+  z.array(z.object({ role: optionalText, name: text('el nombre en uno de los créditos') })),
+);
+
 const videos = defineCollection({
   loader: glob({ pattern: '**/*.{yaml,yml}', base: './src/content/videos' }),
   schema: z
     .object({
       title: text('el título del video'),
       type: optionalText,
+      /** Una línea suelta arriba de los créditos, como "(Publicidad no oficial)". */
+      note: optionalText,
+      credits,
       youtube,
       file: z.preprocess(
         empty,

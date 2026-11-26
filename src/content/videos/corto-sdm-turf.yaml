@@ -1,5 +1,10 @@
 title: "SDM (Turf)"
 file: /videos/sdm-turf.mp4
 poster: /src/assets/videos/sdm-turf.jpg
+credits:
+  - role: "Edición y Color"
+    name: "Agustín Camacho"
+  - role: "Cámara"
+    name: "Mathias Porras"
 soon: false
 hidden: false
