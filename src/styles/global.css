@@ -300,8 +300,9 @@ button {
 .drawer-list a,
 .drawer-toggle {
   display: block;
-  padding-block: 14px;
-  font-size: 15px;
+  padding-block: 15px;
+  /* Del tamaño que se ve el menú del celular de Reilin Joey. */
+  font-size: 18px;
 }
 /* Fotos: un botón que se ve igual que los links, con la flechita de la compu, que gira al desplegarse. */
 .drawer-toggle {
@@ -313,15 +314,15 @@ button {
   background: transparent;
   color: inherit;
   font: inherit;
-  font-size: 15px;
+  font-size: 18px;
   letter-spacing: inherit;
   text-transform: inherit;
   cursor: pointer;
 }
 /* La flechita no cuenta para centrar: "Fotos" queda alineada con las demás palabras y la flecha a su derecha
-   (el margen negativo es el espacio de 6 px más los 10 px de la flecha). */
+   (el margen negativo es el espacio de 6 px más los 12 px de la flecha). */
 .drawer-toggle svg {
-  margin-right: -16px;
+  margin-right: -18px;
   transition: transform 0.25s var(--ease);
 }
 .drawer-toggle:hover {
@@ -336,8 +337,8 @@ button {
   list-style: none;
 }
 .drawer-sub a {
-  padding-block: 9px;
-  font-size: 12px;
+  padding-block: 10px;
+  font-size: 14px;
   color: var(--mute);
 }
 /* En el celular, lo último que se tocó queda "con el mouse encima" y se pintaba de azul junto con la página

@@ -71,7 +71,7 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
                 aria-controls={`drawer-${item.key}`}
                 data-menu-toggle>
                 {item.label}
-                <Icon name="chevron" size={10} />
+                <Icon name="chevron" size={12} />
               </button>
             ) : (
               <a href={withBase(item.href)} aria-current={current === item.key ? 'page' : undefined}>
