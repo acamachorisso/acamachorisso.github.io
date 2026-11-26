@@ -7,6 +7,8 @@
   --line: rgba(242, 242, 240, 0.16);
   --field: rgba(242, 242, 240, 0.4);
   --panel: #161616;
+  /* Fondo del menú de arriba: el negro de la página, apenas transparente (deja ver un poco lo que pasa por debajo). */
+  --nav-bg: rgba(10, 10, 10, 0.92);
   /* Azul acero para lo que se puede tocar: la página actual y el mouse encima.
      Inspirado en el azul del menú del Wix (#76A8DE), más apagado para ir con el negro y las fotos frías.
      Contraste sobre el negro: 9 a 1. */
@@ -134,7 +136,7 @@ button {
   flex-wrap: wrap;
   padding-block: 22px;
   border-bottom: 1px solid var(--line);
-  background: var(--bg);
+  background: var(--nav-bg);
   transition: transform 0.35s var(--ease), background-color 0.35s, border-color 0.35s;
 }
 .nav.is-hidden {
@@ -149,7 +151,7 @@ button {
   border-bottom-color: transparent;
 }
 .nav-over.is-scrolled {
-  background: rgba(10, 10, 10, 0.92);
+  background: var(--nav-bg);
   border-bottom-color: var(--line);
 }
 .logo {
