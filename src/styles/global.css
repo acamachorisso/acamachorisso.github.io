@@ -1502,15 +1502,38 @@ a.short:focus-visible img {
   .page-head {
     padding-block: 56px 40px;
   }
+  /* En el celular la foto va arriba, entera y sin oscurecer, y en su mitad de abajo se funde de a poco
+     con el fondo; el título empieza sobre el final del degradado y el texto sigue sobre el fondo. */
   .about {
+    --about-img: min(96vw, 520px);
+    display: block;
     min-height: 0;
+    padding-top: calc(var(--about-img) - 88px);
+    background: var(--bg);
+  }
+  .about-bg,
+  .about::before {
+    inset: 0 0 auto;
+    height: var(--about-img);
+  }
+  .about-bg {
+    object-position: 84% 30%;
+  }
+  .about::before {
+    background: linear-gradient(
+      rgba(10, 10, 10, 0) 50%,
+      rgba(10, 10, 10, 0.05) 56%,
+      rgba(10, 10, 10, 0.16) 62.5%,
+      rgba(10, 10, 10, 0.32) 69%,
+      rgba(10, 10, 10, 0.5) 75%,
+      rgba(10, 10, 10, 0.68) 81%,
+      rgba(10, 10, 10, 0.83) 87.5%,
+      rgba(10, 10, 10, 0.94) 94%,
+      #0a0a0a 100%
+    );
   }
   .about-in {
-    padding-block: 64px;
-  }
-  /* En el celular el texto ocupa todo el ancho: el degradado cubre todo, pero más suave. */
-  .about::before {
-    background: linear-gradient(90deg, rgba(10, 10, 10, 0.88) 0%, rgba(10, 10, 10, 0.55) 100%);
+    padding-block: 0 16px;
   }
   .tiles,
   .grid {

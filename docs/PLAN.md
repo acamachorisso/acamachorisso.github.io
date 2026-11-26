@@ -69,7 +69,7 @@ El canvas no se modifica: estos cambios van directo en la web.
 - **Menú (25/11):** letra de 14 px (12 en el celular). Se esconde al bajar y aparece deslizándose al subir, en todas las páginas; en el inicio toma fondo negro cuando dejás la portada.
 - **Espaciado (25/11):** -0.05em entre letras en todos los textos, como en el Wix.
 - **Links (25/11):** sin subrayados. La página actual del menú y todo texto que se puede tocar se pintan de azul acero (`--accent: #8db3dc`) con el mouse encima, como el menú del Wix (#76A8DE) pero más apagado para ir con el negro.
-- **Inicio, Sobre mí:** con las proporciones de la sección del Wix: alto de un tercio del ancho (494 px en 1440), título "Sobre mí" grande (43 px en 1440), texto de 18 px y un degradado corto y suave que cubre solo el 56 % izquierdo de la foto. En el celular el degradado cubre toda la foto, más suave, para que el texto se lea.
+- **Inicio, Sobre mí:** con las proporciones de la sección del Wix: alto de un tercio del ancho (494 px en 1440), título "Sobre mí" grande (43 px en 1440), texto de 18 px y un degradado corto y suave que cubre solo el 56 % izquierdo de la foto. En el celular (26/11, a pedido de Agustín) la foto va arriba, recortada alrededor de él y sin oscurecer, y se funde suave con el fondo en su mitad de abajo; el título empieza sobre el final del degradado y el texto sigue debajo.
 - **Inicio, Trabajo:** solo Videos y Fotos. Se sacan Viajes, Trabajos y Personales, que son categorías de Fotos.
 
 ## Stack y decisiones técnicas

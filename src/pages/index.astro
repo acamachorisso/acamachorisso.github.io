@@ -55,7 +55,14 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
   </header>
 
   <section class="about wrap" aria-labelledby="sobre-mi">
-    <Image class="about-bg" src={img(site.about_background)} alt="" widths={[800, 1400, 2000]} sizes="100vw" />
+    <!-- En el celular la foto se recorta alrededor de Agustín y se ve más ampliada: necesita la versión grande. -->
+    <Image
+      class="about-bg"
+      src={img(site.about_background)}
+      alt=""
+      widths={[800, 1400, 2000]}
+      sizes="(max-width: 760px) 250vw, 100vw"
+    />
     <div class="about-in">
       <h2 id="sobre-mi" class="about-title wide">Sobre mí</h2>
       <p class="about-text">{site.bio_short}</p>
