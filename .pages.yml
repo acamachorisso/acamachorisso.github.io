@@ -1,6 +1,9 @@
 # Configuración del editor de la web (Pages CMS: https://app.pagescms.org).
 # Cada vez que Agustín guarda algo, Pages CMS hace un commit y GitHub Actions publica la web en 1 o 2 minutos.
 # Si un dato está mal, la publicación se frena y queda online la versión anterior.
+# Pages CMS guarda una copia de este archivo y solo la renueva cuando un push cambia .pages.yml
+# (le avisa el webhook de su app de GitHub). Si el editor muestra campos que ya no están acá,
+# alcanza con cambiar algo de este archivo, aunque sea un comentario, y hacer push.
 
 media:
   - name: fotos
