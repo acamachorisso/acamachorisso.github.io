@@ -168,5 +168,7 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
     menu.querySelector('[data-menu-close]')?.addEventListener('click', close);
     // Si la pantalla se agranda (girar la tablet), vuelve el menú de la compu.
     window.matchMedia('(min-width: 761px)').addEventListener('change', (e) => e.matches && menu.close());
+    // Al volver atrás, el navegador muestra la página tal como quedó, con el menú abierto: se cierra.
+    window.addEventListener('pageshow', (event) => event.persisted && menu.close());
   }
 </script>

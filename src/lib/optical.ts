@@ -17,3 +17,29 @@ export function leftBearing(text: string): number {
   const first = text.trim().charAt(0).toLocaleUpperCase('es');
   return LEFT_BEARING[first] ?? 0.06;
 }
+
+/**
+ * Ancho de cada letra en los mismos títulos, en em, con el espaciado de -0.05em incluido.
+ * Medido en el navegador (20 letras iguales seguidas, dividido por 20). La suma da un poco más que
+ * la palabra real (entre 0 y 8 %, porque algunos pares de letras se juntan), nunca menos.
+ */
+const GLYPH_WIDTH: Record<string, number> = {
+  A: 0.925, B: 0.906, C: 0.934, D: 0.925, E: 0.855, F: 0.791, G: 1.004, H: 0.981, I: 0.365,
+  J: 0.726, K: 0.943, L: 0.746, M: 1.14, N: 0.98, Ñ: 0.98, O: 1.005, P: 0.853, Q: 1.005,
+  R: 0.924, S: 0.859, T: 0.84, U: 0.96, V: 0.896, W: 1.205, X: 0.932, Y: 0.91, Z: 0.849,
+  Á: 0.925, É: 0.855, Í: 0.365, Ó: 1.005, Ú: 0.96, Ü: 0.96,
+  0: 0.778, 1: 0.695, 2: 0.775, 3: 0.781, 4: 0.773, 5: 0.781, 6: 0.783, 7: 0.708, 8: 0.795, 9: 0.783,
+  '&': 0.993, "'": 0.27, '.': 0.341, ',': 0.341, '-': 0.408, ':': 0.336, '!': 0.35, '¡': 0.35,
+  '?': 0.707, '¿': 0.707, '(': 0.363, ')': 0.363, '"': 0.514, '/': 0.3, '+': 0.728,
+};
+
+/**
+ * Ancho de la palabra más larga del título, en em: en el celular el título se achica lo justo para que
+ * esa palabra entre en el ancho de la pantalla (ver `.title.fit` en global.css). Una letra que no está
+ * en la tabla cuenta como una de las más anchas, para no quedarse corto.
+ */
+export function titleFit(text: string): number {
+  const words = text.toLocaleUpperCase('es').split(/\s+/);
+  const widths = words.map((word) => [...word].reduce((sum, c) => sum + (GLYPH_WIDTH[c] ?? 1.2), 0));
+  return Math.ceil(Math.max(1, ...widths) * 1000) / 1000;
+}

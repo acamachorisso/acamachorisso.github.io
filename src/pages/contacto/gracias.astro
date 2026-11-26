@@ -3,12 +3,13 @@
 import Base from '../../layouts/Base.astro';
 import Icon from '../../components/Icon.astro';
 import { withBase } from '../../lib/format';
+import { titleFit } from '../../lib/optical';
 ---
 
 <Base title="Mensaje enviado" current="contacto" noindex>
   <div class="simple wrap">
     <span class="caps mute">Contacto</span>
-    <h1 class="title wide">Gracias</h1>
+    <h1 class="title wide fit" style={`--fit: ${titleFit('Gracias')}`}>Gracias</h1>
     <p>Tu mensaje llegó. Te respondo a la brevedad por email.</p>
     <a class="line-link caps" href={withBase('/')}>
       Volver al inicio

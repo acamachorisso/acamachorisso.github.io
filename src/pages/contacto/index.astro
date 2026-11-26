@@ -6,6 +6,7 @@ import { WEB3FORMS_KEY } from '../../config';
 import { getSite } from '../../lib/content';
 import { handle, withBase } from '../../lib/format';
 import { maybeImg } from '../../lib/media';
+import { titleFit } from '../../lib/optical';
 
 const site = await getSite();
 const picture = maybeImg(site.contact_image);
@@ -18,7 +19,7 @@ const thanks = new URL(withBase('/contacto/gracias/'), Astro.site).href;
 <Base title="Contacto" description={`Escribile a ${site.name} para tu proyecto de foto o video.`} current="contacto">
   <div class="contact wrap">
     <div class="left">
-      <h1 class="title wide">Contacto</h1>
+      <h1 class="title wide fit" style={`--fit: ${titleFit('Contacto')}`}>Contacto</h1>
       {site.contact_intro && <p class="intro">{site.contact_intro}</p>}
 
       <form class="form" action="https://api.web3forms.com/submit" method="POST" data-contact-form data-email={site.email}>

@@ -9,7 +9,7 @@ import Viewer from '../../components/Viewer.astro';
 import { albumsLabel, getAlbumWarnings, getPhotoGroups, getUnusedPhotos, photosLabel, type Album, type CategoryGroup } from '../../lib/content';
 import { withBase } from '../../lib/format';
 import { img } from '../../lib/media';
-import { leftBearing } from '../../lib/optical';
+import { leftBearing, titleFit } from '../../lib/optical';
 
 type Props =
   | { kind: 'category'; group: CategoryGroup; groups: CategoryGroup[] }
@@ -86,7 +86,9 @@ const photos =
       <div class="page-head wrap cat-head">
         <span class="kicker caps mute">Fotos</span>
         <div class="head-row">
-          <h1 class="title title-md wide" style={`--lsb: ${leftBearing(categoryTitle)}em`}>{categoryTitle}</h1>
+          <h1 class="title title-md wide fit" style={`--lsb: ${leftBearing(categoryTitle)}em; --fit: ${titleFit(categoryTitle)}`}>
+            {categoryTitle}
+          </h1>
           <span class="caps mute">
             {albumsLabel(group.albums.length)} · {photosLabel(group.photoCount)}
           </span>
@@ -147,7 +149,7 @@ const photos =
           {categoryTitle}
         </a>
         <div class="head-row">
-          <h1 class="title wide">{props.album.data.title}</h1>
+          <h1 class="title wide fit" style={`--fit: ${titleFit(props.album.data.title)}`}>{props.album.data.title}</h1>
           <span class="caps mute">
             {[props.album.data.kind, photosLabel(props.album.data.photos.length)].filter(Boolean).join(' · ')}
           </span>

@@ -318,7 +318,10 @@ button {
   text-transform: inherit;
   cursor: pointer;
 }
+/* La flechita no cuenta para centrar: "Fotos" queda alineada con las demás palabras y la flecha a su derecha
+   (el margen negativo es el espacio de 6 px más los 10 px de la flecha). */
 .drawer-toggle svg {
+  margin-right: -16px;
   transition: transform 0.25s var(--ease);
 }
 .drawer-toggle:hover {
@@ -337,8 +340,21 @@ button {
   font-size: 12px;
   color: var(--mute);
 }
+/* En el celular, lo último que se tocó queda "con el mouse encima" y se pintaba de azul junto con la página
+   actual. En las pantallas táctiles el menú no se pinta al tocar: azul queda solo la página en la que estás. */
+@media (hover: none) {
+  .burger:hover,
+  .drawer-list a:hover,
+  .drawer-toggle:hover {
+    color: var(--fg);
+  }
+  .drawer-sub a:hover {
+    color: var(--mute);
+  }
+}
+/* Fotos va azul solo mientras está replegada (la página actual queda adentro); desplegada, solo la categoría. */
 .drawer a[aria-current],
-.drawer .is-current {
+.drawer .is-current[aria-expanded='false'] {
   color: var(--accent);
 }
 .menu-open {
@@ -361,15 +377,17 @@ button {
   flex-wrap: wrap;
 }
 .title {
+  /* El tamaño va en una variable para que el celular pueda achicarlo si no entra (ver `.title.fit`). */
+  --title-size: clamp(56px, 8.4vw, 136px);
   margin: 0;
-  font-size: clamp(56px, 8.4vw, 136px);
+  font-size: var(--title-size);
   line-height: 0.86;
   /* La primera letra grande tiene margen propio: se corre para que quede alineada con el texto chico. */
   margin-left: -0.035em;
 }
 /* Videos: mismo tamaño que "Videos" en el cuadro del inicio, para que no le gane a las secciones de abajo. */
 .title-md {
-  font-size: clamp(40px, 5.4vw, 84px);
+  --title-size: clamp(40px, 5.4vw, 84px);
   line-height: 0.88;
 }
 /* Categorías de Fotos: la etiqueta "Fotos" un poco más grande y pegada al título (14 px en vez de 32). */
@@ -1216,7 +1234,7 @@ a.short:focus-visible img {
   padding-block: 96px 120px;
 }
 .contact .title {
-  font-size: clamp(48px, 6.4vw, 104px);
+  --title-size: clamp(48px, 6.4vw, 104px);
   line-height: 0.88;
 }
 .left {
@@ -1501,6 +1519,16 @@ a.short:focus-visible img {
   }
   .page-head {
     padding-block: 56px 40px;
+  }
+  /* Los títulos grandes se achican lo justo para que su palabra más larga entre en el ancho de la pantalla:
+     "Inglaterra" o "Cimientos" se salían, y la página quedaba más ancha que el celular (se corría de costado
+     y el menú se abría corrido). --fit es el ancho de esa palabra en em (titleFit, en src/lib/optical.ts),
+     y 100cqw el ancho del bloque que contiene al título. */
+  :has(> .title.fit) {
+    container-type: inline-size;
+  }
+  .title.fit {
+    font-size: min(var(--title-size), 100cqw / var(--fit));
   }
   /* En el celular la foto va arriba, entera y sin oscurecer, y en su mitad de abajo se funde de a poco
      con el fondo; el título empieza sobre el final del degradado y el texto sigue sobre el fondo. */
