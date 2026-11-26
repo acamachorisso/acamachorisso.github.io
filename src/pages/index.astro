@@ -108,13 +108,23 @@ const poster = await getImage({ src: img(site.hero_poster), width: 1920, format:
 <script>
   // El video del inicio empieza a cargar cuando el resto de la página ya terminó:
   // primero se ven el nombre y la imagen fija, y enseguida arranca el video, sin sonido y en loop.
-  // Con "reducir movimiento" activado, queda la imagen fija.
+  // Arranca aunque el dispositivo tenga "reducir movimiento": en Windows se activa solo con apagar las
+  // animaciones del sistema, y Agustín quiere que el video se vea en todos lados (26/11).
   const video = document.querySelector<HTMLVideoElement>('[data-hero-video]');
   const start = () => {
-    if (!video?.dataset.src || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (!video?.dataset.src) return;
     video.src = video.dataset.src;
     video.muted = true;
-    video.play().catch(() => {});
+    video.play().catch(() => {
+      // Algunos celulares (el iPhone en ahorro de batería) no dejan que un video arranque solo:
+      // ahí arranca con el primer toque o tecla.
+      const events = ['touchend', 'click', 'keydown'];
+      const retry = () => {
+        video.play().catch(() => {});
+        for (const type of events) window.removeEventListener(type, retry, true);
+      };
+      for (const type of events) window.addEventListener(type, retry, { capture: true, passive: true });
+    });
   };
   if (document.readyState === 'complete') start();
   else window.addEventListener('load', start, { once: true });
