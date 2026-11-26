@@ -297,10 +297,35 @@ button {
   list-style: none;
   text-align: center;
 }
-.drawer-list a {
+.drawer-list a,
+.drawer-toggle {
   display: block;
   padding-block: 14px;
   font-size: 15px;
+}
+/* Fotos: un botón que se ve igual que los links, con la flechita de la compu, que gira al desplegarse. */
+.drawer-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding-inline: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-size: 15px;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+}
+.drawer-toggle svg {
+  transition: transform 0.25s var(--ease);
+}
+.drawer-toggle:hover {
+  color: var(--accent);
+}
+.drawer-toggle[aria-expanded='true'] svg {
+  transform: rotate(180deg);
 }
 .drawer-sub {
   margin: -4px 0 6px;
@@ -313,7 +338,7 @@ button {
   color: var(--mute);
 }
 .drawer a[aria-current],
-.drawer a.is-current {
+.drawer .is-current {
   color: var(--accent);
 }
 .menu-open {

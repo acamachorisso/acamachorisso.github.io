@@ -62,14 +62,24 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
       {
         nav.map((item) => (
           <li>
-            <a
-              href={withBase(item.href)}
-              class:list={{ 'is-current': current === item.key }}
-              aria-current={current === item.key && !currentSub ? 'page' : undefined}>
-              {item.label}
-            </a>
+            {item.children ? (
+              // Fotos lleva la flechita, como en la compu: al tocarlo se despliegan sus categorías.
+              <button
+                class:list={['drawer-toggle', { 'is-current': current === item.key }]}
+                type="button"
+                aria-expanded="false"
+                aria-controls={`drawer-${item.key}`}
+                data-menu-toggle>
+                {item.label}
+                <Icon name="chevron" size={10} />
+              </button>
+            ) : (
+              <a href={withBase(item.href)} aria-current={current === item.key ? 'page' : undefined}>
+                {item.label}
+              </a>
+            )}
             {item.children && (
-              <ul class="drawer-sub">
+              <ul class="drawer-sub" id={`drawer-${item.key}`} hidden>
                 {item.children.map((child) => (
                   <li>
                     <a href={withBase(child.href)} aria-current={currentSub === child.key ? 'page' : undefined}>
@@ -146,6 +156,14 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
       const box = menu.getBoundingClientRect();
       if (event.target === menu && event.clientX < box.left) close();
     });
+    // Fotos: despliega y repliega sus categorías.
+    for (const toggle of menu.querySelectorAll<HTMLButtonElement>('[data-menu-toggle]')) {
+      toggle.addEventListener('click', () => {
+        const expanded = toggle.getAttribute('aria-expanded') !== 'true';
+        toggle.setAttribute('aria-expanded', String(expanded));
+        document.getElementById(toggle.getAttribute('aria-controls') ?? '')?.toggleAttribute('hidden', !expanded);
+      });
+    }
     document.querySelector('[data-menu-open]')?.addEventListener('click', open);
     menu.querySelector('[data-menu-close]')?.addEventListener('click', close);
     // Si la pantalla se agranda (girar la tablet), vuelve el menú de la compu.
