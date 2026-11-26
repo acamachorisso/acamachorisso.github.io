@@ -41,6 +41,8 @@ const shareUrl = new URL(share.src, Astro.site);
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <!-- Con JavaScript, el celular usa el menú de tres líneas; sin JavaScript queda el menú común (ver global.css). -->
+    <script is:inline>document.documentElement.classList.add('js');</script>
     <link rel="preload" href={archivoLatin} as="font" type="font/woff2" crossorigin />
     <title>{fullTitle}</title>
     <meta name="description" content={desc} />

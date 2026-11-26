@@ -17,7 +17,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 - Fotos en `src/assets/`, optimizadas por Astro (sharp). Videos MP4 en `public/videos/`.
 - Editor: Pages CMS (`.pages.yml`), con etiquetas en español.
 - Deploy: GitHub Actions a GitHub Pages. `site` y `base` se configuran en `astro.config.mjs` (y `BASE` en `scripts/check-links.mjs`).
-- CSS propio en `src/styles/global.css`, sin Tailwind ni React. JS solo en: menú que se esconde al bajar (`src/components/Nav.astro`), visor de fotos y videos (`src/components/Viewer.astro`, con `<dialog>`), flechas del carrusel, formulario y arranque del video del inicio (arranca también con "reducir movimiento", a pedido de Agustín). Sin JS, todo se ve y los links llevan a la foto, al MP4 o a YouTube.
+- CSS propio en `src/styles/global.css`, sin Tailwind ni React. JS solo en: menú que se esconde al bajar y menú del celular con las tres líneas (`src/components/Nav.astro`), visor de fotos y videos (`src/components/Viewer.astro`, con `<dialog>`), flechas del carrusel, formulario y arranque del video del inicio (arranca también con "reducir movimiento", a pedido de Agustín). Sin JS, todo se ve y los links llevan a la foto, al MP4 o a YouTube.
 
 ## Reglas que no se discuten
 

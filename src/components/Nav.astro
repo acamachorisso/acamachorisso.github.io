@@ -40,7 +40,7 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
             </ul>
           </li>
         ) : (
-          <li class={item.key === 'inicio' ? 'home-link' : undefined}>
+          <li>
             <a class="menu-link" href={withBase(item.href)} aria-current={current === item.key ? 'page' : undefined}>
               {item.label}
             </a>
@@ -49,6 +49,41 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
       )
     }
   </ul>
+
+  <!-- Celular: botón de tres líneas que abre el menú en un panel desde la derecha (como en la web de Reilin Joey). -->
+  <button class="burger" type="button" aria-label="Abrir menú" aria-haspopup="dialog" data-menu-open>
+    <Icon name="menu" size={24} />
+  </button>
+  <dialog class="drawer" aria-label="Menú" data-menu>
+    <button class="burger drawer-close" type="button" aria-label="Cerrar menú" data-menu-close>
+      <Icon name="close" size={24} />
+    </button>
+    <ul class="drawer-list caps">
+      {
+        nav.map((item) => (
+          <li>
+            <a
+              href={withBase(item.href)}
+              class:list={{ 'is-current': current === item.key }}
+              aria-current={current === item.key && !currentSub ? 'page' : undefined}>
+              {item.label}
+            </a>
+            {item.children && (
+              <ul class="drawer-sub">
+                {item.children.map((child) => (
+                  <li>
+                    <a href={withBase(child.href)} aria-current={currentSub === child.key ? 'page' : undefined}>
+                      {child.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+  </dialog>
 </nav>
 
 <script>
@@ -78,5 +113,42 @@ const [nav, site] = await Promise.all([getNav(), getSite()]);
     );
     nav.addEventListener('focusin', () => nav.classList.remove('is-hidden'));
     update();
+  }
+
+  // Menú del celular: el panel entra desde la derecha y cubre parte de la pantalla; se cierra con la X,
+  // tocando afuera, con Escape o al elegir una página. Mientras está abierto, la página no se mueve.
+  const drawer = document.querySelector<HTMLDialogElement>('[data-menu]');
+  if (drawer) {
+    const menu = drawer;
+    const root = document.documentElement;
+    const open = () => {
+      menu.classList.remove('is-closing');
+      menu.showModal();
+      root.classList.add('menu-open');
+    };
+    const close = () => {
+      if (!menu.open || menu.classList.contains('is-closing')) return;
+      menu.classList.add('is-closing');
+      // Sale deslizándose; con "reducir movimiento" la animación dura casi nada y cierra enseguida.
+      menu.addEventListener('animationend', () => menu.close(), { once: true });
+    };
+    menu.addEventListener('close', () => {
+      menu.classList.remove('is-closing');
+      root.classList.remove('menu-open');
+    });
+    // Escape: se cierra con la misma animación.
+    menu.addEventListener('cancel', (event) => {
+      event.preventDefault();
+      close();
+    });
+    // Un toque en el velo (fuera del panel) cierra.
+    menu.addEventListener('click', (event) => {
+      const box = menu.getBoundingClientRect();
+      if (event.target === menu && event.clientX < box.left) close();
+    });
+    document.querySelector('[data-menu-open]')?.addEventListener('click', open);
+    menu.querySelector('[data-menu-close]')?.addEventListener('click', close);
+    // Si la pantalla se agranda (girar la tablet), vuelve el menú de la compu.
+    window.matchMedia('(min-width: 761px)').addEventListener('change', (e) => e.matches && menu.close());
   }
 </script>

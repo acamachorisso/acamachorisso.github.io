@@ -218,6 +218,108 @@ button {
   color: var(--accent);
 }
 
+/* Menú del celular (ver Nav.astro): tres líneas a la derecha y un panel que entra desde la derecha,
+   como en la web de Reilin Joey: no ocupa toda la pantalla y deja un velo sobre el resto. */
+.burger {
+  display: none;
+  width: 40px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  margin-right: -8px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--fg);
+  cursor: pointer;
+}
+.burger:hover {
+  color: var(--accent);
+}
+.drawer {
+  position: fixed;
+  inset: 0 0 0 auto;
+  width: min(81vw, 340px);
+  max-width: none;
+  height: 100dvh;
+  max-height: none;
+  margin: 0;
+  padding: 0 var(--gutter) 40px;
+  overflow-y: auto;
+  border: 0;
+  border-left: 1px solid var(--line);
+  background: var(--panel);
+  color: var(--fg);
+}
+.drawer[open] {
+  animation: drawer-in 0.35s var(--ease);
+}
+.drawer.is-closing {
+  animation: drawer-out 0.25s ease-in forwards;
+}
+.drawer::backdrop {
+  background: rgba(242, 242, 240, 0.22);
+  animation: veil-in 0.35s ease;
+}
+.drawer.is-closing::backdrop {
+  animation: veil-out 0.25s ease-in forwards;
+}
+@keyframes drawer-in {
+  from {
+    transform: translateX(100%);
+  }
+}
+@keyframes drawer-out {
+  to {
+    transform: translateX(100%);
+  }
+}
+@keyframes veil-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes veil-out {
+  to {
+    opacity: 0;
+  }
+}
+/* La X queda justo donde estaban las tres líneas. */
+.drawer-close {
+  display: flex;
+  position: absolute;
+  top: 22px;
+  right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+.drawer-list {
+  margin: 0;
+  padding: 96px 0 0;
+  list-style: none;
+  text-align: center;
+}
+.drawer-list a {
+  display: block;
+  padding-block: 14px;
+  font-size: 15px;
+}
+.drawer-sub {
+  margin: -4px 0 6px;
+  padding: 0;
+  list-style: none;
+}
+.drawer-sub a {
+  padding-block: 9px;
+  font-size: 12px;
+  color: var(--mute);
+}
+.drawer a[aria-current],
+.drawer a.is-current {
+  color: var(--accent);
+}
+.menu-open {
+  overflow: hidden;
+}
+
 /* ---------- Títulos y piezas comunes ---------- */
 
 .page-head {
@@ -1355,11 +1457,16 @@ a.short:focus-visible img {
   :root {
     --gutter: 20px;
   }
+  /* En el celular, el menú va compactado en las tres líneas (necesita JavaScript para abrirse). */
+  .js .menu {
+    display: none;
+  }
+  .js .burger {
+    display: flex;
+  }
+  /* Sin JavaScript queda el menú común, más chico. */
   .menu {
     gap: 14px;
-  }
-  .menu .home-link {
-    display: none;
   }
   .menu-link {
     font-size: 12px;
