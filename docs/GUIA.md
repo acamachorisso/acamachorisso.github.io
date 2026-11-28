@@ -40,9 +40,9 @@ A la izquierda vas a ver:
 
 ### Antes de subir: exportá bien las fotos
 
-- **JPG**, con el lado más largo en **2500 px** y calidad de 80 a 85 % (en Lightroom: Exportar → Cambiar tamaño → Lado largo 2500 px).
+- **JPG**, con el lado más largo en **2500 px** y calidad de 80 a 85 % (en Lightroom: Exportar → Cambiar tamaño → Lado largo 2500 px). Así pesan menos de 1 MB.
+- **Cada foto, hasta 3 MB.** El editor no sube archivos más pesados: tira **error 413** (quiere decir "archivo demasiado grande"). Las fotos tal cual salen de la cámara (20 MB) no entran; exportalas a 2500 px y listo. La web no necesita más: igual las achica.
 - Las fotos **.HEIC** del iPhone no sirven: exportalas como JPG.
-- Si subís una foto enorme (20 MB), la web igual la achica, pero tarda más en publicarse.
 
 ### Crear un álbum
 
@@ -98,12 +98,21 @@ Sacar una foto del álbum **no la borra**: sigue guardada y ocupa lugar. Para bo
 
 1. Exportalo en **MP4 (H.264)**, lo más liviano posible. Para los cortos, menos de 15 MB. Los **.MOV** del celular no sirven.
 2. **Videos** → **Add an entry** → título.
-3. **Archivo MP4**: subilo.
+3. **Archivo MP4**: subilo. El editor sube **hasta 3 MB**; si pesa más, tira **error 413**. En ese caso, subilo desde GitHub (ver [Videos de más de 3 MB](#videos-de-más-de-3-mb)) y después elegilo acá de la lista.
 4. **Portada**: obligatoria. Es un cuadro del video en JPG.
 5. **Save**. La duración se calcula sola.
 6. Sumalo a su sección, como en el paso 6 de arriba.
 
 Cada video lleva **un link de YouTube o un MP4, no los dos**.
+
+### Videos de más de 3 MB
+
+El editor no sube archivos de más de 3 MB (tira **error 413**), y casi todos los MP4 pesan más. Se suben desde la web de GitHub, que acepta hasta 25 MB:
+
+1. Poné al archivo un nombre en minúsculas, sin espacios ni tildes, con guiones: por ejemplo `be-like-me.mp4`.
+2. Entrá a **https://github.com/acamachorisso/acamachorisso.github.io/tree/main/public/videos** con tu cuenta.
+3. **Add file** → **Upload files** → arrastrá el MP4 → **Commit changes**.
+4. Volvé al editor: en **Archivo MP4** (o **Video del inicio**), tocá para elegir un archivo y el video ya aparece en la lista. Elegilo y guardá.
 
 ### Créditos (opcional)
 
@@ -134,7 +143,7 @@ Salen chicos debajo del título cuando se abre el video.
 Es el video que se ve atrás de tu nombre: corto, sin sonido y en loop.
 
 1. Exportalo así: **MP4 (H.264), 1080p, sin audio, de 10 a 20 segundos y de menos de 15 MB**.
-2. **Datos generales** → **Video del inicio** → sacá el actual con el tacho y subí el nuevo con **Upload**.
+2. **Datos generales** → **Video del inicio** → sacá el actual con el tacho y subí el nuevo con **Upload**. Si pesa más de 3 MB, el editor tira **error 413**: subilo desde GitHub (ver [Videos de más de 3 MB](#videos-de-más-de-3-mb)) y elegilo de la lista.
 3. **Imagen del video del inicio**: subí un cuadro del video en JPG. Se ve mientras el video carga y en celulares con ahorro de batería.
 4. **Save**.
 
@@ -158,6 +167,13 @@ Ahí están los textos y las fotos fijas de la web:
 - **Imagen al compartir el link**: la que aparece cuando alguien pega el link de tu web en WhatsApp o Instagram.
 
 Los mensajes del formulario de Contacto llegan a **acamacho.contacto@gmail.com**. Si querés cambiar esa casilla, hay que hacerlo en Web3Forms: pedíselo a Juani.
+
+## Si el editor tira "error 413" al subir
+
+El archivo pesa más de 3 MB, el máximo que sube el editor (el mensaje lo pone el editor, en inglés, y no se puede cambiar).
+
+- **Fotos**: exportalas en JPG a 2500 px del lado más largo (ver [Antes de subir](#antes-de-subir-exportá-bien-las-fotos)).
+- **Videos**: subilos desde GitHub (ver [Videos de más de 3 MB](#videos-de-más-de-3-mb)).
 
 ## Si algo no se publica
 

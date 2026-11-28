@@ -203,7 +203,7 @@ Son unas 33 horas en total. Con Claude Code, el tiempo de Juani se estima en 13 
 | --- | --- |
 | El repo crece mucho con videos y fotos | GitHub Pages admite sitios de hasta 1 GB. Los videos se comprimen antes de subirlos y las fotos originales se achican a 2500 px. Si se acerca al límite, los videos cortos pasan a YouTube Shorts o a un hosting de video |
 | Pages CMS no deja subir videos grandes desde la compu | Se prueba en la etapa 5. Si falla, los videos se suben desde github.com o los sube Juani |
-| Agustín sube fotos sin achicar (20 MB cada una) | El build las optimiza igual. La guía explica cómo exportarlas a 2500 px |
+| Agustín sube fotos sin achicar (20 MB cada una) | Pages CMS corre en Vercel y no sube archivos de más de 4,5 MB por pedido (unos 3 MB de archivo, porque va en base64): tira "error 413" y el mensaje no se puede cambiar. Lo descubrimos el 27/11. La guía y las descripciones de los campos avisan el límite y explican cómo exportar las fotos a 2500 px (menos de 1 MB). Los MP4 de más de 3 MB se suben desde la web de GitHub (hasta 25 MB) y se eligen de la lista en el editor |
 | Pages CMS no deja subir muchas fotos juntas o reordenar cómodo | Se prueba en la etapa 5, antes de escribir la guía. Si la subida múltiple falla, se suben arrastrando la carpeta en github.com (hasta 100 archivos por vez) y se ordenan en el editor |
 | El selector de categoría o sección no anda bien en Pages CMS | Se prueba en la etapa 5. Si falla, se usa un campo de texto con la lista de opciones válidas en la ayuda, y el build frena si el nombre no existe |
 | El showreel no está listo | El inicio sigue con el clip actual; cambiarlo es reemplazar un archivo |

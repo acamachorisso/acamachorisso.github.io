@@ -60,14 +60,14 @@ content:
         label: Portada
         type: image
         required: true
-        description: La foto que se ve en la lista de álbumes. Se recorta a 3:2 desde el centro.
+        description: "La foto que se ve en la lista de álbumes. Se recorta a 3:2 desde el centro. JPG a 2500 px, hasta 3 MB: si pesa más, el editor tira error 413."
         options:
           media: fotos
       - name: photos
         label: Fotos
         type: image
         required: true
-        description: "Subí varias a la vez (JPG, 2500 px del lado más largo). Arrastralas para cambiar el orden: así se ven en la web. Las fotos del iPhone en .HEIC no sirven: exportalas como JPG."
+        description: "Subí varias a la vez (JPG, 2500 px del lado más largo, hasta 3 MB cada una: si pesa más, el editor tira error 413). Arrastralas para cambiar el orden: así se ven en la web. Las fotos del iPhone en .HEIC no sirven: exportalas como JPG."
         options:
           media: fotos
           multiple: true
@@ -139,13 +139,13 @@ content:
       - name: file
         label: Archivo MP4
         type: file
-        description: "Para videos que no están en YouTube. Exportalo en MP4 (H.264), lo más liviano posible: los videos cortos, de menos de 15 MB. Los .MOV del celular no sirven."
+        description: "Para videos que no están en YouTube. Exportalo en MP4 (H.264), lo más liviano posible: los videos cortos, de menos de 15 MB. Los .MOV del celular no sirven. El editor sube hasta 3 MB (si pesa más, tira error 413): subilo desde GitHub, como dice la guía, y elegilo acá de la lista."
         options:
           media: videos
       - name: poster
         label: Portada
         type: image
-        description: "Un cuadro del video en JPG. Obligatoria para los MP4 y los Próximamente. Con YouTube, si la dejás vacía, se usa la miniatura de YouTube."
+        description: "Un cuadro del video en JPG, hasta 3 MB. Obligatoria para los MP4 y los Próximamente. Con YouTube, si la dejás vacía, se usa la miniatura de YouTube."
         options:
           media: portadas
       - name: note
@@ -258,14 +258,14 @@ content:
         label: Video del inicio
         type: file
         required: true
-        description: "El video de fondo, sin sonido y en loop. MP4 en 1080p, sin audio, de 10 a 20 segundos y menos de 15 MB. Si pesa más de 20 MB, la publicación se frena."
+        description: "El video de fondo, sin sonido y en loop. MP4 en 1080p, sin audio, de 10 a 20 segundos y menos de 15 MB. Si pesa más de 20 MB, la publicación se frena. El editor sube hasta 3 MB (si pesa más, tira error 413): subilo desde GitHub, como dice la guía, y elegilo acá de la lista."
         options:
           media: videos
       - name: hero_poster
         label: Imagen del video del inicio
         type: image
         required: true
-        description: Un cuadro del video. Se ve mientras el video carga y cuando el celular está en ahorro de batería.
+        description: Un cuadro del video, en JPG de hasta 3 MB. Se ve mientras el video carga y cuando el celular está en ahorro de batería.
         options:
           media: imagenes
       - name: showreel
@@ -285,26 +285,28 @@ content:
         label: Foto de fondo de Sobre mí (inicio)
         type: image
         required: true
-        description: Horizontal. El texto va a la izquierda, así que conviene que lo importante esté a la derecha.
+        description: Horizontal, en JPG de hasta 3 MB. El texto va a la izquierda, así que conviene que lo importante esté a la derecha.
         options:
           media: imagenes
       - name: videos_cover
         label: Foto del acceso a Videos (inicio)
         type: image
         required: true
+        description: JPG de hasta 3 MB (si pesa más, el editor tira error 413).
         options:
           media: imagenes
       - name: photos_cover
         label: Foto del acceso a Fotos (inicio)
         type: image
         required: true
+        description: JPG de hasta 3 MB (si pesa más, el editor tira error 413).
         options:
           media: imagenes
       - name: portrait
         label: Retrato (Sobre mí)
         type: image
         required: true
-        description: Vertical. Se recorta a 7:8 desde el centro.
+        description: Vertical, en JPG de hasta 3 MB. Se recorta a 7:8 desde el centro.
         options:
           media: imagenes
       - name: bio_lead

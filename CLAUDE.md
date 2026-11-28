@@ -28,6 +28,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 - Cada categoría lista sus álbumes y cada sección sus videos, en orden (en el editor se arrastran). Un álbum o video va en una sola lista; si no está en ninguna, no se ve.
 - Categorías y álbumes comparten `/fotos/<nombre>/`: si coinciden, el build frena con un error que dice cuál cambiar.
 - Cada video lleva un link de YouTube **o** un MP4. Los MP4 y los "Próximamente" necesitan portada. El video del inicio, hasta 20 MB; los demás, hasta 95 MB (GitHub bloquea más de 100 MB).
+- El editor (Pages CMS, en Vercel) no sube archivos de más de unos 3 MB: tira "error 413". Fotos: JPG a 2500 px. MP4 más pesados: se suben desde la web de GitHub y se eligen en el editor (ver la guía).
 - Los errores de contenido dicen qué archivo y qué campo arreglar, en palabras que entienda Agustín.
 - La clave de Web3Forms va en `src/config.ts` a propósito: igual es pública en el HTML.
 - Accesibilidad y rendimiento: HTML semántico, teclado, contraste de 4.5 a 1, Lighthouse 90 o más.
