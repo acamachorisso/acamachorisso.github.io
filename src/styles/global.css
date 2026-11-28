@@ -293,9 +293,11 @@ button {
 }
 .drawer-list {
   margin: 0;
-  padding: 96px 0 0;
+  /* Alineado a la izquierda: centradas, las palabras de distinto largo (y la flechita de Fotos)
+     no se veían centradas al ojo. */
+  padding: 96px 0 0 24px;
   list-style: none;
-  text-align: center;
+  text-align: left;
 }
 .drawer-list a,
 .drawer-toggle {
@@ -319,10 +321,7 @@ button {
   text-transform: inherit;
   cursor: pointer;
 }
-/* La flechita no cuenta para centrar: "Fotos" queda alineada con las demás palabras y la flecha a su derecha
-   (el margen negativo es el espacio de 6 px más los 12 px de la flecha). */
 .drawer-toggle svg {
-  margin-right: -18px;
   transition: transform 0.25s var(--ease);
 }
 .drawer-toggle:hover {
@@ -333,7 +332,8 @@ button {
 }
 .drawer-sub {
   margin: -4px 0 6px;
-  padding: 0;
+  /* Las categorías van un poco adentro, debajo de Fotos. */
+  padding: 0 0 0 16px;
   list-style: none;
 }
 .drawer-sub a {
@@ -1566,15 +1566,9 @@ a.short:focus-visible img {
   .about-in {
     padding-block: 0 16px;
   }
-  /* En el celular el texto va justificado (el título no). Como la columna es angosta, las palabras se
-     cortan con guion al final del renglón, como en un libro, para que no queden espacios muy grandes. */
-  .about-text {
-    text-align: justify;
-  }
-  .about-text,
+  /* En el celular el texto de la página Sobre mí va alineado a la izquierda (en la compu, justificado). */
   .body {
-    -webkit-hyphens: auto;
-    hyphens: auto;
+    text-align: left;
   }
   .tiles,
   .grid {
@@ -1638,13 +1632,29 @@ a.short:focus-visible img {
   }
   .foot-id {
     grid-column: 1 / -1;
+    /* "Fotógrafo — Filmmaker" apenas más pegado al nombre. */
+    gap: 8px;
   }
-  /* El copyright va al final de la página, sobre la derecha. */
+  /* Redes, contra el margen derecho (alineada con el copyright). */
+  .foot-social {
+    justify-self: end;
+  }
+  /* Páginas, un poquito más arriba, siempre en la tercera fila (aunque no haya Redes),
+     y el copyright en esa misma fila, a la derecha, a la altura de su último link. */
+  .foot-pages {
+    grid-row: 3;
+    grid-column: 1;
+    margin-top: -8px;
+  }
+  .foot-pages,
   .foot-brand .copy {
-    order: 1;
+    align-self: end;
+    align-self: last baseline;
+  }
+  .foot-brand .copy {
+    grid-row: 3;
     grid-column: 1 / -1;
     justify-self: end;
-    margin-top: 16px;
   }
 }
 

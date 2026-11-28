@@ -23,7 +23,7 @@ const copyRow = 1 + (site.links.length || 2);
     </div>
     <p class="copy">© {year} {site.name}</p>
   </div>
-  <div>
+  <div class="foot-contact">
     <h2 class="caps">Contacto</h2>
     <ul>
       <li><a href={withBase('/contacto/')}>Escribime</a></li>
@@ -36,7 +36,7 @@ const copyRow = 1 + (site.links.length || 2);
   </div>
   {
     site.links.length > 0 && (
-      <div>
+      <div class="foot-social">
         <h2 class="caps">Redes</h2>
         <ul>
           {site.links.map((l) => (
@@ -50,7 +50,7 @@ const copyRow = 1 + (site.links.length || 2);
       </div>
     )
   }
-  <div>
+  <div class="foot-pages">
     <h2 class="caps">Páginas</h2>
     <ul>
       {
