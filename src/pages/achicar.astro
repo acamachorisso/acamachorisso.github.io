@@ -1,0 +1,294 @@
+---
+// Herramienta para Agustín: achica fotos en el navegador (sin subirlas a ningún lado) para que entren en el
+// editor, que no sube archivos de más de 3 MB. No está en el menú ni en Google; el link está en el editor.
+import Base from '../layouts/Base.astro';
+import { titleFit } from '../lib/optical';
+---
+
+<Base title="Achicar fotos" noindex>
+  <div class="simple wrap shrink">
+    <span class="caps mute">Herramienta</span>
+    <h1 class="title wide fit" style={`--fit: ${titleFit('Achicar fotos')}`}>Achicar fotos</h1>
+    <p>
+      El editor no sube fotos de más de 3 MB. Arrastrá acá todas las fotos juntas, aunque sean cientos: se achican en tu
+      compu, sin subirse a ningún lado, y te llevás un .zip con todas listas para el editor.
+    </p>
+
+    <label class="drop" data-drop>
+      <input class="drop-input" type="file" accept="image/*" multiple data-files />
+      <span class="drop-big">Arrastrá las fotos acá</span>
+      <span class="caps mute">o tocá para elegirlas</span>
+    </label>
+    <label class="line-link caps folder">
+      <input class="drop-input" type="file" multiple data-folder />
+      Elegir una carpeta entera
+    </label>
+
+    <div class="shrink-status" aria-live="polite" data-status hidden>
+      <p data-progress-text></p>
+      <progress max="1" value="0" data-progress></progress>
+    </div>
+    <ul class="shrink-out" data-out></ul>
+    <p class="shrink-skip mute" data-skip hidden></p>
+
+    <p class="shrink-note mute">
+      Quedan en JPG, con el lado más largo en 3000 px y calidad 90 (la web muestra hasta 2560 px, así que se ven igual que
+      el original). Las que ya son chicas quedan como están.
+    </p>
+    <noscript><p>Esta herramienta necesita JavaScript.</p></noscript>
+  </div>
+</Base>
+
+<script>
+  // Lado más largo y calidad de las fotos que salen, y peso hasta el que una foto se deja como está.
+  const MAX_SIDE = 3000;
+  const QUALITY = 0.9;
+  const KEEP_UNDER = 2.5 * 1024 * 1024;
+  // Cada .zip, hasta unos 400 MB (los navegadores manejan mejor archivos de ese tamaño).
+  const ZIP_LIMIT = 400 * 1024 * 1024;
+
+  const $ = <T extends HTMLElement>(sel: string) => document.querySelector<T>(sel)!;
+  const drop = $<HTMLLabelElement>('[data-drop]');
+  const status = $('[data-status]');
+  const progressText = $('[data-progress-text]');
+  const progress = $<HTMLProgressElement>('[data-progress]');
+  const out = $<HTMLUListElement>('[data-out]');
+  const skip = $('[data-skip]');
+  let busy = false;
+
+  // ---------- Achicar una foto ----------
+
+  const canvasOf = (w: number, h: number) => {
+    const c = document.createElement('canvas');
+    c.width = w;
+    c.height = h;
+    return c;
+  };
+
+  const toJpeg = (canvas: HTMLCanvasElement) =>
+    new Promise<Blob>((resolve, reject) =>
+      canvas.toBlob((b) => (b ? resolve(b) : reject(new Error('no se pudo guardar'))), 'image/jpeg', QUALITY),
+    );
+
+  /** Devuelve la foto lista: la misma si ya es chica, o una JPG achicada (girada según la cámara). */
+  async function shrink(file: File): Promise<Blob> {
+    const bitmap = await createImageBitmap(file);
+    try {
+      const { width, height } = bitmap;
+      const scale = Math.min(1, MAX_SIDE / Math.max(width, height));
+      const isJpeg = /jpe?g$/i.test(file.type) || /\.jpe?g$/i.test(file.name);
+      if (scale === 1 && file.size <= KEEP_UNDER && isJpeg) return file;
+      const tw = Math.round(width * scale);
+      const th = Math.round(height * scale);
+      // Se achica a la mitad varias veces y recién al final al tamaño justo: así queda nítida, sin serrucho.
+      let source: CanvasImageSource = bitmap;
+      let w = width;
+      let h = height;
+      const steps: HTMLCanvasElement[] = [];
+      while (w / 2 >= tw) {
+        w = Math.round(w / 2);
+        h = Math.round(h / 2);
+        const step = canvasOf(w, h);
+        const ctx = step.getContext('2d')!;
+        ctx.imageSmoothingQuality = 'high';
+        ctx.drawImage(source, 0, 0, w, h);
+        steps.push(step);
+        source = step;
+      }
+      const final = canvasOf(tw, th);
+      const ctx = final.getContext('2d')!;
+      ctx.fillStyle = '#fff'; // Un PNG con transparencia queda sobre blanco.
+      ctx.fillRect(0, 0, tw, th);
+      ctx.imageSmoothingQuality = 'high';
+      ctx.drawImage(source, 0, 0, tw, th);
+      const blob = await toJpeg(final);
+      for (const c of [...steps, final]) c.width = c.height = 0; // Libera memoria enseguida.
+      return blob;
+    } finally {
+      bitmap.close();
+    }
+  }
+
+  // ---------- Zip sin compresión (las JPG ya vienen comprimidas) ----------
+
+  const CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xedb88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  const crc32 = (bytes: Uint8Array) => {
+    let c = 0xffffffff;
+    for (let i = 0; i < bytes.length; i++) c = CRC_TABLE[(c ^ bytes[i]) & 0xff] ^ (c >>> 8);
+    return (c ^ 0xffffffff) >>> 0;
+  };
+
+  class Zip {
+    parts: BlobPart[] = [];
+    central: BlobPart[] = [];
+    centralSize = 0;
+    offset = 0;
+    count = 0;
+    get size() {
+      return this.offset;
+    }
+    async add(name: string, blob: Blob) {
+      const data = new Uint8Array(await blob.arrayBuffer());
+      const nameBytes = new TextEncoder().encode(name);
+      const crc = crc32(data);
+      const now = new Date();
+      const time = (now.getHours() << 11) | (now.getMinutes() << 5) | (now.getSeconds() >> 1);
+      const date = ((now.getFullYear() - 1980) << 9) | ((now.getMonth() + 1) << 5) | now.getDate();
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint16(6, 0x0800, true); // Nombres en UTF-8 (tildes y eñes).
+      local.setUint16(8, 0, true);
+      local.setUint16(10, time, true);
+      local.setUint16(12, date, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, data.length, true);
+      local.setUint32(22, data.length, true);
+      local.setUint16(26, nameBytes.length, true);
+      local.setUint16(28, 0, true);
+      const entry = new DataView(new ArrayBuffer(46));
+      entry.setUint32(0, 0x02014b50, true);
+      entry.setUint16(4, 20, true);
+      entry.setUint16(6, 20, true);
+      entry.setUint16(8, 0x0800, true);
+      entry.setUint16(10, 0, true);
+      entry.setUint16(12, time, true);
+      entry.setUint16(14, date, true);
+      entry.setUint32(16, crc, true);
+      entry.setUint32(20, data.length, true);
+      entry.setUint32(24, data.length, true);
+      entry.setUint16(28, nameBytes.length, true);
+      entry.setUint32(42, this.offset, true);
+      this.parts.push(local.buffer, nameBytes, data);
+      this.central.push(entry.buffer, nameBytes);
+      this.centralSize += 46 + nameBytes.length;
+      this.offset += 30 + nameBytes.length + data.length;
+      this.count++;
+    }
+    finish() {
+      const cdSize = this.centralSize;
+      const end = new DataView(new ArrayBuffer(22));
+      end.setUint32(0, 0x06054b50, true);
+      end.setUint16(8, this.count, true);
+      end.setUint16(10, this.count, true);
+      end.setUint32(12, cdSize, true);
+      end.setUint32(16, this.offset, true);
+      return new Blob([...this.parts, ...this.central, end.buffer], { type: 'application/zip' });
+    }
+  }
+
+  // ---------- Pantalla ----------
+
+  const mb = (bytes: number) => `${(bytes / 1024 / 1024).toLocaleString('es', { maximumFractionDigits: 1 })} MB`;
+
+  function offer(zip: Zip, index: number, total: number) {
+    const name = total > 1 ? `fotos-achicadas-${index}.zip` : 'fotos-achicadas.zip';
+    const url = URL.createObjectURL(zip.finish());
+    const li = document.createElement('li');
+    const a = document.createElement('a');
+    a.className = 'btn solid caps';
+    a.href = url;
+    a.download = name;
+    a.textContent = `Descargar ${name}`;
+    const info = document.createElement('span');
+    info.className = 'mute';
+    info.textContent = `${zip.count} ${zip.count === 1 ? 'foto' : 'fotos'} · ${mb(zip.size)}`;
+    li.append(a, info);
+    out.append(li);
+  }
+
+  async function run(list: FileList | File[]) {
+    const files = [...list].filter((f) => f.type.startsWith('image/') || /\.(jpe?g|png|webp|heic|heif|tiff?)$/i.test(f.name));
+    if (busy || files.length === 0) return;
+    busy = true;
+    drop.classList.add('is-busy');
+    out.replaceChildren();
+    skip.hidden = true;
+    status.hidden = false;
+    progress.max = files.length;
+    const failed: string[] = [];
+    const used = new Set<string>();
+    const zips: Zip[] = [new Zip()];
+    let before = 0;
+    let after = 0;
+    for (const [i, file] of files.entries()) {
+      progress.value = i;
+      progressText.textContent = `Achicando ${i + 1} de ${files.length}: ${file.name}`;
+      try {
+        const blob = await shrink(file);
+        // Mismo nombre, en .jpg; si dos se llaman igual (de carpetas distintas), la segunda lleva "-2".
+        const base = file.name.replace(/\.[^.]+$/, '') || 'foto';
+        let name = `${base}.jpg`;
+        for (let n = 2; used.has(name.toLowerCase()); n++) name = `${base}-${n}.jpg`;
+        used.add(name.toLowerCase());
+        let zip = zips[zips.length - 1];
+        if (zip.size + blob.size > ZIP_LIMIT && zip.count > 0) zips.push((zip = new Zip()));
+        await zip.add(name, blob);
+        before += file.size;
+        after += blob.size;
+      } catch {
+        failed.push(file.name);
+      }
+    }
+    progress.value = files.length;
+    const done = files.length - failed.length;
+    progressText.textContent = done
+      ? `Listo: ${done} ${done === 1 ? 'foto' : 'fotos'}, de ${mb(before)} a ${mb(after)}. Descomprimí el .zip y subí las fotos al editor.`
+      : 'No se pudo achicar ninguna foto.';
+    zips.filter((z) => z.count > 0).forEach((z, i, all) => offer(z, i + 1, all.length));
+    if (failed.length) {
+      skip.hidden = false;
+      skip.textContent = `No se pudieron leer (si son .HEIC del iPhone, exportalas como JPG): ${failed.join(', ')}`;
+    }
+    drop.classList.remove('is-busy');
+    busy = false;
+  }
+
+  // Elegir una carpeta entera (se activa acá porque el atributo no es estándar).
+  $<HTMLInputElement>('[data-folder]').webkitdirectory = true;
+  for (const input of document.querySelectorAll<HTMLInputElement>('[data-files], [data-folder]')) {
+    input.addEventListener('change', () => {
+      if (input.files) void run(input.files);
+      input.value = '';
+    });
+  }
+  // Arrastrar y soltar: el recuadro se marca mientras la foto está encima.
+  drop.addEventListener('dragover', (e) => {
+    e.preventDefault();
+    drop.classList.add('is-over');
+  });
+  drop.addEventListener('dragleave', () => drop.classList.remove('is-over'));
+  // Si sueltan una carpeta, se recorre entera (con sus subcarpetas).
+  const readEntry = async (entry: FileSystemEntry): Promise<File[]> => {
+    if (entry.isFile) {
+      return new Promise((resolve) => (entry as FileSystemFileEntry).file((f) => resolve([f]), () => resolve([])));
+    }
+    const reader = (entry as FileSystemDirectoryEntry).createReader();
+    const files: File[] = [];
+    for (;;) {
+      const batch = await new Promise<FileSystemEntry[]>((resolve) => reader.readEntries(resolve, () => resolve([])));
+      if (!batch.length) return files;
+      for (const child of batch) files.push(...(await readEntry(child)));
+    }
+  };
+  drop.addEventListener('drop', async (e) => {
+    e.preventDefault();
+    drop.classList.remove('is-over');
+    const items = [...(e.dataTransfer?.items ?? [])];
+    const entries = items.map((item) => item.webkitGetAsEntry?.()).filter((x): x is FileSystemEntry => Boolean(x));
+    if (entries.length) {
+      const files = (await Promise.all(entries.map(readEntry))).flat();
+      void run(files);
+    } else if (e.dataTransfer?.files) {
+      void run(e.dataTransfer.files);
+    }
+  });
+</script>

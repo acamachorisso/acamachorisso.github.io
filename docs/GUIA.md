@@ -40,8 +40,9 @@ A la izquierda vas a ver:
 
 ### Antes de subir: exportá bien las fotos
 
-- **JPG**, con el lado más largo en **2500 px** y calidad de 80 a 85 % (en Lightroom: Exportar → Cambiar tamaño → Lado largo 2500 px). Así pesan menos de 1 MB.
-- **Cada foto, hasta 3 MB.** El editor no sube archivos más pesados: tira **error 413** (quiere decir "archivo demasiado grande"). Las fotos tal cual salen de la cámara (20 MB) no entran; exportalas a 2500 px y listo. La web no necesita más: igual las achica.
+- **Cada foto, hasta 3 MB.** El editor no sube archivos más pesados: tira **error 413** (quiere decir "archivo demasiado grande"). Las fotos tal cual salen de la cámara (20 MB) no entran.
+- **Para achicarlas, entrá a https://acamachorisso.github.io/achicar/** (guardala en favoritos). Arrastrá todas las fotos juntas, aunque sean cientos, o elegí la carpeta entera. Se achican en tu compu, sin subirse a ningún lado, y te bajás un **.zip** con todas: descomprimilo y subí esas fotos al editor. Quedan en 3000 px y calidad 90: la web muestra hasta 2560 px, así que se ven igual que el original.
+- Si exportás desde Lightroom, también sirve: JPG, lado largo 3000 px, calidad 90.
 - Las fotos **.HEIC** del iPhone no sirven: exportalas como JPG.
 
 ### Crear un álbum
@@ -172,7 +173,7 @@ Los mensajes del formulario de Contacto llegan a **acamacho.contacto@gmail.com**
 
 El archivo pesa más de 3 MB, el máximo que sube el editor (el mensaje lo pone el editor, en inglés, y no se puede cambiar).
 
-- **Fotos**: exportalas en JPG a 2500 px del lado más largo (ver [Antes de subir](#antes-de-subir-exportá-bien-las-fotos)).
+- **Fotos**: achicalas en **https://acamachorisso.github.io/achicar/** (ver [Antes de subir](#antes-de-subir-exportá-bien-las-fotos)).
 - **Videos**: subilos desde GitHub (ver [Videos de más de 3 MB](#videos-de-más-de-3-mb)).
 
 ## Si algo no se publica

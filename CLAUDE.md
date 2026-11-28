@@ -17,7 +17,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 - Fotos en `src/assets/`, optimizadas por Astro (sharp). Videos MP4 en `public/videos/`.
 - Editor: Pages CMS (`.pages.yml`), con etiquetas en español.
 - Deploy: GitHub Actions a GitHub Pages. `site` y `base` se configuran en `astro.config.mjs` (y `BASE` en `scripts/check-links.mjs`).
-- CSS propio en `src/styles/global.css`, sin Tailwind ni React. JS solo en: menú que se esconde al bajar y menú del celular con las tres líneas (`src/components/Nav.astro`), visor de fotos y videos (`src/components/Viewer.astro`, con `<dialog>`), flechas del carrusel, formulario y arranque del video del inicio (arranca también con "reducir movimiento", a pedido de Agustín). Sin JS, todo se ve y los links llevan a la foto, al MP4 o a YouTube.
+- CSS propio en `src/styles/global.css`, sin Tailwind ni React. JS solo en: menú que se esconde al bajar y menú del celular con las tres líneas (`src/components/Nav.astro`), visor de fotos y videos (`src/components/Viewer.astro`, con `<dialog>`), flechas del carrusel, formulario, arranque del video del inicio (arranca también con "reducir movimiento", a pedido de Agustín) y la herramienta para achicar fotos (`src/pages/achicar.astro`, en `/achicar/`, sin menú ni Google: el link está en el editor y en la guía). Sin JS, todo se ve y los links llevan a la foto, al MP4 o a YouTube.
 
 ## Reglas que no se discuten
 
@@ -28,7 +28,7 @@ El plan completo (decisiones, modelo de contenido, etapas, pruebas y riesgos) es
 - Cada categoría lista sus álbumes y cada sección sus videos, en orden (en el editor se arrastran). Un álbum o video va en una sola lista; si no está en ninguna, no se ve.
 - Categorías y álbumes comparten `/fotos/<nombre>/`: si coinciden, el build frena con un error que dice cuál cambiar.
 - Cada video lleva un link de YouTube **o** un MP4. Los MP4 y los "Próximamente" necesitan portada. El video del inicio, hasta 20 MB; los demás, hasta 95 MB (GitHub bloquea más de 100 MB).
-- El editor (Pages CMS, en Vercel) no sube archivos de más de unos 3 MB: tira "error 413". Fotos: JPG a 2500 px. MP4 más pesados: se suben desde la web de GitHub y se eligen en el editor (ver la guía).
+- El editor (Pages CMS, en Vercel) no sube archivos de más de unos 3 MB: tira "error 413". Fotos: se achican en `/achicar/` (3000 px, calidad 90, en el navegador). MP4 más pesados: se suben desde la web de GitHub y se eligen en el editor (ver la guía).
 - Los errores de contenido dicen qué archivo y qué campo arreglar, en palabras que entienda Agustín.
 - La clave de Web3Forms va en `src/config.ts` a propósito: igual es pública en el HTML.
 - Accesibilidad y rendimiento: HTML semántico, teclado, contraste de 4.5 a 1, Lighthouse 90 o más.

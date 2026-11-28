@@ -1396,6 +1396,92 @@ a.short:focus-visible img {
   max-width: 48ch;
 }
 
+/* ---------- Achicar fotos (herramienta para Agustín, /achicar/) ---------- */
+
+.drop {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 220px;
+  padding: 32px var(--gutter);
+  border: 1px dashed rgba(242, 242, 240, 0.4);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.2s, background-color 0.2s;
+}
+.drop:hover,
+.drop.is-over,
+.drop:focus-within {
+  border-color: var(--accent);
+  background: rgba(141, 179, 220, 0.06);
+}
+.drop.is-busy {
+  pointer-events: none;
+  opacity: 0.5;
+}
+.drop-big {
+  font-size: clamp(20px, 2vw, 26px);
+}
+/* El input de archivo queda invisible pero se puede usar con el teclado (el foco marca el recuadro). */
+.drop-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+.folder {
+  position: relative;
+  margin-top: -16px;
+  cursor: pointer;
+}
+.shrink-status {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.shrink-status progress {
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  border: 0;
+  background: var(--line);
+  accent-color: var(--accent);
+}
+.shrink-status progress::-webkit-progress-bar {
+  background: var(--line);
+}
+.shrink-status progress::-webkit-progress-value {
+  background: var(--accent);
+}
+.shrink-status progress::-moz-progress-bar {
+  background: var(--accent);
+}
+.shrink-out:empty {
+  display: none;
+}
+.shrink-out {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.shrink-out li {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 16px;
+}
+.shrink .shrink-note,
+.shrink .shrink-skip {
+  font-size: 15px;
+}
+
 /* ---------- Pie ---------- */
 
 .foot {

@@ -13,5 +13,5 @@ export default defineConfig({
   output: 'static',
   trailingSlash: 'always',
   build: { format: 'directory' },
-  integrations: [sitemap({ filter: (page) => !page.includes('/contacto/gracias/') })],
+  integrations: [sitemap({ filter: (page) => !page.includes('/contacto/gracias/') && !page.includes('/achicar/') })],
 });
